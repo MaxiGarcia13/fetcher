@@ -5,4 +5,5 @@ export default eslintConfig({
   typescript: true,
   jsx: true,
   tailwindcss: true,
+  astro: true,
 });
