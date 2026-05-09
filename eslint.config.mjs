@@ -6,4 +6,8 @@ export default eslintConfig({
   jsx: true,
   tailwindcss: true,
   astro: true,
+
+  formatters: {
+    css: true,
+  },
 });
