@@ -1,7 +1,14 @@
 ---
+import Aside from '../components/aside.astro';
 import AppLayout from '../layouts/app-layout.astro';
 ---
 
 <AppLayout>
-  <h1>Hello, World!</h1>
+  <main class="flex h-full w-full gap-4">
+    <Aside class="rounded-md bg-gray-800 p-4" />
+
+    <div class="flex-1 rounded-md p-4">
+      <h1>Hello, World!</h1>
+    </div>
+  </main>
 </AppLayout>
