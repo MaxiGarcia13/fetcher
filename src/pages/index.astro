@@ -1,14 +1,23 @@
 ---
 import Aside from '../components/aside.astro';
+import { RequestEditor } from '../components/request-editor';
+import { RequestPanel } from '../components/request-panel';
 import AppLayout from '../layouts/app-layout.astro';
 ---
 
 <AppLayout>
-  <main class="flex h-full w-full gap-4">
-    <Aside class="rounded-md bg-gray-800 p-4" />
+  <main class="flex h-full w-full overflow-hidden rounded">
+    <Aside class="border border-gray-700 bg-gray-800 p-4" />
 
-    <div class="flex-1 rounded-md p-4">
-      <h1>Hello, World!</h1>
+    <div class="flex flex-1 flex-col">
+      <RequestEditor
+        client:only="react"
+        className="border border-gray-700 bg-gray-800 p-4"
+      />
+      <RequestPanel
+        client:only="react"
+        className="flex-1 border border-gray-700 bg-gray-900"
+      />
     </div>
   </main>
 </AppLayout>
