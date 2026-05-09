@@ -29,8 +29,13 @@
     "lint:fix": "eslint --fix"
   },
   "dependencies": {
+    "@astrojs/react": "^5.0.4",
     "@maxigarcia/js-utils": "^1.2.1",
-    "astro": "^6.3.1"
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^6.3.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   },
   "devDependencies": {
     "@eslint-react/eslint-plugin": "^3.0.0",
