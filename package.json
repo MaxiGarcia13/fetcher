@@ -1,0 +1,28 @@
+{
+  "name": "fetcher",
+  "version": "0.0.0",
+  "description": "Fetcher is a lightweight and developer-friendly REST API client for testing, debugging, and managing HTTP requests.",
+  "keywords": [
+    "rest-api",
+    "api-client",
+    "http-client",
+    "developer-tools",
+    "api-testing",
+    "rest-client"
+  ],
+  "homepage": "https://github.com/MaxiGarcia13/fetcher#readme",
+  "bugs": {
+    "url": "https://github.com/MaxiGarcia13/fetcher/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxiGarcia13/fetcher.git"
+  },
+  "license": "ISC",
+  "author": "Maximiliano Garcia Mortigliengo",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
