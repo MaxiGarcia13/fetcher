@@ -3,16 +3,16 @@ import { useRef, useState } from 'react';
 
 interface ResizablePanelProps {
   className?: string;
-  leftContent: React.ReactNode;
-  rightContent: React.ReactNode;
+  firstContent: React.ReactNode;
+  secondContent: React.ReactNode;
   offset?: number;
   direction?: 'horizontal' | 'vertical';
 }
 
 export function ResizablePanel({
   className,
-  leftContent,
-  rightContent,
+  firstContent,
+  secondContent,
   direction = 'horizontal',
   offset = 100,
 }: ResizablePanelProps) {
@@ -74,7 +74,7 @@ export function ResizablePanel({
         className={containerClassName}
         style={{ width: leftWidth, height: leftHeight }}
       >
-        {leftContent}
+        {firstContent}
       </div>
       <div
         className={cn(dividerClassName, 'bg-gray-700', cursorClassName)}
@@ -85,7 +85,7 @@ export function ResizablePanel({
         className={containerClassName}
         style={{ width: `calc(100% - ${leftWidth}px)`, height: `calc(100% - ${leftHeight}px)` }}
       >
-        {rightContent}
+        {secondContent}
       </div>
     </section>
   );

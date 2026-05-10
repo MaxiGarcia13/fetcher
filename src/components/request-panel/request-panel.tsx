@@ -1,6 +1,6 @@
 import { cn } from '@maxigarcia/js-utils';
 import { ResizablePanel } from '../resizable-panel';
-import { RequestPanelLeft } from './request-panel-left';
+import { RequestOptionsPanel } from './request-options-panel';
 
 interface Props {
   className?: string;
@@ -10,10 +10,10 @@ export function RequestPanel({ className }: Props) {
   return (
     <ResizablePanel
       className={cn('flex-1', className)}
-      leftContent={
-        <RequestPanelLeft />
+      firstContent={
+        <RequestOptionsPanel />
       }
-      rightContent={<div>Right</div>}
+      secondContent={<div>Right</div>}
       direction="vertical"
     />
   );

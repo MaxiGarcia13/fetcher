@@ -1,9 +1,18 @@
 import { Tabs } from '../tabs';
 
-export function RequestPanelLeft() {
+export function RequestOptionsPanel() {
   return (
     <Tabs
       items={[
+        {
+          value: 'params',
+          label: 'Params',
+          content: (
+            <p className="text-sm text-gray-500">
+              Request params will go here.
+            </p>
+          ),
+        },
         {
           value: 'headers',
           label: 'Headers',
