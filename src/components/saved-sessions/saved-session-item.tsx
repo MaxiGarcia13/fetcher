@@ -3,6 +3,7 @@ import { cn } from '@maxigarcia/js-utils';
 import { formatShortDate } from '@/utils/date';
 import { Button } from '../button';
 import { BinIcon } from '../icons/bin';
+import { RequestMethodBadge } from './request-method-badge';
 import { getSnapshotRequestMeta } from './utils';
 
 export interface SavedSessionItemProps {
@@ -23,16 +24,12 @@ export function SavedSessionItem({
   onRemove,
 }: SavedSessionItemProps) {
   const { method, domain } = getSnapshotRequestMeta(snapshot.search);
-  const isActive
-    = location.search === snapshot.search;
 
   return (
     <li
       className={cn(
         'flex gap-2 items-center rounded border text-xs cursor-pointer',
-        isActive
-          ? 'border-sky-500 bg-sky-950/25 ring-1 ring-sky-500/40'
-          : 'border-gray-700',
+        'border-gray-700',
         className,
       )}
       onClick={() => onSelect?.(snapshot)}
@@ -40,9 +37,7 @@ export function SavedSessionItem({
 
       <div className="flex flex-1 flex-col p-2">
         <div className="flex min-w-0 items-center gap-2">
-          <span className="shrink-0 font-mono text-[11px] font-semibold text-sky-400">
-            {method ?? 'GET'}
-          </span>
+          <RequestMethodBadge method={method} />
           <span
             className="min-w-0 truncate text-gray-300"
             title={domain ?? undefined}
