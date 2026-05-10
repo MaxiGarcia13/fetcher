@@ -1,0 +1,27 @@
+---
+import pkg from '../../package.json';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const version = pkg.version;
+const repositoryUrl = pkg.repository.url;
+---
+
+<footer
+  class={`mt-auto flex items-center justify-center gap-2 text-xs text-gray-500 ${className}`}
+>
+  <span>v{version}</span>
+  -
+  <a
+    href={repositoryUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="hover:text-gray-300 text-orange-400 hover:underline"
+  >
+    Repository
+  </a>
+</footer>
