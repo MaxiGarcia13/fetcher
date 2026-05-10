@@ -22,6 +22,7 @@ export function RequestParams({ className }: Props) {
       emptyMessage="No query parameters yet."
       spreadsheetTrailingBlankRow
       showAddButton={false}
+      hideableRows
     />
   );
 }

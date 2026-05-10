@@ -4,6 +4,9 @@ import { useMemo } from 'react';
 import { AutocompleteInput } from '../autocomplete-input';
 import { Button } from '../button';
 import { BinIcon } from '../icons/bin';
+import { EyeIcon } from '../icons/eye';
+import { EyeOffIcon } from '../icons/eye-off';
+import { LockPasswordIcon } from '../icons/lock-password';
 import { applySpreadsheetTrailingBlankRow } from './utils';
 
 export interface KeyValueSuggestion {
@@ -21,6 +24,7 @@ interface KeyValueTableProps {
   emptyMessage?: string;
   spreadsheetTrailingBlankRow?: boolean;
   showAddButton?: boolean;
+  hideableRows?: boolean;
 }
 
 export function KeyValueTable({
@@ -32,6 +36,7 @@ export function KeyValueTable({
   keySuggestions = [],
   emptyMessage = 'No rows yet.',
   spreadsheetTrailingBlankRow = false,
+  hideableRows = false,
 }: KeyValueTableProps) {
   const normalizedSuggestions = useMemo(
     () =>
@@ -49,14 +54,30 @@ export function KeyValueTable({
   }
 
   function updateCell(index: number, cell: 'key' | 'value', nextCellValue: string) {
-    const nextValue = value.map((entry, entryIndex) =>
-      entryIndex === index ? { ...entry, [cell]: nextCellValue } : entry,
-    );
-    emit(nextValue);
+    const next
+      = value.map((entry, entryIndex) =>
+        entryIndex === index ? { ...entry, [cell]: nextCellValue } : entry,
+      );
+    emit(next);
   }
 
   function removeRow(index: number) {
-    emit(value.filter((_, entryIndex) => entryIndex !== index));
+    const nextValue = value.filter((_, entryIndex) => entryIndex !== index);
+    emit(nextValue);
+  }
+
+  function toggleRowVisibility(rowId: string) {
+    const next = value.map((entry) =>
+      entry.id === rowId ? { ...entry, hidden: !entry.hidden } : entry,
+    );
+    emit(next);
+  }
+
+  function toggleRowMask(rowId: string) {
+    const next = value.map((entry) =>
+      entry.id === rowId ? { ...entry, masked: !entry.masked } : entry,
+    );
+    emit(next);
   }
 
   return (
@@ -77,6 +98,7 @@ export function KeyValueTable({
                 const valueSuggestions = normalizedSuggestions.find(
                   (suggestion) => suggestion.key.toLowerCase() === entry.key.toLowerCase(),
                 )?.valueSuggestions;
+                const { hidden: isHidden, masked: isMasked } = entry;
 
                 return (
                   <div key={entry.id} className="grid grid-cols-[1fr_1fr_auto]">
@@ -95,21 +117,50 @@ export function KeyValueTable({
                       onChange={(nextValue) => {
                         updateCell(index, 'value', nextValue);
                       }}
+                      type={isMasked ? 'password' : 'text'}
                       placeholder={valuePlaceholder}
                       suggestions={valueSuggestions}
                       aria-label={`Value row ${index + 1}`}
                       className="rounded-l-none rounded-r-none border-r-0"
                     />
-                    <Button
-                      type="button"
-                      onClick={() => {
-                        removeRow(index);
-                      }}
-                      className="shrink-0 rounded-l-none"
-                      aria-label={`Remove row ${index + 1}`}
-                    >
-                      <BinIcon className="size-4 text-gray-400" />
-                    </Button>
+                    <div className="flex">
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          toggleRowMask(entry.id);
+                        }}
+                        className="shrink-0 rounded-none border-r-0"
+                        aria-label={`${isMasked ? 'Show value' : 'Mask value'} for row ${index + 1}`}
+                      >
+                        <LockPasswordIcon className={cn('size-4', !isMasked ? 'text-gray-400' : 'text-gray-200')} />
+                      </Button>
+                      {hideableRows
+                        ? (
+                            <Button
+                              type="button"
+                              onClick={() => {
+                                toggleRowVisibility(entry.id);
+                              }}
+                              className="shrink-0 rounded-none border-r-0"
+                              aria-label={`${isHidden ? 'Show' : 'Hide'} row ${index + 1}`}
+                            >
+                              {isHidden
+                                ? <EyeOffIcon className="size-4 text-gray-200" />
+                                : <EyeIcon className="size-4 text-gray-400" />}
+                            </Button>
+                          )
+                        : null}
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          removeRow(index);
+                        }}
+                        className="shrink-0 rounded-l-none"
+                        aria-label={`Remove row ${index + 1}`}
+                      >
+                        <BinIcon className="size-4 text-gray-400" />
+                      </Button>
+                    </div>
                   </div>
                 );
               })}
