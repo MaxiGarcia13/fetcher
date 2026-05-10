@@ -1,17 +1,23 @@
 import type { InputHTMLAttributes } from 'react';
 import { cn } from '@maxigarcia/js-utils';
+import { useId } from 'react';
+import { Field } from './field';
 
-type InputProps = InputHTMLAttributes<HTMLInputElement>;
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+  error?: string;
+};
 
-export function Input({ className, ...props }: InputProps) {
+export function Input({ className, error, ...props }: InputProps) {
+  const id = useId();
+  const name = props.name ?? props.id ?? id;
+
   return (
-    <input
-      className={cn(
-        'border border-gray-600 focus:border-gray-600',
-        'h-10 min-w-0 rounded px-3 py-2 text-sm outline-none',
-        className,
-      )}
-      {...props}
-    />
+    <Field error={error} className={cn('border border-gray-600 focus:border-gray-600 rounded h-10', className)}>
+      <input
+        className="flex-1 px-3 py-2 text-sm outline-none"
+        name={name}
+        {...props}
+      />
+    </Field>
   );
 }
