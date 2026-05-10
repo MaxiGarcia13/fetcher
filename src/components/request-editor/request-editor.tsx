@@ -1,6 +1,7 @@
 import type { HttpMethod } from '../../domain/http-method';
 import { cn } from '@maxigarcia/js-utils';
 import { useState } from 'react';
+import { Button } from '../button';
 import { Input } from '../input';
 import { RequestMethodSelect } from './request-method-select';
 
@@ -13,7 +14,7 @@ export function RequestEditor({ className }: Props) {
   const [url, setUrl] = useState('');
 
   return (
-    <header className={cn('flex gap-4', className)}>
+    <header className={cn('flex gap-2', className)}>
       <div className="flex flex-1">
         <RequestMethodSelect value={method} onChange={setMethod} className="rounded-r-none" />
         <Input
@@ -25,6 +26,7 @@ export function RequestEditor({ className }: Props) {
           className="min-w-0 flex-1 rounded-l-none border-l-0"
         />
       </div>
+      <Button variant="primary" className="min-w-24">Send</Button>
     </header>
   );
 }

@@ -29,8 +29,8 @@ export function Select({
           onChange(event.target.value);
         }}
         className={cn(
-          'border border-gray-600 focus:border-gray-600',
-          'h-10 appearance-none rounded-md  py-2 pr-9 pl-3 text-sm outline-none',
+          'border border-gray-600 focus:border-gray-600 cursor-pointer',
+          'h-10 appearance-none rounded  py-2 pr-9 pl-3 text-sm outline-none',
           className,
         )}
         {...props}
