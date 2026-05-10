@@ -27,17 +27,15 @@ function methodTextClass(method: HttpMethod): string {
 }
 
 export function RequestMethodBadge({ method, className }: RequestMethodBadgeProps) {
-  const label = method?.trim() ? method.trim() : 'GET';
-
   return (
     <span
       className={cn(
         'shrink-0 font-mono text-[11px] font-semibold',
-        methodTextClass(label as HttpMethod),
+        methodTextClass(method),
         className,
       )}
     >
-      {label}
+      {method}
     </span>
   );
 }
