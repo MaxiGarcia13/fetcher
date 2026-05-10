@@ -37,7 +37,7 @@ export function SavedSessionList({
               <SavedSessionItem
                 key={session.id}
                 snapshot={session}
-                isActive={session.id === activeSessionId}
+                isActive={session.id === activeSessionId || session.search === window.location.search}
                 onSelect={onSelectSession}
                 onRemove={onRemoveSession}
               />
