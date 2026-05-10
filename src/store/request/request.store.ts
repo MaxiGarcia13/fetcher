@@ -1,8 +1,9 @@
 import type { KeyValueEntry } from '@/components/key-value-table/types';
 import type { HttpMethod } from '@/domain/http-method';
-import { decodeText, encodeText, getUrlParam, isValidHttpUrl, removeUrlParam, setUrlParams } from '@maxigarcia/js-utils';
+import { encodeText, isValidHttpUrl, removeUrlParam, setUrlParams } from '@maxigarcia/js-utils';
 import { map } from 'nanostores';
 import { createKeyValueEmptyEntry } from '@/components/key-value-table/utils';
+import { readParm, REQUEST_BODY_PARAM, REQUEST_HEADERS_PARAM, REQUEST_METHOD_PARAM, REQUEST_PARAMS_PARAM, REQUEST_URL_PARAM } from './url';
 
 export interface RequestEditorState {
   method: HttpMethod;
@@ -10,30 +11,6 @@ export interface RequestEditorState {
   headers: KeyValueEntry[];
   params: KeyValueEntry[];
   body: string;
-}
-
-export const REQUEST_URL_PARAM = 'url';
-export const REQUEST_METHOD_PARAM = 'method';
-export const REQUEST_HEADERS_PARAM = 'headers';
-export const REQUEST_PARAMS_PARAM = 'params';
-export const REQUEST_BODY_PARAM = 'body';
-
-function readParm<T>(key: string, defaultValue: T): T | undefined {
-  const param = getUrlParam(key);
-
-  if (param) {
-    const decoded = decodeText(param);
-
-    const paramsToParse = [REQUEST_HEADERS_PARAM, REQUEST_PARAMS_PARAM];
-
-    if (paramsToParse.includes(key)) {
-      return JSON.parse(decoded) as T;
-    }
-
-    return decoded as T;
-  }
-
-  return defaultValue;
 }
 
 export const $requestEditor = map<RequestEditorState>({
