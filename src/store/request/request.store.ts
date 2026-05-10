@@ -3,7 +3,7 @@ import type { HttpMethod } from '@/domain/http-method';
 import { encodeText, isValidHttpUrl, removeUrlParam, setUrlParams } from '@maxigarcia/js-utils';
 import { map } from 'nanostores';
 import { createKeyValueEmptyEntry } from '@/components/key-value-table/utils';
-import { HTTP_METHODS } from '@/domain/http-method';
+import { methodFromUrlParam } from '@/utils/url';
 import {
   readUrlParam,
   REQUEST_BODY_PARAM,
@@ -14,13 +14,6 @@ import {
   resetUrlParams,
 } from './url';
 
-function methodFromUrlParam(value: unknown): HttpMethod {
-  if (typeof value === 'string' && HTTP_METHODS.includes(value as HttpMethod)) {
-    return value as HttpMethod;
-  }
-  return 'GET';
-}
-
 export interface RequestEditorState {
   method: HttpMethod;
   url: string;
@@ -30,7 +23,7 @@ export interface RequestEditorState {
 }
 
 export const $requestEditor = map<RequestEditorState>({
-  method: readUrlParam(REQUEST_METHOD_PARAM, 'GET'),
+  method: methodFromUrlParam(readUrlParam(REQUEST_METHOD_PARAM)),
   url: readUrlParam(REQUEST_URL_PARAM, ''),
   headers: readUrlParam(REQUEST_HEADERS_PARAM, [createKeyValueEmptyEntry()]),
   params: readUrlParam(REQUEST_PARAMS_PARAM, [createKeyValueEmptyEntry()]),

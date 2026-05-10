@@ -6,7 +6,7 @@ export const REQUEST_HEADERS_PARAM = 'headers';
 export const REQUEST_PARAMS_PARAM = 'params';
 export const REQUEST_BODY_PARAM = 'body';
 
-export function readUrlParam<T>(key: string, defaultValue: T): T | undefined {
+export function readUrlParam<T>(key: string, defaultValue?: T): T | undefined {
   const param = getUrlParam(key);
 
   if (param) {
