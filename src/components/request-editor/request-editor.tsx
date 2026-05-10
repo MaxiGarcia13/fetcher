@@ -1,6 +1,7 @@
 import type { HttpMethod } from '../../domain/http-method';
 import { cn } from '@maxigarcia/js-utils';
 import { useState } from 'react';
+import { Input } from '../input';
 import { RequestMethodSelect } from './request-method-select';
 
 interface Props {
@@ -9,10 +10,21 @@ interface Props {
 
 export function RequestEditor({ className }: Props) {
   const [method, setMethod] = useState<HttpMethod>('GET');
+  const [url, setUrl] = useState('');
 
   return (
-    <div className={cn('flex gap-4', className)}>
-      <RequestMethodSelect value={method} onChange={setMethod} />
-    </div>
+    <header className={cn('flex gap-4', className)}>
+      <div className="flex flex-1">
+        <RequestMethodSelect value={method} onChange={setMethod} className="rounded-r-none" />
+        <Input
+          type="url"
+          value={url}
+          onChange={(event) => setUrl(event.target.value)}
+          placeholder="Enter url"
+          aria-label="Request URL"
+          className="min-w-0 flex-1 rounded-l-none border-l-0"
+        />
+      </div>
+    </header>
   );
 }
