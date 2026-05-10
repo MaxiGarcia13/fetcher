@@ -11,7 +11,7 @@ export function RequestPanel({ className }: Props) {
     <ResizablePanel
       className={cn('flex-1', className)}
       firstContent={
-        <RequestOptionsPanel className="px-4" />
+        <RequestOptionsPanel />
       }
       secondContent={<div>Right</div>}
       direction="vertical"
