@@ -3,7 +3,22 @@ import type { HttpMethod } from '@/domain/http-method';
 import { encodeText, isValidHttpUrl, removeUrlParam, setUrlParams } from '@maxigarcia/js-utils';
 import { map } from 'nanostores';
 import { createKeyValueEmptyEntry } from '@/components/key-value-table/utils';
-import { readParm, REQUEST_BODY_PARAM, REQUEST_HEADERS_PARAM, REQUEST_METHOD_PARAM, REQUEST_PARAMS_PARAM, REQUEST_URL_PARAM } from './url';
+import { HTTP_METHODS } from '@/domain/http-method';
+import {
+  readParm,
+  REQUEST_BODY_PARAM,
+  REQUEST_HEADERS_PARAM,
+  REQUEST_METHOD_PARAM,
+  REQUEST_PARAMS_PARAM,
+  REQUEST_URL_PARAM,
+} from './url';
+
+function methodFromUrlParam(value: unknown): HttpMethod {
+  if (typeof value === 'string' && HTTP_METHODS.includes(value as HttpMethod)) {
+    return value as HttpMethod;
+  }
+  return 'GET';
+}
 
 export interface RequestEditorState {
   method: HttpMethod;
@@ -73,4 +88,45 @@ export function setRequestBody(body: string): void {
   } else {
     removeUrlParam(REQUEST_BODY_PARAM);
   }
+}
+
+export function applyRequestFromSearch(search: string): void {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  try {
+    const next = new URL(window.location.href);
+    const normalized = search.startsWith('?')
+      ? search
+      : search.length > 0
+        ? `?${search}`
+        : '';
+    next.search = normalized;
+    window.history.replaceState({}, '', next.toString());
+
+    const methodRaw = readParm(REQUEST_METHOD_PARAM, 'GET');
+    $requestEditor.set({
+      method: methodFromUrlParam(methodRaw),
+      url: readParm(REQUEST_URL_PARAM, '') ?? '',
+      headers: readParm(REQUEST_HEADERS_PARAM, [createKeyValueEmptyEntry()]) ?? [
+        createKeyValueEmptyEntry(),
+      ],
+      params: readParm(REQUEST_PARAMS_PARAM, [createKeyValueEmptyEntry()]) ?? [
+        createKeyValueEmptyEntry(),
+      ],
+      body: readParm(REQUEST_BODY_PARAM, '{}') ?? '{}',
+    });
+  } catch {
+    /* ignore: malformed snapshot query (e.g. invalid JSON in encoded params) */
+  }
+}
+
+export function resetRequestState() {
+  $requestEditor.set({
+    method: 'GET',
+    url: '',
+    headers: [createKeyValueEmptyEntry()],
+    params: [createKeyValueEmptyEntry()],
+    body: '{}',
+  });
 }
