@@ -5,6 +5,8 @@ import {
   appendSavedSession,
   refreshSavedSessions,
   removeSavedSession,
+  selectSavedSession,
+  setActiveSession,
   setSavedSessions,
 } from './saved-sessions.store';
 
@@ -13,6 +15,8 @@ export function useSavedSessionsState(): SavedSessionsState & {
   setSessions: typeof setSavedSessions;
   appendSession: typeof appendSavedSession;
   removeSession: typeof removeSavedSession;
+  setActiveSession: typeof setActiveSession;
+  selectSession: typeof selectSavedSession;
 } {
   const state = useSyncExternalStore(
     (onChange) => $savedSessions.subscribe(onChange),
@@ -26,5 +30,7 @@ export function useSavedSessionsState(): SavedSessionsState & {
     setSessions: setSavedSessions,
     appendSession: appendSavedSession,
     removeSession: removeSavedSession,
+    setActiveSession,
+    selectSession: selectSavedSession,
   };
 }

@@ -1,11 +1,13 @@
 import type { SavedSessionSnapshot } from '@/domain/saved-sessions';
 import { map } from 'nanostores';
+import { $requestEditor, applyRequestFromSearch } from '@/store/request/request.store';
 import { storage } from '@/utils/storage';
 
 export const SAVED_SESSIONS_STORAGE_KEY = 'fetcher.savedSessions';
 
 export interface SavedSessionsState {
   sessions: SavedSessionSnapshot[];
+  activeSession: string | null;
 }
 
 function readSessionsFromStorage(): SavedSessionSnapshot[] {
@@ -14,19 +16,39 @@ function readSessionsFromStorage(): SavedSessionSnapshot[] {
 
 export const $savedSessions = map<SavedSessionsState>({
   sessions: readSessionsFromStorage(),
+  activeSession: null,
 });
+
+function pruneInvalidActive(sessions: SavedSessionSnapshot[]): void {
+  const { activeSession } = $savedSessions.get();
+  if (activeSession && !sessions.some((s) => s.id === activeSession)) {
+    $savedSessions.setKey('activeSession', null);
+  }
+}
 
 function persistSessions(sessions: SavedSessionSnapshot[]): void {
   storage.writeJson(SAVED_SESSIONS_STORAGE_KEY, sessions);
   $savedSessions.setKey('sessions', sessions);
+  pruneInvalidActive(sessions);
 }
 
 export function refreshSavedSessions(): void {
-  $savedSessions.setKey('sessions', readSessionsFromStorage());
+  const sessions = readSessionsFromStorage();
+  $savedSessions.setKey('sessions', sessions);
+  pruneInvalidActive(sessions);
 }
 
 export function setSavedSessions(sessions: SavedSessionSnapshot[]): void {
   persistSessions(sessions);
+}
+
+export function setActiveSession(id: string | null): void {
+  $savedSessions.setKey('activeSession', id);
+}
+
+export function selectSavedSession(snapshot: SavedSessionSnapshot): void {
+  $savedSessions.setKey('activeSession', snapshot.id);
+  applyRequestFromSearch(snapshot.search);
 }
 
 export function appendSavedSession(snapshot: SavedSessionSnapshot): void {
@@ -41,10 +63,10 @@ export function appendSavedSession(snapshot: SavedSessionSnapshot): void {
 }
 
 export function removeSavedSession(snapshot: SavedSessionSnapshot): void {
-  const { sessions } = $savedSessions.get();
-  const next = sessions.filter(
-    (s) => s.savedAt !== snapshot.savedAt && s.search !== snapshot.search,
-  );
-
+  const { sessions, activeSession } = $savedSessions.get();
+  const next = sessions.filter((s) => s.id !== snapshot.id);
+  if (activeSession === snapshot.id) {
+    $savedSessions.setKey('activeSession', null);
+  }
   persistSessions(next);
 }

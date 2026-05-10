@@ -8,6 +8,7 @@ import { getSnapshotRequestMeta } from './utils';
 
 export interface SavedSessionItemProps {
   snapshot: SavedSessionSnapshot;
+  isActive?: boolean;
   className?: string;
   onSelect?: (snapshot: SavedSessionSnapshot) => void;
   onRemove?: (snapshot: SavedSessionSnapshot) => void;
@@ -19,6 +20,7 @@ function display(value: string | null): string {
 
 export function SavedSessionItem({
   snapshot,
+  isActive,
   className,
   onSelect,
   onRemove,
@@ -29,7 +31,10 @@ export function SavedSessionItem({
     <li
       className={cn(
         'flex gap-2 items-center rounded border text-xs cursor-pointer',
-        'border-gray-700',
+
+        isActive
+          ? 'border-blue-500'
+          : 'border-gray-700',
         className,
       )}
       onClick={() => onSelect?.(snapshot)}

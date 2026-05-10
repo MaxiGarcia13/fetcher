@@ -9,12 +9,15 @@ export interface NewSessionButtonProps {
 }
 
 export function NewSessionButton({ className, onAfterNewSession }: NewSessionButtonProps) {
-  const { appendSession } = useSavedSessionsState();
+  const { appendSession, setActiveSession } = useSavedSessionsState();
 
   const handleClick = () => {
+    setActiveSession(null);
+
     appendSession({
       savedAt: new Date().toISOString(),
       search: window.location.search,
+      id: crypto.randomUUID(),
     });
 
     resetRequestState();

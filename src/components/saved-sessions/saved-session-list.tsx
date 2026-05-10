@@ -4,6 +4,7 @@ import { SavedSessionItem } from './saved-session-item';
 
 export interface SavedSessionListProps {
   sessions: SavedSessionSnapshot[];
+  activeSessionId?: string | null;
   className?: string;
   emptyClassName?: string;
   onSelectSession?: (snapshot: SavedSessionSnapshot) => void;
@@ -12,6 +13,7 @@ export interface SavedSessionListProps {
 
 export function SavedSessionList({
   sessions,
+  activeSessionId,
   className,
   emptyClassName,
   onSelectSession,
@@ -31,10 +33,11 @@ export function SavedSessionList({
             <li className={cn('text-xs text-gray-500', emptyClassName)}>No saved sessions yet.</li>
           )
         : (
-            ordered.map((session, index) => (
+            ordered.map((session) => (
               <SavedSessionItem
-                key={`${session.savedAt}-${ordered.length - 1 - index}`}
+                key={session.id}
                 snapshot={session}
+                isActive={session.id === activeSessionId}
                 onSelect={onSelectSession}
                 onRemove={onRemoveSession}
               />

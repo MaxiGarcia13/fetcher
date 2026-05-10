@@ -1,8 +1,5 @@
 import type { SavedSessionSnapshot } from '@/domain/saved-sessions';
 import { cn } from '@maxigarcia/js-utils';
-import {
-  applyRequestFromSearch,
-} from '@/store/request';
 import { useSavedSessionsState } from '@/store/saved-sessions';
 import { NewSessionButton } from './new-session-button';
 import { SavedSessionList } from './saved-session-list';
@@ -12,11 +9,11 @@ export interface SavedSessionsPanelProps {
 }
 
 export function SavedSessionsPanel({ className }: SavedSessionsPanelProps) {
-  const { sessions, removeSession, refresh } = useSavedSessionsState();
+  const { sessions, activeSession, removeSession, refresh, selectSession } =
+    useSavedSessionsState();
 
   const handleSelectSession = (snapshot: SavedSessionSnapshot) => {
-    applyRequestFromSearch(snapshot.search);
-    refresh();
+    selectSession(snapshot);
   };
 
   const handleRemoveSession = (snapshot: SavedSessionSnapshot) => {
@@ -34,6 +31,7 @@ export function SavedSessionsPanel({ className }: SavedSessionsPanelProps) {
 
       <SavedSessionList
         sessions={sessions}
+        activeSessionId={activeSession}
         onSelectSession={handleSelectSession}
         onRemoveSession={handleRemoveSession}
       />
