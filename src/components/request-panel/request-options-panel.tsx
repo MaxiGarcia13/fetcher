@@ -3,6 +3,7 @@ import { cn } from '@maxigarcia/js-utils';
 import { TabsContent } from '../tabs/tabs-content';
 import { TabsHeader } from '../tabs/tabs-header';
 import { TabsRoot } from '../tabs/tabs-root';
+import { RequestHeaders } from './request-headers';
 import { RequestParams } from './request-params';
 
 interface RequestOptionsPanelProps {
@@ -15,11 +16,7 @@ export function RequestOptionsPanel({ defaultTab = 'headers', className }: Reque
     {
       value: 'headers',
       label: 'Headers',
-      content: (
-        <p className="text-sm text-gray-500">
-          Request headers will go here.
-        </p>
-      ),
+      content: <RequestHeaders />,
     },
     {
       value: 'params',
