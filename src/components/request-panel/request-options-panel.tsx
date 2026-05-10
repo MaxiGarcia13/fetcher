@@ -10,15 +10,8 @@ interface RequestOptionsPanelProps {
   className?: string;
 }
 
-export function RequestOptionsPanel({ defaultTab = 'params', className }: RequestOptionsPanelProps = {}) {
+export function RequestOptionsPanel({ defaultTab = 'headers', className }: RequestOptionsPanelProps = {}) {
   const items: TabItem<'params' | 'headers' | 'body'>[] = [
-    {
-      value: 'params',
-      label: 'Params',
-      content: (
-        <RequestParams />
-      ),
-    },
     {
       value: 'headers',
       label: 'Headers',
@@ -28,6 +21,14 @@ export function RequestOptionsPanel({ defaultTab = 'params', className }: Reques
         </p>
       ),
     },
+    {
+      value: 'params',
+      label: 'Params',
+      content: (
+        <RequestParams />
+      ),
+    },
+
     {
       value: 'body',
       label: 'Body',
