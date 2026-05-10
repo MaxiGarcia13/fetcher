@@ -1,4 +1,4 @@
-import type { HttpMethod } from './request-method-select';
+import type { HttpMethod } from '../../domain/http-method';
 import { cn } from '@maxigarcia/js-utils';
 import { useState } from 'react';
 import { RequestMethodSelect } from './request-method-select';
