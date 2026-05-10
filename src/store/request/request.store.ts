@@ -5,12 +5,13 @@ import { map } from 'nanostores';
 import { createKeyValueEmptyEntry } from '@/components/key-value-table/utils';
 import { HTTP_METHODS } from '@/domain/http-method';
 import {
-  readParm,
+  readUrlParam,
   REQUEST_BODY_PARAM,
   REQUEST_HEADERS_PARAM,
   REQUEST_METHOD_PARAM,
   REQUEST_PARAMS_PARAM,
   REQUEST_URL_PARAM,
+  resetUrlParams,
 } from './url';
 
 function methodFromUrlParam(value: unknown): HttpMethod {
@@ -29,11 +30,11 @@ export interface RequestEditorState {
 }
 
 export const $requestEditor = map<RequestEditorState>({
-  method: readParm(REQUEST_METHOD_PARAM, 'GET'),
-  url: readParm(REQUEST_URL_PARAM, ''),
-  headers: readParm(REQUEST_HEADERS_PARAM, [createKeyValueEmptyEntry()]),
-  params: readParm(REQUEST_PARAMS_PARAM, [createKeyValueEmptyEntry()]),
-  body: readParm(REQUEST_BODY_PARAM, '{}'),
+  method: readUrlParam(REQUEST_METHOD_PARAM, 'GET'),
+  url: readUrlParam(REQUEST_URL_PARAM, ''),
+  headers: readUrlParam(REQUEST_HEADERS_PARAM, [createKeyValueEmptyEntry()]),
+  params: readUrlParam(REQUEST_PARAMS_PARAM, [createKeyValueEmptyEntry()]),
+  body: readUrlParam(REQUEST_BODY_PARAM, '{}'),
 });
 
 export function requestUrlValidationError(url: string): string | undefined {
@@ -104,17 +105,17 @@ export function applyRequestFromSearch(search: string): void {
     next.search = normalized;
     window.history.replaceState({}, '', next.toString());
 
-    const methodRaw = readParm(REQUEST_METHOD_PARAM, 'GET');
+    const methodRaw = readUrlParam(REQUEST_METHOD_PARAM, 'GET');
     $requestEditor.set({
       method: methodFromUrlParam(methodRaw),
-      url: readParm(REQUEST_URL_PARAM, '') ?? '',
-      headers: readParm(REQUEST_HEADERS_PARAM, [createKeyValueEmptyEntry()]) ?? [
+      url: readUrlParam(REQUEST_URL_PARAM, '') ?? '',
+      headers: readUrlParam(REQUEST_HEADERS_PARAM, [createKeyValueEmptyEntry()]) ?? [
         createKeyValueEmptyEntry(),
       ],
-      params: readParm(REQUEST_PARAMS_PARAM, [createKeyValueEmptyEntry()]) ?? [
+      params: readUrlParam(REQUEST_PARAMS_PARAM, [createKeyValueEmptyEntry()]) ?? [
         createKeyValueEmptyEntry(),
       ],
-      body: readParm(REQUEST_BODY_PARAM, '{}') ?? '{}',
+      body: readUrlParam(REQUEST_BODY_PARAM, '{}') ?? '{}',
     });
   } catch {
     /* ignore: malformed snapshot query (e.g. invalid JSON in encoded params) */
@@ -129,4 +130,6 @@ export function resetRequestState() {
     params: [createKeyValueEmptyEntry()],
     body: '{}',
   });
+
+  resetUrlParams();
 }
