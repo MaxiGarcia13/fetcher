@@ -9,7 +9,7 @@ import AppLayout from '@/layouts/app-layout.astro';
   <main class="flex h-full w-full overflow-hidden rounded">
     <Aside class="border border-gray-700 bg-gray-800 p-4" />
 
-    <div class="flex flex-1 flex-col border border-gray-700">
+    <div class="flex min-h-0 flex-1 flex-col border border-gray-700">
       <RequestEditor client:only="react" className=" p-4" />
       <RequestPanel client:only="react" className="flex-1 " />
     </div>
