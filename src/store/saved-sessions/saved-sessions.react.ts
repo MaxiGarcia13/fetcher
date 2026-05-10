@@ -1,0 +1,30 @@
+import type { SavedSessionsState } from './saved-sessions.store';
+import { useSyncExternalStore } from 'react';
+import {
+  $savedSessions,
+  appendSavedSession,
+  refreshSavedSessions,
+  removeSavedSession,
+  setSavedSessions,
+} from './saved-sessions.store';
+
+export function useSavedSessionsState(): SavedSessionsState & {
+  refresh: typeof refreshSavedSessions;
+  setSessions: typeof setSavedSessions;
+  appendSession: typeof appendSavedSession;
+  removeSession: typeof removeSavedSession;
+} {
+  const state = useSyncExternalStore(
+    (onChange) => $savedSessions.subscribe(onChange),
+    () => $savedSessions.get(),
+    () => $savedSessions.get(),
+  );
+
+  return {
+    ...state,
+    refresh: refreshSavedSessions,
+    setSessions: setSavedSessions,
+    appendSession: appendSavedSession,
+    removeSession: removeSavedSession,
+  };
+}

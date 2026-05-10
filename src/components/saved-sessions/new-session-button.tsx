@@ -1,7 +1,7 @@
 import { cn } from '@maxigarcia/js-utils';
 import { resetRequestState } from '@/store/request';
+import { useSavedSessionsState } from '@/store/saved-sessions';
 import { Button } from '../button';
-import { useSavedSessions } from './use-saved-sessions';
 
 export interface NewSessionButtonProps {
   className?: string;
@@ -9,7 +9,7 @@ export interface NewSessionButtonProps {
 }
 
 export function NewSessionButton({ className, onAfterNewSession }: NewSessionButtonProps) {
-  const { appendSession } = useSavedSessions();
+  const { appendSession } = useSavedSessionsState();
 
   const handleClick = () => {
     appendSession({

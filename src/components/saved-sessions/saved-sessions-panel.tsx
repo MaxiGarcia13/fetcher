@@ -3,16 +3,16 @@ import { cn } from '@maxigarcia/js-utils';
 import {
   applyRequestFromSearch,
 } from '@/store/request';
+import { useSavedSessionsState } from '@/store/saved-sessions';
 import { NewSessionButton } from './new-session-button';
 import { SavedSessionList } from './saved-session-list';
-import { useSavedSessions } from './use-saved-sessions';
 
 export interface SavedSessionsPanelProps {
   className?: string;
 }
 
 export function SavedSessionsPanel({ className }: SavedSessionsPanelProps) {
-  const { sessions, removeSession, refresh } = useSavedSessions();
+  const { sessions, removeSession, refresh } = useSavedSessionsState();
 
   const handleSelectSession = (snapshot: SavedSessionSnapshot) => {
     applyRequestFromSearch(snapshot.search);
