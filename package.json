@@ -31,6 +31,7 @@
   "dependencies": {
     "@astrojs/react": "^5.0.4",
     "@maxigarcia/js-utils": "^1.3.0",
+    "@nanostores/react": "^1.1.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "astro": "^6.3.1",
