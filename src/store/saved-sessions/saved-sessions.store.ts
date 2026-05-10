@@ -70,3 +70,31 @@ export function removeSavedSession(snapshot: SavedSessionSnapshot): void {
   }
   persistSessions(next);
 }
+
+export function updateSavedSessionFromSearch(): void {
+  const { activeSession, sessions } = $savedSessions.get();
+
+  if (!activeSession) {
+    return;
+  }
+
+  const snapshot = sessions.find((s) => s.id === activeSession);
+
+  if (!snapshot) {
+    return;
+  }
+
+  const index = sessions.findIndex((s) => s.id === activeSession);
+  if (index === -1) {
+    return;
+  }
+
+  const next = [...sessions];
+  next[index] = {
+    ...snapshot,
+    savedAt: new Date().toISOString(),
+    search: window.location.search,
+  };
+
+  persistSessions(next);
+}
