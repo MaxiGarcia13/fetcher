@@ -1,8 +1,8 @@
 import type { editor } from 'monaco-editor';
 import { KeyCode, KeyMod } from 'monaco-editor';
 import { useEffect } from 'react';
-import { CommandIcon } from '../../icons/command';
-import { PasteIcon } from '../../icons/paste';
+import { CommandIcon } from '@/components/icons/command';
+import { PasteIcon } from '@/components/icons/paste';
 import { ContextMenuItem } from './context-menu-item';
 
 interface PasteActionMenuItemProps {

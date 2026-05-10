@@ -1,12 +1,12 @@
 import type { KeyValueEntry } from './types';
 import { cn } from '@maxigarcia/js-utils';
-import { AutocompleteInput } from '../autocomplete-input';
-import { Button } from '../button';
-import { BinIcon } from '../icons/bin';
-import { EyeIcon } from '../icons/eye';
-import { EyeOffIcon } from '../icons/eye-off';
-import { LockPasswordIcon } from '../icons/lock-password';
-import { Tooltip } from '../tooltip';
+import { AutocompleteInput } from '@/components/autocomplete-input';
+import { Button } from '@/components/button';
+import { BinIcon } from '@/components/icons/bin';
+import { EyeIcon } from '@/components/icons/eye';
+import { EyeOffIcon } from '@/components/icons/eye-off';
+import { LockPasswordIcon } from '@/components/icons/lock-password';
+import { Tooltip } from '@/components/tooltip';
 
 export interface KeyValueTableRowProps {
   entry: KeyValueEntry;

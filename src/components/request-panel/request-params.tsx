@@ -1,7 +1,7 @@
-import type { KeyValueEntry } from '../key-value-table';
+import type { KeyValueEntry } from '@/components/key-value-table';
 import { cn } from '@maxigarcia/js-utils';
 import { useState } from 'react';
-import { createKeyValueEmptyEntry, KeyValueTable } from '../key-value-table';
+import { createKeyValueEmptyEntry, KeyValueTable } from '@/components/key-value-table';
 
 interface Props {
   className?: string;

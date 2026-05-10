@@ -1,7 +1,7 @@
-import type { KeyValueEntry, KeyValueSuggestion } from '../key-value-table';
+import type { KeyValueEntry, KeyValueSuggestion } from '@/components/key-value-table';
 import { cn } from '@maxigarcia/js-utils';
 import { useState } from 'react';
-import { createKeyValueEmptyEntry, KeyValueTable } from '../key-value-table';
+import { createKeyValueEmptyEntry, KeyValueTable } from '@/components/key-value-table';
 
 const COMMON_HTTP_HEADER_SUGGESTIONS: readonly KeyValueSuggestion[] = [
   {

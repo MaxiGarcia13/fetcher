@@ -1,4 +1,4 @@
-import type { HttpMethod } from '../../domain/http-method';
+import type { HttpMethod } from '@/domain/http-method';
 import { isValidHttpUrl } from '@maxigarcia/js-utils';
 import { map } from 'nanostores';
 

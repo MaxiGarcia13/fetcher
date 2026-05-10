@@ -1,6 +1,6 @@
 import { cn } from '@maxigarcia/js-utils';
 import { useState } from 'react';
-import { Editor } from '../editor/editor';
+import { Editor } from '@/components/editor/editor';
 
 interface Props {
   className?: string;

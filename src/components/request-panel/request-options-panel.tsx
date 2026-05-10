@@ -1,8 +1,8 @@
-import type { TabItem } from '../tabs/types';
+import type { TabItem } from '@/components/tabs/types';
 import { cn } from '@maxigarcia/js-utils';
-import { TabsContent } from '../tabs/tabs-content';
-import { TabsHeader } from '../tabs/tabs-header';
-import { TabsRoot } from '../tabs/tabs-root';
+import { TabsContent } from '@/components/tabs/tabs-content';
+import { TabsHeader } from '@/components/tabs/tabs-header';
+import { TabsRoot } from '@/components/tabs/tabs-root';
 import { RequestBody } from './request-body';
 import { RequestHeaders } from './request-headers';
 import { RequestParams } from './request-params';

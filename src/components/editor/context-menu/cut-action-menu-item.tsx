@@ -1,8 +1,8 @@
 import type { editor } from 'monaco-editor';
 import { KeyCode, KeyMod } from 'monaco-editor';
 import { useEffect } from 'react';
-import { CommandIcon } from '../../icons/command';
-import { CutIcon } from '../../icons/cut';
+import { CommandIcon } from '@/components/icons/command';
+import { CutIcon } from '@/components/icons/cut';
 import { ContextMenuItem } from './context-menu-item';
 import { getEffectiveSelectionRange } from './utils/effective-range';
 

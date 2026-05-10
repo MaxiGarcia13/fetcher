@@ -1,5 +1,5 @@
 import { cn } from '@maxigarcia/js-utils';
-import { ResizablePanel } from '../resizable-panel';
+import { ResizablePanel } from '@/components/resizable-panel';
 import { RequestOptionsPanel } from './request-options-panel';
 import { Response } from './response';
 

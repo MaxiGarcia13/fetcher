@@ -1,7 +1,7 @@
 import { cn } from '@maxigarcia/js-utils';
-import { useRequestState } from '../../store/request';
-import { Button } from '../button';
-import { Input } from '../input';
+import { Button } from '@/components/button';
+import { Input } from '@/components/input';
+import { useRequestState } from '@/store/request';
 import { RequestMethodSelect } from './request-method-select';
 
 interface Props {

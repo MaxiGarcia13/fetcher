@@ -1,7 +1,7 @@
-import type { HttpMethod } from '../../domain/http-method';
-import type { SelectOption } from '../select';
-import { HTTP_METHODS } from '../../domain/http-method';
-import { Select } from '../select';
+import type { HttpMethod } from '@/domain/http-method';
+import type { SelectOption } from '@/components/select';
+import { HTTP_METHODS } from '@/domain/http-method';
+import { Select } from '@/components/select';
 
 const HTTP_METHOD_OPTIONS: ReadonlyArray<SelectOption> = HTTP_METHODS.map((method) => ({
   label: method,
