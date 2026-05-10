@@ -14,7 +14,7 @@ export function RequestParams({ className }: Props) {
 
   return (
     <KeyValueTable
-      className={cn(className)}
+      className={cn('p-4', className)}
       value={entries}
       onChange={setEntries}
       keyFieldPlaceholder="Parameter name"

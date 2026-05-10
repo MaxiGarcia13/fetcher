@@ -23,7 +23,7 @@ export function TabsContent({ containerClassName, contentClassName }: TabsConten
         <TabsPanel
           key={item.value}
           value={item.value}
-          className={cn('flex min-h-0 flex-1 flex-col overflow-auto p-4', contentClassName)}
+          className={cn('flex min-h-0 flex-1 flex-col overflow-auto', contentClassName)}
         >
           {item.content}
         </TabsPanel>

@@ -43,7 +43,7 @@ export function RequestOptionsPanel({ defaultTab = 'headers', className }: Reque
       <div className="border-b border-gray-700 px-4">
         <TabsHeader className="border-b-0" />
       </div>
-      <TabsContent contentClassName="px-4" />
+      <TabsContent />
     </TabsRoot>
   );
 }
