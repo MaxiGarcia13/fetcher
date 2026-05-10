@@ -1,16 +1,23 @@
+import { cn } from '@maxigarcia/js-utils';
 import { Tabs } from '../tabs';
+import { RequestParams } from './request-params';
 
-export function RequestOptionsPanel() {
+interface RequestOptionsPanelProps {
+  defaultTab?: 'params' | 'headers' | 'body';
+  className?: string;
+}
+
+export function RequestOptionsPanel({ defaultTab = 'params', className }: RequestOptionsPanelProps = {}) {
   return (
     <Tabs
+      defaultValue={defaultTab}
+      className={cn('h-full border-b-0', className)}
       items={[
         {
           value: 'params',
           label: 'Params',
           content: (
-            <p className="text-sm text-gray-500">
-              Request params will go here.
-            </p>
+            <RequestParams />
           ),
         },
         {
@@ -32,8 +39,6 @@ export function RequestOptionsPanel() {
           ),
         },
       ]}
-      defaultValue="headers"
-      className="h-full"
     />
   );
 }
