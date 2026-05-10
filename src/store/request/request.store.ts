@@ -4,6 +4,7 @@ import { encodeText, isValidHttpUrl, removeUrlParam, setUrlParams } from '@maxig
 import { map } from 'nanostores';
 import { createKeyValueEmptyEntry } from '@/components/key-value-table/utils';
 import { methodFromUrlParam } from '@/utils/url';
+import { updateSavedSessionFromSearch } from '../saved-sessions';
 import {
   readUrlParam,
   REQUEST_BODY_PARAM,
@@ -42,6 +43,8 @@ export function setRequestEditorMethod(method: HttpMethod): void {
   $requestEditor.setKey('method', method);
 
   setUrlParams({ [REQUEST_METHOD_PARAM]: encodeText(method) });
+
+  updateSavedSessionFromSearch();
 }
 
 export function setRequestEditorUrl(url: string): void {
@@ -52,6 +55,8 @@ export function setRequestEditorUrl(url: string): void {
   } else {
     removeUrlParam(REQUEST_URL_PARAM);
   }
+
+  updateSavedSessionFromSearch();
 }
 
 export function setRequestHeaders(headers: KeyValueEntry[]): void {
@@ -62,6 +67,8 @@ export function setRequestHeaders(headers: KeyValueEntry[]): void {
   } else {
     removeUrlParam(REQUEST_HEADERS_PARAM);
   }
+
+  updateSavedSessionFromSearch();
 }
 
 export function setRequestParams(params: KeyValueEntry[]): void {
@@ -72,6 +79,8 @@ export function setRequestParams(params: KeyValueEntry[]): void {
   } else {
     removeUrlParam(REQUEST_PARAMS_PARAM);
   }
+
+  updateSavedSessionFromSearch();
 }
 
 export function setRequestBody(body: string): void {
@@ -82,6 +91,8 @@ export function setRequestBody(body: string): void {
   } else {
     removeUrlParam(REQUEST_BODY_PARAM);
   }
+
+  updateSavedSessionFromSearch();
 }
 
 export function applyRequestFromSearch(search: string): void {
