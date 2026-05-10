@@ -16,6 +16,7 @@ export function SavedSessionsPanel({ className }: SavedSessionsPanelProps) {
 
   const handleSelectSession = (snapshot: SavedSessionSnapshot) => {
     applyRequestFromSearch(snapshot.search);
+    refresh();
   };
 
   const handleRemoveSession = (snapshot: SavedSessionSnapshot) => {

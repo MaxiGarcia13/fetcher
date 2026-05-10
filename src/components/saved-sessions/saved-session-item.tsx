@@ -23,11 +23,16 @@ export function SavedSessionItem({
   onRemove,
 }: SavedSessionItemProps) {
   const { method, domain } = getSnapshotRequestMeta(snapshot.search);
+  const isActive
+    = location.search === snapshot.search;
 
   return (
     <li
       className={cn(
-        'flex gap-2 items-center rounded border border-gray-700 text-xs cursor-pointer',
+        'flex gap-2 items-center rounded border text-xs cursor-pointer',
+        isActive
+          ? 'border-sky-500 bg-sky-950/25 ring-1 ring-sky-500/40'
+          : 'border-gray-700',
         className,
       )}
       onClick={() => onSelect?.(snapshot)}
