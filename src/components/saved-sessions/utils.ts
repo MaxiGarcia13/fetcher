@@ -1,12 +1,12 @@
+import type { HttpMethod } from '@/domain/http-method';
 import { decodeText, getUrlDomain } from '@maxigarcia/js-utils';
 import { REQUEST_METHOD_PARAM, REQUEST_URL_PARAM } from '@/store/request/url';
 
 export interface SnapshotRequestMeta {
-  method: string | null;
+  method: HttpMethod | null;
   domain: string | null;
 }
 
-/** Reads encoded `url` and `method` query keys from a snapshot search string (for display). */
 export function getSnapshotRequestMeta(search: string): SnapshotRequestMeta {
   const qs = search.startsWith('?') ? search.slice(1) : search;
   const params = new URLSearchParams(qs);
@@ -19,7 +19,7 @@ export function getSnapshotRequestMeta(search: string): SnapshotRequestMeta {
   const domain = rawUrl !== '' ? getUrlDomain(rawUrl) : null;
 
   return {
-    method: method !== '' ? method : null,
+    method: method !== '' ? method as HttpMethod : 'GET',
     domain,
   };
 }
