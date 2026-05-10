@@ -1,5 +1,5 @@
 import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-import TypeScriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 
 type MonacoWorkerFactory = (workerId: string, label: string) => Worker;
 
@@ -17,8 +17,8 @@ const workerGlobalScope = globalThis as WorkerGlobalScope;
 
 workerGlobalScope.MonacoEnvironment = {
   getWorker(_workerId, label) {
-    if (label === 'javascript' || label === 'typescript') {
-      return new TypeScriptWorker();
+    if (label === 'json' || label === 'jsonc') {
+      return new JsonWorker();
     }
 
     return new EditorWorker();
