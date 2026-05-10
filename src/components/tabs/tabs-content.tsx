@@ -18,9 +18,13 @@ export function TabsContent({ containerClassName, contentClassName }: TabsConten
   const { items } = useTabsContext();
 
   return (
-    <div className={cn('min-h-0 flex-1 overflow-auto', containerClassName)}>
+    <div className={cn('flex min-h-0 flex-1 flex-col overflow-hidden', containerClassName)}>
       {items.map((item) => (
-        <TabsPanel key={item.value} value={item.value} className={cn('p-4', contentClassName)}>
+        <TabsPanel
+          key={item.value}
+          value={item.value}
+          className={cn('flex min-h-0 flex-1 flex-col overflow-auto p-4', contentClassName)}
+        >
           {item.content}
         </TabsPanel>
       ))}
