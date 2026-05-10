@@ -1,7 +1,13 @@
 import type { KeyValueEntry } from './types';
 
 export function createKeyValueEmptyEntry(): KeyValueEntry {
-  return { id: crypto.randomUUID(), key: '', value: '' };
+  return {
+    id: crypto.randomUUID(),
+    key: '',
+    value: '',
+    hidden: false,
+    masked: false,
+  };
 }
 
 function rowIsEmpty(entry: KeyValueEntry): boolean {
