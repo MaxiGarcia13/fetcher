@@ -1,6 +1,6 @@
 import type { KeyValueEntry, KeyValueSuggestion } from '../key-value-table';
 import { cn } from '@maxigarcia/js-utils';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { createKeyValueEmptyEntry, KeyValueTable } from '../key-value-table';
 
 const COMMON_HTTP_HEADER_SUGGESTIONS: readonly KeyValueSuggestion[] = [
@@ -67,8 +67,6 @@ export function RequestHeaders({ className }: Props) {
     createKeyValueEmptyEntry(),
   ]);
 
-  const suggestions = useMemo(() => COMMON_HTTP_HEADER_SUGGESTIONS, []);
-
   return (
     <KeyValueTable
       className={cn(className)}
@@ -76,7 +74,7 @@ export function RequestHeaders({ className }: Props) {
       onChange={setEntries}
       keyFieldPlaceholder="Header name"
       valueFieldPlaceholder="Header value"
-      keySuggestions={suggestions}
+      keySuggestions={COMMON_HTTP_HEADER_SUGGESTIONS}
       emptyMessage="No headers yet."
       spreadsheetTrailingBlankRow
       showAddButton={false}
