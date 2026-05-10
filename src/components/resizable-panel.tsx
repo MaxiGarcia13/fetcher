@@ -68,23 +68,26 @@ export function ResizablePanel({
     event.stopPropagation();
   }
 
+  const firstPaneStyle
+    = direction === 'horizontal'
+      ? leftWidth !== undefined
+        ? { width: leftWidth, flex: 'none' as const }
+        : undefined
+      : leftHeight !== undefined
+        ? { height: leftHeight, flex: 'none' as const }
+        : undefined;
+
   return (
     <section ref={panelRef} className={mainClassName}>
-      <div
-        className={containerClassName}
-        style={{ width: leftWidth, height: leftHeight }}
-      >
+      <div className={containerClassName} style={firstPaneStyle}>
         {firstContent}
       </div>
       <div
-        className={cn(dividerClassName, 'bg-gray-700', cursorClassName)}
+        className={cn(dividerClassName, 'shrink-0 bg-gray-700', cursorClassName)}
         onMouseDown={handleMouseDown}
       >
       </div>
-      <div
-        className={containerClassName}
-        style={{ width: `calc(100% - ${leftWidth}px)`, height: `calc(100% - ${leftHeight}px)` }}
-      >
+      <div className={containerClassName}>
         {secondContent}
       </div>
     </section>
@@ -92,18 +95,20 @@ export function ResizablePanel({
 }
 
 function getClassNames({ className, direction }: Partial<ResizablePanelProps>) {
+  const pane = 'flex min-h-0 min-w-0 flex-1 basis-0 flex-col overflow-hidden';
+
   if (direction === 'horizontal') {
     return {
-      mainClassName: cn(className, 'flex flex-row'),
-      containerClassName: 'w-1/2',
+      mainClassName: cn(className, 'flex min-h-0 min-w-0 flex-1 flex-row overflow-hidden'),
+      containerClassName: pane,
       cursorClassName: 'cursor-col-resize',
       dividerClassName: 'w-1',
     };
   }
 
   return {
-    mainClassName: cn(className, 'flex flex-col'),
-    containerClassName: 'h-1/2',
+    mainClassName: cn(className, 'flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden'),
+    containerClassName: pane,
     cursorClassName: 'cursor-row-resize',
     dividerClassName: 'h-1',
   };
