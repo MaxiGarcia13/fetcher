@@ -1,7 +1,7 @@
-import type { KeyValueEntry, KeyValueSuggestion } from '@/components/key-value-table';
+import type { KeyValueSuggestion } from '@/components/key-value-table';
 import { cn } from '@maxigarcia/js-utils';
-import { useState } from 'react';
-import { createKeyValueEmptyEntry, KeyValueTable } from '@/components/key-value-table';
+import { KeyValueTable } from '@/components/key-value-table';
+import { useRequestState } from '@/store/request';
 
 const COMMON_HTTP_HEADER_SUGGESTIONS: readonly KeyValueSuggestion[] = [
   {
@@ -63,15 +63,13 @@ interface Props {
 }
 
 export function RequestHeaders({ className }: Props) {
-  const [entries, setEntries] = useState<KeyValueEntry[]>(() => [
-    createKeyValueEmptyEntry(),
-  ]);
+  const { headers, setHeaders } = useRequestState();
 
   return (
     <KeyValueTable
       className={cn('p-4', className)}
-      value={entries}
-      onChange={setEntries}
+      value={headers}
+      onChange={setHeaders}
       keyFieldPlaceholder="Header name"
       valueFieldPlaceholder="Header value"
       keySuggestions={COMMON_HTTP_HEADER_SUGGESTIONS}

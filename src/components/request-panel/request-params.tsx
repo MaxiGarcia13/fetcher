@@ -1,22 +1,19 @@
-import type { KeyValueEntry } from '@/components/key-value-table';
 import { cn } from '@maxigarcia/js-utils';
-import { useState } from 'react';
-import { createKeyValueEmptyEntry, KeyValueTable } from '@/components/key-value-table';
+import { KeyValueTable } from '@/components/key-value-table';
+import { useRequestState } from '@/store/request';
 
 interface Props {
   className?: string;
 }
 
 export function RequestParams({ className }: Props) {
-  const [entries, setEntries] = useState<KeyValueEntry[]>(() => [
-    createKeyValueEmptyEntry(),
-  ]);
+  const { params, setParams } = useRequestState();
 
   return (
     <KeyValueTable
       className={cn('p-4', className)}
-      value={entries}
-      onChange={setEntries}
+      value={params}
+      onChange={setParams}
       keyFieldPlaceholder="Parameter name"
       valueFieldPlaceholder="Parameter value"
       emptyMessage="No query parameters yet."
