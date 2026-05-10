@@ -1,7 +1,5 @@
-import type { HttpMethod } from '../../domain/http-method';
-import { cn, isValidHttpUrl } from '@maxigarcia/js-utils';
-import { useState } from 'react';
-import { useField } from '../../hooks/use-field';
+import { cn } from '@maxigarcia/js-utils';
+import { useRequestState } from '../../store/request';
 import { Button } from '../button';
 import { Input } from '../input';
 import { RequestMethodSelect } from './request-method-select';
@@ -11,8 +9,7 @@ interface Props {
 }
 
 export function RequestEditor({ className }: Props) {
-  const url = useField('', (value) => isValidHttpUrl(value) ? undefined : 'Invalid URL');
-  const [method, setMethod] = useState<HttpMethod>('GET');
+  const { method, url, urlError, setMethod, setUrl } = useRequestState();
 
   return (
     <header className={cn('flex gap-2', className)}>
@@ -20,14 +17,14 @@ export function RequestEditor({ className }: Props) {
         <RequestMethodSelect value={method} onChange={setMethod} className="rounded-r-none" />
         <Input
           type="url"
-          value={url.value}
+          value={url}
           onChange={(event) => {
-            url.onChange(event.target.value);
+            setUrl(event.target.value);
           }}
           placeholder="Enter url"
           aria-label="Request URL"
           className="flex-1 rounded-l-none border-l-0"
-          error={url.error}
+          error={urlError}
         />
       </div>
       <Button variant="primary" className="min-w-24">Send</Button>
