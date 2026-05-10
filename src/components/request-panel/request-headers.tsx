@@ -74,13 +74,13 @@ export function RequestHeaders({ className }: Props) {
       className={cn(className)}
       value={entries}
       onChange={setEntries}
-      keyPlaceholder="Header name"
-      valuePlaceholder="Header value"
+      keyFieldPlaceholder="Header name"
+      valueFieldPlaceholder="Header value"
       keySuggestions={suggestions}
       emptyMessage="No headers yet."
       spreadsheetTrailingBlankRow
       showAddButton={false}
-      hideableRows
+      showVisibilityToggle
     />
   );
 }

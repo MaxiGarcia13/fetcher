@@ -17,12 +17,12 @@ export function RequestParams({ className }: Props) {
       className={cn(className)}
       value={entries}
       onChange={setEntries}
-      keyPlaceholder="Parameter name"
-      valuePlaceholder="Parameter value"
+      keyFieldPlaceholder="Parameter name"
+      valueFieldPlaceholder="Parameter value"
       emptyMessage="No query parameters yet."
       spreadsheetTrailingBlankRow
       showAddButton={false}
-      hideableRows
+      showVisibilityToggle
     />
   );
 }
