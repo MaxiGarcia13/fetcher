@@ -7,7 +7,7 @@ import { ContextMenu } from './context-menu';
 interface EditorProps {
   className?: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   readOnly?: boolean;
 }
 
@@ -33,11 +33,11 @@ export function Editor({ className, value, onChange, readOnly }: EditorProps) {
         },
       );
 
-      const debouncedOnChange = debounce(onChange, 100);
+      const debouncedOnChange = onChange ? debounce(onChange, 100) : undefined;
 
       editorInstanceRef.current.onDidChangeModelContent(() => {
         const value = editorInstanceRef.current.getValue();
-        debouncedOnChange(value);
+        debouncedOnChange?.(value);
       });
 
       focusEditor();
