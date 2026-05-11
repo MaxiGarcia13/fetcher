@@ -14,7 +14,7 @@ export function Input({ className, error, ...props }: InputProps) {
   return (
     <Field error={error} className={cn('border border-gray-600 focus:border-gray-600 rounded h-10', className)}>
       <input
-        className="flex-1 px-3 py-2 text-sm outline-none"
+        className="w-full flex-1 px-3 py-2 text-sm outline-none"
         name={name}
         {...props}
       />

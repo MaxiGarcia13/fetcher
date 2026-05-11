@@ -1,17 +1,33 @@
 ---
 import Aside from '@/components/aside.astro';
+import Brand from '@/components/brand.astro';
+import Footer from '@/components/footer.astro';
 import { RequestEditor } from '@/components/request-editor';
 import { RequestPanel } from '@/components/request-panel';
 import AppLayout from '@/layouts/app-layout.astro';
 ---
 
 <AppLayout>
-  <main class="flex h-full w-full overflow-hidden rounded">
-    <Aside class="border border-gray-700 bg-gray-800 p-4" />
+  <main class="flex h-full w-full flex-col overflow-y-auto rounded sm:flex-row">
+    <Aside class="hidden border border-gray-700 bg-gray-800 p-4 sm:flex" />
 
-    <div class="flex min-h-0 flex-1 flex-col border border-gray-700">
+    <!-- Mobile brand -->
+    <div class="flex border border-b-0 border-gray-700 p-4 sm:hidden">
+      <Brand />
+    </div>
+
+    <div
+      class="flex min-h-0 flex-1 flex-col border border-t-0 border-gray-700 sm:border-t"
+    >
       <RequestEditor client:only="react" className=" p-4" />
       <RequestPanel client:only="react" className="flex-1" />
+    </div>
+
+    <!-- Mobile footer -->
+    <div
+      class="flex justify-center border border-t-0 border-gray-700 p-4 sm:hidden"
+    >
+      <Footer />
     </div>
   </main>
 </AppLayout>

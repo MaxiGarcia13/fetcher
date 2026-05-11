@@ -47,11 +47,11 @@ export function RequestEditor({ className }: Props) {
       </div>
       <Button
         variant="primary"
-        className="flex min-w-24 items-center gap-2"
+        className="flex min-w-0 shrink-0 items-center gap-2 sm:min-w-24"
         disabled={!url || urlError !== undefined || isLoading}
         onClick={handleSend}
       >
-        <span className="mt-0.5">Send</span>
+        <span className="mt-0.5 hidden sm:block">Send</span>
         <SendIcon className="size-4" />
       </Button>
     </header>
