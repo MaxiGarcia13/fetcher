@@ -34,7 +34,7 @@ export function NewSessionButton({ className, onAfterNewSession }: NewSessionBut
     >
       <PlusIcon className="size-4" />
       <span className="mt-0.5">
-        New session
+        New request
       </span>
     </Button>
   );

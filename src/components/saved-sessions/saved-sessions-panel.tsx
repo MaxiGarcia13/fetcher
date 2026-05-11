@@ -10,17 +10,7 @@ export interface SavedSessionsPanelProps {
 }
 
 export function SavedSessionsPanel({ className }: SavedSessionsPanelProps) {
-  const { sessions, activeSession, removeSession, refresh, selectSession }
-    = useSavedSessionsState();
-
-  const handleSelectSession = (snapshot: SavedSessionSnapshot) => {
-    selectSession(snapshot);
-  };
-
-  const handleRemoveSession = (snapshot: SavedSessionSnapshot) => {
-    removeSession(snapshot);
-    refresh();
-  };
+  const { refresh } = useSavedSessionsState();
 
   return (
     <div className={cn('flex min-h-0 flex-1 flex-col gap-4 pt-4', className)}>
@@ -29,17 +19,11 @@ export function SavedSessionsPanel({ className }: SavedSessionsPanelProps) {
       <h2 className="flex shrink-0 items-center gap-2 text-sm font-medium text-gray-400 uppercase">
         <HistoryIcon className="size-4" />
         <span className="mt-0.5">
-          Saved sessions
+          Saved requests
         </span>
       </h2>
 
-      <SavedSessionList
-        sessions={sessions}
-        activeSessionId={activeSession}
-        onSelectSession={handleSelectSession}
-        onRemoveSession={handleRemoveSession}
-      />
-
+      <SavedSessionList />
     </div>
   );
 }

@@ -1,25 +1,33 @@
 import type { SavedSessionSnapshot } from '@/domain/saved-sessions';
 import { cn } from '@maxigarcia/js-utils';
+import { useSavedSessionsState } from '@/store/saved-sessions';
 import { SavedSessionItem } from './saved-session-item';
 
 export interface SavedSessionListProps {
-  sessions: SavedSessionSnapshot[];
-  activeSessionId?: string | null;
   className?: string;
-  emptyClassName?: string;
-  onSelectSession?: (snapshot: SavedSessionSnapshot) => void;
-  onRemoveSession?: (snapshot: SavedSessionSnapshot) => void;
 }
 
 export function SavedSessionList({
-  sessions,
-  activeSessionId,
   className,
-  emptyClassName,
-  onSelectSession,
-  onRemoveSession,
 }: SavedSessionListProps) {
-  const ordered = [...sessions].reverse();
+  const {
+    sessions,
+    activeSession,
+    removeSession,
+    refresh,
+    selectSession,
+  } = useSavedSessionsState();
+
+  const sortedSessions = [...sessions].sort((a, b) => new Date(b.savedAt).getTime() - new Date(a.savedAt).getTime());
+
+  const handleSelectSession = (snapshot: SavedSessionSnapshot) => {
+    selectSession(snapshot);
+  };
+
+  const handleRemoveSession = (snapshot: SavedSessionSnapshot) => {
+    removeSession(snapshot);
+    refresh();
+  };
 
   return (
     <ul
@@ -28,18 +36,18 @@ export function SavedSessionList({
         className,
       )}
     >
-      {ordered.length === 0
+      {sortedSessions.length === 0
         ? (
-            <li className={cn('text-xs text-gray-500', emptyClassName)}>No saved sessions yet.</li>
+            <li className={cn('text-xs text-gray-500')}>No saved requests yet.</li>
           )
         : (
-            ordered.map((session) => (
+            sortedSessions.map((session) => (
               <SavedSessionItem
                 key={session.id}
                 snapshot={session}
-                isActive={session.id === activeSessionId || session.search === window.location.search}
-                onSelect={onSelectSession}
-                onRemove={onRemoveSession}
+                isActive={session.id === activeSession || session.search === window.location.search}
+                onSelect={handleSelectSession}
+                onRemove={handleRemoveSession}
               />
             ))
           )}
