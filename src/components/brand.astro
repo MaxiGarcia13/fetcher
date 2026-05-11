@@ -1,5 +1,6 @@
 ---
 import pkg from '../../package.json';
+import { ActionsSession } from './actions-session';
 ---
 
 <div class="flex shrink-0 flex-col gap-4">
@@ -7,5 +8,7 @@ import pkg from '../../package.json';
     <img src="/favicon.png" alt="Fetcher" class="h-8 w-8" />
     <h1 class="mt-1 text-lg font-bold">Fetcher</h1>
     <span class="mt-1 text-xs text-gray-500">v{pkg.version}</span>
+
+    <ActionsSession client:only="react" className="flex px-4 sm:hidden" />
   </div>
 </div>
