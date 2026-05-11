@@ -24,7 +24,7 @@ Fetcher is intentionally scoped: it focuses on request construction, execution, 
 - Read-only response panel backed by the same editor component
 - Resizable split between request options and response
 - Saved requests in `localStorage`, keyed off URL search state
-- Server-side proxy at `/api/http-request` to perform the outbound `fetch`
+- Server-side proxy at `/api/v1/http-request` to perform the outbound `fetch`
 - Health check at `/api/health`
 
 ## Tech stack
@@ -68,7 +68,7 @@ Open the URL printed in the terminal (Astro defaults to `http://localhost:4321`)
 ## How requests flow
 
 1. The UI keeps request state in Nanostores and mirrors it into the browser URL query string.
-2. **Send** posts the composed request to `/api/http-request`.
+2. **Send** posts the composed request to `/api/v1/http-request`.
 3. That API route calls the target URL with the chosen method, headers, query string, and JSON body when applicable.
 4. The response stream is returned to the client and shown in the response editor.
 
