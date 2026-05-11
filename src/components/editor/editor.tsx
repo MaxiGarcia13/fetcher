@@ -8,9 +8,10 @@ interface EditorProps {
   className?: string;
   value: string;
   onChange: (value: string) => void;
+  readOnly?: boolean;
 }
 
-export function Editor({ className, value, onChange }: EditorProps) {
+export function Editor({ className, value, onChange, readOnly }: EditorProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const editorInstanceRef = useRef<editor.IStandaloneCodeEditor>(null);
 
@@ -27,6 +28,7 @@ export function Editor({ className, value, onChange }: EditorProps) {
         {
           ...EDITOR_CONSTRUCTION_OPTIONS,
           contextmenu: false,
+          readOnly,
           value,
         },
       );

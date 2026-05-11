@@ -1,3 +1,4 @@
+import type { ComponentProps } from 'react';
 import { cn } from '@maxigarcia/js-utils';
 import { lazy, Suspense } from 'react';
 import { EditorSkeleton } from '@/components/skeleton';
@@ -6,22 +7,14 @@ const Editor = lazy(() =>
   import('./editor').then((m) => ({ default: m.Editor })),
 );
 
-interface LazyEditorProps {
-  className?: string;
-  value: string;
-  onChange: (value: string) => void;
-}
+type LazyEditorProps = ComponentProps<typeof Editor>;
 
-export function LazyEditor({ className, value, onChange }: LazyEditorProps) {
+export function LazyEditor(props: LazyEditorProps) {
   return (
     <Suspense
-      fallback={<EditorSkeleton className={cn('min-h-0 flex-1', className)} />}
+      fallback={<EditorSkeleton className={cn('min-h-0 flex-1', props.className)} />}
     >
-      <Editor
-        className={cn('min-h-0 flex-1', className)}
-        value={value}
-        onChange={onChange}
-      />
+      <Editor {...props} />
     </Suspense>
   );
 }
