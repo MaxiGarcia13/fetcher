@@ -28,7 +28,11 @@ export function RequestEditor({ className }: Props) {
           error={urlError}
         />
       </div>
-      <Button variant="primary" className="flex min-w-24 items-center gap-2">
+      <Button
+        variant="primary"
+        className="flex min-w-24 items-center gap-2"
+        disabled={!url || urlError !== undefined}
+      >
         <span className="mt-0.5">Send</span>
         <SendIcon className="size-4" />
       </Button>
