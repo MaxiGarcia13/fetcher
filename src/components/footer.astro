@@ -8,7 +8,7 @@ interface Props {
 const { class: className } = Astro.props;
 
 const version = pkg.version;
-const repositoryUrl = pkg.repository.url;
+const repositoryUrl = pkg.repository.url.replace('git+', '');
 ---
 
 <footer
