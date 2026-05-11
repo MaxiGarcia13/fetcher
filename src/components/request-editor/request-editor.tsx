@@ -2,6 +2,7 @@ import { cn } from '@maxigarcia/js-utils';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { useRequestState } from '@/store/request';
+import { SendIcon } from '../icons/send';
 import { RequestMethodSelect } from './request-method-select';
 
 interface Props {
@@ -27,7 +28,10 @@ export function RequestEditor({ className }: Props) {
           error={urlError}
         />
       </div>
-      <Button variant="primary" className="min-w-24">Send</Button>
+      <Button variant="primary" className="flex min-w-24 items-center gap-2">
+        <span className="mt-0.5">Send</span>
+        <SendIcon className="size-4" />
+      </Button>
     </header>
   );
 }
