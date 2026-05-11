@@ -1,7 +1,7 @@
 import { cn } from '@maxigarcia/js-utils';
 import { ResizablePanel } from '@/components/resizable-panel';
 import { RequestOptionsPanel } from './request-options-panel';
-import { Response } from './response';
+import { RequestResponse } from './request-response';
 
 interface Props {
   className?: string;
@@ -14,7 +14,7 @@ export function RequestPanel({ className }: Props) {
       firstContent={
         <RequestOptionsPanel />
       }
-      secondContent={<Response />}
+      secondContent={<RequestResponse />}
       direction="vertical"
     />
   );
