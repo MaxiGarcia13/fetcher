@@ -1,9 +1,9 @@
 import type { SavedSessionSnapshot } from '@/domain/saved-sessions';
 import { map } from 'nanostores';
-import { $requestEditor, applyRequestFromSearch } from '@/store/request/request.store';
+import { applyRequestFromSearch } from '@/store/request/request.store';
 import { storage } from '@/utils/storage';
 
-export const SAVED_SESSIONS_STORAGE_KEY = 'fetcher.savedSessions';
+export const SAVED_SESSIONS_STORAGE_KEY = 'saved-sessions';
 
 export interface SavedSessionsState {
   sessions: SavedSessionSnapshot[];
