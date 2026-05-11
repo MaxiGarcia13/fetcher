@@ -1,7 +1,9 @@
 import { cn } from '@maxigarcia/js-utils';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
+import { sendHttpRequest } from '@/services/http-request';
 import { useRequestState } from '@/store/request';
+import { saveHttpResponse } from '@/store/response';
 import { SendIcon } from '../icons/send';
 import { RequestMethodSelect } from './request-method-select';
 
@@ -11,6 +13,11 @@ interface Props {
 
 export function RequestEditor({ className }: Props) {
   const { method, url, urlError, setMethod, setUrl } = useRequestState();
+
+  const handleSend = () => {
+    sendHttpRequest()
+      .then((response) => saveHttpResponse(response));
+  };
 
   return (
     <header className={cn('flex gap-2', className)}>
@@ -32,6 +39,7 @@ export function RequestEditor({ className }: Props) {
         variant="primary"
         className="flex min-w-24 items-center gap-2"
         disabled={!url || urlError !== undefined}
+        onClick={handleSend}
       >
         <span className="mt-0.5">Send</span>
         <SendIcon className="size-4" />
