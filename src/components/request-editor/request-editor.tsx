@@ -3,7 +3,12 @@ import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { sendHttpRequest } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
-import { saveHttpResponse, setHttpResponseLoading, useHttpResponseState } from '@/store/http-response';
+import {
+  saveHttpResponse,
+  saveHttpResponseError,
+  setHttpResponseLoading,
+  useHttpResponseState,
+} from '@/store/http-response';
 import { SendIcon } from '../icons/send';
 import { RequestMethodSelect } from './request-method-select';
 
@@ -20,9 +25,7 @@ export function RequestEditor({ className }: Props) {
 
     sendHttpRequest()
       .then((response) => saveHttpResponse(response))
-      .catch((error) => {
-        console.error(error);
-      })
+      .catch((error) => saveHttpResponseError(error))
       .finally(() => setHttpResponseLoading(false));
   };
 
