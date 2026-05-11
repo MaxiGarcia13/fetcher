@@ -2,7 +2,7 @@ import { cn } from '@maxigarcia/js-utils';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { sendHttpRequest } from '@/domain/http-request';
-import { useRequestState } from '@/store/request';
+import { useHttpRequestState } from '@/store/http-request';
 import { saveHttpResponse } from '@/store/response';
 import { SendIcon } from '../icons/send';
 import { RequestMethodSelect } from './request-method-select';
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function RequestEditor({ className }: Props) {
-  const { method, url, urlError, setMethod, setUrl } = useRequestState();
+  const { method, url, urlError, setMethod, setUrl } = useHttpRequestState();
 
   const handleSend = () => {
     sendHttpRequest()

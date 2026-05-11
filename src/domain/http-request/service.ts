@@ -1,8 +1,8 @@
 import { getHttpMethod } from '@/domain/http-request';
-import { $requestEditor } from '@/store/request';
+import { $httpRequest } from '@/store/http-request';
 
 export function sendHttpRequest() {
-  const { url, method, params, headers, body } = $requestEditor.get();
+  const { url, method, params, headers, body } = $httpRequest.get();
 
   const headersObject = Object
     .fromEntries(

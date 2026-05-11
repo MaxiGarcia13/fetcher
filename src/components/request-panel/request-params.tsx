@@ -1,13 +1,13 @@
 import { cn } from '@maxigarcia/js-utils';
 import { KeyValueTable } from '@/components/key-value-table';
-import { useRequestState } from '@/store/request';
+import { useHttpRequestState } from '@/store/http-request';
 
 interface Props {
   className?: string;
 }
 
 export function RequestParams({ className }: Props) {
-  const { params, setParams } = useRequestState();
+  const { params, setParams } = useHttpRequestState();
 
   return (
     <KeyValueTable

@@ -1,7 +1,7 @@
 import type { KeyValueSuggestion } from '@/components/key-value-table';
 import { cn } from '@maxigarcia/js-utils';
 import { KeyValueTable } from '@/components/key-value-table';
-import { useRequestState } from '@/store/request';
+import { useHttpRequestState } from '@/store/http-request';
 
 const COMMON_HTTP_HEADER_SUGGESTIONS: readonly KeyValueSuggestion[] = [
   {
@@ -63,7 +63,7 @@ interface Props {
 }
 
 export function RequestHeaders({ className }: Props) {
-  const { headers, setHeaders } = useRequestState();
+  const { headers, setHeaders } = useHttpRequestState();
 
   return (
     <KeyValueTable

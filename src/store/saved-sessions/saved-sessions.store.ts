@@ -1,6 +1,6 @@
 import type { SavedSessionSnapshot } from '@/domain/saved-sessions';
 import { map } from 'nanostores';
-import { applyRequestFromSearch } from '@/store/request/request.store';
+import { applyHttpRequestFromSearch } from '@/store/http-request/http-request.store';
 import { storage } from '@/utils/storage';
 
 export const SAVED_SESSIONS_STORAGE_KEY = 'saved-sessions';
@@ -48,7 +48,7 @@ export function setActiveSession(id: string | null): void {
 
 export function selectSavedSession(snapshot: SavedSessionSnapshot): void {
   $savedSessions.setKey('activeSession', snapshot.id);
-  applyRequestFromSearch(snapshot.search);
+  applyHttpRequestFromSearch(snapshot.search);
 }
 
 export function appendSavedSession(snapshot: SavedSessionSnapshot): void {

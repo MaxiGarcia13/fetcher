@@ -1,5 +1,5 @@
 import { cn } from '@maxigarcia/js-utils';
-import { resetRequestState } from '@/store/request';
+import { resetHttpRequestState } from '@/store/http-request';
 import { useSavedSessionsState } from '@/store/saved-sessions';
 import { Button } from '../button';
 import { PlusIcon } from '../icons/plus';
@@ -21,7 +21,7 @@ export function NewSessionButton({ className, onAfterNewSession }: NewSessionBut
       id: crypto.randomUUID(),
     });
 
-    resetRequestState();
+    resetHttpRequestState();
 
     onAfterNewSession?.();
   };

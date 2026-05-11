@@ -1,13 +1,13 @@
 import { cn } from '@maxigarcia/js-utils';
 import { LazyEditor } from '@/components/editor';
-import { useRequestState } from '@/store/request';
+import { useHttpRequestState } from '@/store/http-request';
 
 interface Props {
   className?: string;
 }
 
 export function RequestBody({ className }: Props) {
-  const { body, setBody } = useRequestState();
+  const { body, setBody } = useHttpRequestState();
 
   return (
     <LazyEditor
