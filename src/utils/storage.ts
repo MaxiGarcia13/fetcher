@@ -1,18 +1,25 @@
+const PREFIX = 'fetcher.';
+
+function getKey(key: string) {
+  return `${PREFIX}${key}`;
+}
+
 export const storage = {
+  getKey,
   read: (key: string) => {
-    return localStorage.getItem(key);
+    return localStorage.getItem(getKey(key));
   },
   write: (key: string, value: string) => {
-    localStorage.setItem(key, value);
+    localStorage.setItem(getKey(key), value);
   },
   readJson: (key: string) => {
-    return JSON.parse(localStorage.getItem(key));
+    return JSON.parse(localStorage.getItem(getKey(key)));
   },
   writeJson: (key: string, value: unknown) => {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(getKey(key), JSON.stringify(value));
   },
   remove: (key: string) => {
-    localStorage.removeItem(key);
+    localStorage.removeItem(getKey(key));
   },
   clear: () => {
     localStorage.clear();
