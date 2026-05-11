@@ -11,7 +11,7 @@ export function getHttpMethod(value: unknown): HttpMethod {
 
 export function parseObjectFromKeyValueEntries<T extends Record<string, string>>(entries: KeyValueEntry[]): T {
   return Object.fromEntries(entries
-    .filter((entry) => entry.key !== '' || entry.hidden)
+    .filter((entry) => entry.key !== '' && !entry.hidden)
     .map((entry) => [entry.key, entry.value]),
   ) as T;
 }
