@@ -7,6 +7,7 @@ const srcDir = fileURLToPath(new URL('./src', import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
   vite: {
     plugins: [tailwindcss()],
     resolve: {
