@@ -3,7 +3,7 @@ import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { sendHttpRequest } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
-import { saveHttpResponse } from '@/store/http-response';
+import { saveHttpResponse, setHttpResponseLoading, useHttpResponseState } from '@/store/http-response';
 import { SendIcon } from '../icons/send';
 import { RequestMethodSelect } from './request-method-select';
 
@@ -13,10 +13,17 @@ interface Props {
 
 export function RequestEditor({ className }: Props) {
   const { method, url, urlError, setMethod, setUrl } = useHttpRequestState();
+  const { isLoading } = useHttpResponseState();
 
   const handleSend = () => {
+    setHttpResponseLoading(true);
+
     sendHttpRequest()
-      .then((response) => saveHttpResponse(response));
+      .then((response) => saveHttpResponse(response))
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => setHttpResponseLoading(false));
   };
 
   return (
@@ -38,7 +45,7 @@ export function RequestEditor({ className }: Props) {
       <Button
         variant="primary"
         className="flex min-w-24 items-center gap-2"
-        disabled={!url || urlError !== undefined}
+        disabled={!url || urlError !== undefined || isLoading}
         onClick={handleSend}
       >
         <span className="mt-0.5">Send</span>

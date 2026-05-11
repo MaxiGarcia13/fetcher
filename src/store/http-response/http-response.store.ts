@@ -2,6 +2,7 @@ import { map } from 'nanostores';
 import { isJsonString } from '@/domain/http-request';
 
 export interface HttpResponseState {
+  isLoading: boolean;
   status: number | null;
   statusText: string;
   headers: Record<string, string>;
@@ -9,6 +10,7 @@ export interface HttpResponseState {
 }
 
 const initialHttpResponseState: HttpResponseState = {
+  isLoading: false,
   status: null,
   statusText: '',
   headers: {},
@@ -21,11 +23,16 @@ export async function saveHttpResponse(response: Response): Promise<void> {
   const body = await response.text();
 
   $httpResponse.set({
+    ...$httpResponse.get(),
     status: response.status,
     statusText: response.statusText,
     headers: Object.fromEntries(response.headers.entries()),
     body: mapHttpResponseBody(body),
   });
+}
+
+export function setHttpResponseLoading(isLoading: boolean): void {
+  $httpResponse.setKey('isLoading', isLoading);
 }
 
 export function clearHttpResponse(): void {
