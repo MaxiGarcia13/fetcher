@@ -1,4 +1,4 @@
-import type { HttpMethod } from '@/domain/http-method';
+import type { HttpMethod } from '@/domain/http-request';
 import { cn } from '@maxigarcia/js-utils';
 
 export interface RequestMethodBadgeProps {

@@ -1,5 +1,5 @@
 import { map } from 'nanostores';
-import { isJsonString } from '@/utils/response';
+import { isJsonString } from '@/domain/http-request';
 
 export interface HttpResponseState {
   status: number | null;

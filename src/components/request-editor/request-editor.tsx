@@ -1,7 +1,7 @@
 import { cn } from '@maxigarcia/js-utils';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
-import { sendHttpRequest } from '@/services/http-request';
+import { sendHttpRequest } from '@/domain/http-request';
 import { useRequestState } from '@/store/request';
 import { saveHttpResponse } from '@/store/response';
 import { SendIcon } from '../icons/send';

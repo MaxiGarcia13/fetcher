@@ -1,9 +1,9 @@
 import type { KeyValueEntry } from '@/components/key-value-table/types';
-import type { HttpMethod } from '@/domain/http-method';
+import type { HttpMethod } from '@/domain/http-request';
 import { encodeText, isValidHttpUrl, removeUrlParam, setUrlParams } from '@maxigarcia/js-utils';
 import { map } from 'nanostores';
 import { createKeyValueEmptyEntry } from '@/components/key-value-table/utils';
-import { getHttpMethod } from '@/utils/request';
+import { getHttpMethod } from '@/domain/http-request';
 import { updateSavedSessionFromSearch } from '../saved-sessions';
 import {
   readUrlParam,

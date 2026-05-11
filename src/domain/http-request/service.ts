@@ -1,5 +1,5 @@
+import { getHttpMethod } from '@/domain/http-request';
 import { $requestEditor } from '@/store/request';
-import { getHttpMethod } from '@/utils/request';
 
 export function sendHttpRequest() {
   const { url, method, params, headers, body } = $requestEditor.get();
