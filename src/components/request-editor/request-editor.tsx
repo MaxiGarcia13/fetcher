@@ -3,7 +3,7 @@ import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { sendHttpRequest } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
-import { saveHttpResponse } from '@/store/response';
+import { saveHttpResponse } from '@/store/http-response';
 import { SendIcon } from '../icons/send';
 import { RequestMethodSelect } from './request-method-select';
 

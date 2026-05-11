@@ -24,7 +24,7 @@ export async function saveHttpResponse(response: Response): Promise<void> {
     status: response.status,
     statusText: response.statusText,
     headers: Object.fromEntries(response.headers.entries()),
-    body: mapBodyToRequest(body),
+    body: mapHttpResponseBody(body),
   });
 }
 
@@ -32,7 +32,7 @@ export function clearHttpResponse(): void {
   $httpResponse.set(initialHttpResponseState);
 }
 
-function mapBodyToRequest(body: string): string {
+function mapHttpResponseBody(body: string): string {
   try {
     if (isJsonString(body)) {
       return JSON.stringify(JSON.parse(body), null, 2);

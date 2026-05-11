@@ -1,6 +1,6 @@
-import type { HttpResponseState } from './response.store';
+import type { HttpResponseState } from './http-response.store';
 import { useSyncExternalStore } from 'react';
-import { $httpResponse, clearHttpResponse, saveHttpResponse } from './response.store';
+import { $httpResponse, clearHttpResponse, saveHttpResponse } from './http-response.store';
 
 export function useHttpResponseState(): HttpResponseState & {
   saveResponse: typeof saveHttpResponse;

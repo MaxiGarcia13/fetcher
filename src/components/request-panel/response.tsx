@@ -1,6 +1,6 @@
 import { cn } from '@maxigarcia/js-utils';
 import { LazyEditor } from '@/components/editor';
-import { useHttpResponseState } from '@/store/response';
+import { useHttpResponseState } from '@/store/http-response';
 
 interface Props {
   className?: string;
