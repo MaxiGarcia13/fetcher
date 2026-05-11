@@ -1,10 +1,6 @@
 import { cn } from '@maxigarcia/js-utils';
-import { lazy, Suspense, useState } from 'react';
-import { EditorSkeleton } from '@/components/skeleton';
-
-const Editor = lazy(() =>
-  import('@/components/editor/editor').then((m) => ({ default: m.Editor })),
-);
+import { useState } from 'react';
+import { LazyEditor } from '@/components/editor';
 
 interface Props {
   className?: string;
@@ -14,16 +10,10 @@ export function Response({ className }: Props) {
   const [body, setBody] = useState('{}');
 
   return (
-    <Suspense
-      fallback={
-        <EditorSkeleton className={cn('min-h-0 flex-1', className)} />
-      }
-    >
-      <Editor
-        className={cn('min-h-0 flex-1', className)}
-        value={body}
-        onChange={setBody}
-      />
-    </Suspense>
+    <LazyEditor
+      className={cn('min-h-0 flex-1', className)}
+      value={body}
+      onChange={setBody}
+    />
   );
 }
