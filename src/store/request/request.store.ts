@@ -3,7 +3,7 @@ import type { HttpMethod } from '@/domain/http-method';
 import { encodeText, isValidHttpUrl, removeUrlParam, setUrlParams } from '@maxigarcia/js-utils';
 import { map } from 'nanostores';
 import { createKeyValueEmptyEntry } from '@/components/key-value-table/utils';
-import { methodFromUrlParam } from '@/utils/url';
+import { getHttpMethod } from '@/utils/request';
 import { updateSavedSessionFromSearch } from '../saved-sessions';
 import {
   readUrlParam,
@@ -24,7 +24,7 @@ export interface RequestEditorState {
 }
 
 export const $requestEditor = map<RequestEditorState>({
-  method: methodFromUrlParam(readUrlParam(REQUEST_METHOD_PARAM)),
+  method: getHttpMethod(readUrlParam(REQUEST_METHOD_PARAM)),
   url: readUrlParam(REQUEST_URL_PARAM, ''),
   headers: readUrlParam(REQUEST_HEADERS_PARAM, [createKeyValueEmptyEntry()]),
   params: readUrlParam(REQUEST_PARAMS_PARAM, [createKeyValueEmptyEntry()]),
@@ -111,7 +111,7 @@ export function applyRequestFromSearch(search: string): void {
 
     const methodRaw = readUrlParam(REQUEST_METHOD_PARAM, 'GET');
     $requestEditor.set({
-      method: methodFromUrlParam(methodRaw),
+      method: getHttpMethod(methodRaw),
       url: readUrlParam(REQUEST_URL_PARAM, '') ?? '',
       headers: readUrlParam(REQUEST_HEADERS_PARAM, [createKeyValueEmptyEntry()]) ?? [
         createKeyValueEmptyEntry(),

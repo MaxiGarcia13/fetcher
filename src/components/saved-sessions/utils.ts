@@ -1,7 +1,7 @@
 import type { HttpMethod } from '@/domain/http-method';
 import { decodeText, getUrlDomain } from '@maxigarcia/js-utils';
 import { REQUEST_METHOD_PARAM, REQUEST_URL_PARAM } from '@/store/request/url';
-import { methodFromUrlParam } from '@/utils/url';
+import { getHttpMethod } from '@/utils/request';
 
 export interface SnapshotRequestMeta {
   method: HttpMethod | null;
@@ -20,7 +20,7 @@ export function getSnapshotRequestMeta(search: string): SnapshotRequestMeta {
   const domain = rawUrl !== '' ? getUrlDomain(rawUrl) : null;
 
   return {
-    method: methodFromUrlParam(method),
+    method: getHttpMethod(method),
     domain,
   };
 }
