@@ -30,8 +30,7 @@ export function SavedSessionItem({
   return (
     <li
       className={cn(
-        'flex gap-2 items-center rounded border text-xs cursor-pointer',
-
+        'flex gap-2 items-center rounded border text-xs cursor-pointer overflow-hidden',
         isActive
           ? 'border-blue-500'
           : 'border-gray-700',
@@ -40,7 +39,7 @@ export function SavedSessionItem({
       onClick={() => onSelect?.(snapshot)}
     >
 
-      <div className="flex flex-1 flex-col p-2">
+      <div className="flex flex-1 flex-col truncate p-2">
         <div className="flex min-w-0 items-center gap-2">
           <RequestMethodBadge method={method} />
           <span
@@ -56,7 +55,7 @@ export function SavedSessionItem({
       </div>
 
       <Button
-        className="h-full rounded border-none hover:bg-gray-700"
+        className="h-full shrink-0 rounded border-none hover:bg-gray-700"
         aria-label="Remove saved session"
         onClick={(e) => {
           e.stopPropagation();
