@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import type { HttpMethod } from '@/domain/http-request';
-import { isJsonString } from '@/domain/http-request';
+import { isJsonString, METHODS_EXCLUDED_FROM_BODY } from '@/domain/http-request';
 
 export const POST: APIRoute = async ({ request }) => {
   const { url, method, params, headers, body } = await request.json();
@@ -17,9 +17,7 @@ export const POST: APIRoute = async ({ request }) => {
 };
 
 function parseBody(method: HttpMethod, body: string) {
-  const excludedMethods = ['GET', 'HEAD', 'DELETE', 'OPTIONS'];
-
-  if (excludedMethods.includes(method)) {
+  if (METHODS_EXCLUDED_FROM_BODY.includes(method)) {
     return undefined;
   }
 

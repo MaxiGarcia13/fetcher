@@ -20,6 +20,7 @@ export function TabsHeader({
           className={triggerClassName}
           activeClassName={activeTriggerClassName}
           inactiveClassName={inactiveTriggerClassName}
+          disabled={item.disabled}
         >
           {item.label}
         </TabsTrigger>

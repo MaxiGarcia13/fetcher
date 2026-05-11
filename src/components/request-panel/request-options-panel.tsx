@@ -1,8 +1,11 @@
 import type { TabItem } from '@/components/tabs/types';
 import { cn } from '@maxigarcia/js-utils';
+import { useEffect, useMemo, useState } from 'react';
 import { TabsContent } from '@/components/tabs/tabs-content';
 import { TabsHeader } from '@/components/tabs/tabs-header';
 import { TabsRoot } from '@/components/tabs/tabs-root';
+import { METHODS_WITH_BODY } from '@/domain/http-request';
+import { useHttpRequestState } from '@/store/http-request';
 import { storage } from '@/utils/storage';
 import { RequestBody } from './request-body';
 import { RequestHeaders } from './request-headers';
@@ -15,8 +18,22 @@ interface RequestOptionsPanelProps {
 
 const REQUEST_OPTIONS_TAB_STORAGE_SUFFIX = 'request-options-active-tab';
 
+type RequestOptionsTab = 'params' | 'headers' | 'body';
+
+function readStoredRequestOptionsTab(defaultTab: RequestOptionsTab): RequestOptionsTab {
+  const stored = storage.read(REQUEST_OPTIONS_TAB_STORAGE_SUFFIX);
+  if (stored === 'params' || stored === 'headers' || stored === 'body') {
+    return stored;
+  }
+  return defaultTab;
+}
+
 export function RequestOptionsPanel({ defaultTab = 'headers', className }: RequestOptionsPanelProps = {}) {
-  const items: TabItem<'params' | 'headers' | 'body'>[] = [
+  const { method } = useHttpRequestState();
+  const [activeTab, setActiveTab] = useState<RequestOptionsTab>(() => readStoredRequestOptionsTab(defaultTab));
+  const bodyEnabled = METHODS_WITH_BODY.includes(method);
+
+  const items: TabItem<RequestOptionsTab>[] = [
     {
       value: 'headers',
       label: 'Headers',
@@ -25,26 +42,31 @@ export function RequestOptionsPanel({ defaultTab = 'headers', className }: Reque
     {
       value: 'params',
       label: 'Params',
-      content: (
-        <RequestParams />
-      ),
+      content: <RequestParams />,
     },
-
     {
       value: 'body',
       label: 'Body',
       content: <RequestBody />,
+      disabled: !bodyEnabled,
     },
   ];
 
-  const handleValueChange = (value: 'params' | 'headers' | 'body') => {
+  if (!bodyEnabled && activeTab === 'body') {
+    setActiveTab(defaultTab);
+    storage.write(REQUEST_OPTIONS_TAB_STORAGE_SUFFIX, defaultTab);
+  }
+
+  const handleValueChange = (value: RequestOptionsTab) => {
+    setActiveTab(value);
     storage.write(REQUEST_OPTIONS_TAB_STORAGE_SUFFIX, value);
   };
 
   return (
     <TabsRoot
       items={items}
-      defaultValue={storage.read(REQUEST_OPTIONS_TAB_STORAGE_SUFFIX) ?? defaultTab}
+      defaultValue={defaultTab}
+      value={activeTab}
       onValueChange={handleValueChange}
       className={cn('h-full', className)}
     >

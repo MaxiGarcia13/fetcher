@@ -2,6 +2,7 @@ export interface TabItem<T extends string = string> {
   value: T;
   label: string;
   content: React.ReactNode;
+  disabled?: boolean;
 }
 
 export interface TabsRootProps<T extends string = string> {
@@ -23,10 +24,11 @@ export interface TabsTriggerProps<T extends string = string> {
   className?: string;
   activeClassName?: string;
   inactiveClassName?: string;
+  disabled?: boolean;
   children: React.ReactNode;
 }
 
-export interface TabsContentProps<T extends string = string> {
+export interface TabsContentProps {
   contentClassName?: string;
   containerClassName?: string;
 }
