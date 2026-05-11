@@ -29,7 +29,7 @@ export function NewSessionButton({ className, onAfterNewSession }: NewSessionBut
   return (
     <Button
       type="button"
-      className={cn('w-full shrink-0 flex items-center gap-2', className)}
+      className={cn('shrink-0 flex items-center gap-2', className)}
       onClick={handleClick}
     >
       <PlusIcon className="size-4" />
