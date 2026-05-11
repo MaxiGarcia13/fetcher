@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^5.0.4",
+    "@astrojs/vercel": "^10.0.6",
     "@maxigarcia/js-utils": "^1.3.0",
     "@nanostores/react": "^1.1.0",
     "@types/react": "^19.2.14",
