@@ -1,7 +1,7 @@
 {
   "name": "fetcher",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Fetcher is a lightweight and developer-friendly REST API client for testing, debugging, and managing HTTP requests.",
   "author": "Maximiliano Garcia Mortigliengo",
   "license": "ISC",
