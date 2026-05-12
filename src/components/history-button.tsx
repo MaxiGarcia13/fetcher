@@ -15,7 +15,7 @@ export function HistoryButton({ className }: HistoryButtonProps) {
 
   return (
     <>
-      <Tooltip content="Saved requests" position="bottom">
+      <Tooltip content="Saved requests" position="bottom" className={className}>
         <Button className={cn(className)} onClick={() => setOpen(true)}>
           <HistoryIcon className="size-4" />
         </Button>
