@@ -4,13 +4,16 @@ import { encodeText, isValidHttpUrl, removeUrlParam, setUrlParams } from '@maxig
 import { map } from 'nanostores';
 import { createKeyValueEmptyEntry } from '@/components/key-value-table/utils';
 import { getHttpMethod } from '@/domain/http-request';
-import { updateSavedSessionFromSearch } from '../saved-sessions';
 import {
+
   HTTP_REQUEST_BODY_PARAM,
   HTTP_REQUEST_HEADERS_PARAM,
   HTTP_REQUEST_METHOD_PARAM,
   HTTP_REQUEST_PARAMS_PARAM,
   HTTP_REQUEST_URL_PARAM,
+} from '@/domain/http-request/url.consts';
+import { updateSavedSessionFromSearch } from '../saved-sessions';
+import {
   readHttpRequestUrlParam,
   resetHttpRequestUrlParams,
 } from './http-request.url';

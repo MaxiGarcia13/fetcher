@@ -1,10 +1,11 @@
 import { decodeText, getUrlParam, removeUrlParam } from '@maxigarcia/js-utils';
-
-export const HTTP_REQUEST_URL_PARAM = 'url';
-export const HTTP_REQUEST_METHOD_PARAM = 'method';
-export const HTTP_REQUEST_HEADERS_PARAM = 'headers';
-export const HTTP_REQUEST_PARAMS_PARAM = 'params';
-export const HTTP_REQUEST_BODY_PARAM = 'body';
+import {
+  HTTP_REQUEST_BODY_PARAM,
+  HTTP_REQUEST_HEADERS_PARAM,
+  HTTP_REQUEST_METHOD_PARAM,
+  HTTP_REQUEST_PARAMS_PARAM,
+  HTTP_REQUEST_URL_PARAM,
+} from '@/domain/http-request';
 
 export function readHttpRequestUrlParam<T>(key: string, defaultValue?: T): T | undefined {
   const param = getUrlParam(key);

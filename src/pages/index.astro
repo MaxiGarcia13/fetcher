@@ -12,9 +12,10 @@ import AppLayout from '@/layouts/app-layout.astro';
     <Aside class="hidden border border-gray-700 bg-gray-800 p-4 sm:flex" />
 
     <!-- Mobile brand -->
-    <div class="flex border border-b-0 border-gray-700 p-4 sm:hidden">
-      <Brand />
-    </div>
+    <Brand
+      class="flex border border-b-0 border-gray-700 p-4 pb-0 sm:hidden sm:pb-4"
+    />
+    <!-- End mobile brand -->
 
     <div
       class="flex min-h-0 flex-1 flex-col border border-t-0 border-gray-700 sm:border-t"

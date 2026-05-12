@@ -9,7 +9,7 @@ export function ShareButton({ className }: { className?: string }) {
   };
 
   return (
-    <Tooltip content="Share link" position="bottom">
+    <Tooltip content="Share link" position="bottom" className={className}>
       <Button onClick={handleShare} className={className}>
         <LinkIcon className="size-5" />
       </Button>

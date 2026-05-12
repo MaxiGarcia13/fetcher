@@ -3,6 +3,7 @@ import { resetHttpRequestState } from '@/store/http-request';
 import { useSavedSessionsState } from '@/store/saved-sessions';
 import { Button } from './button';
 import { PlusIcon } from './icons/plus';
+import { Tooltip } from './tooltip';
 
 export interface NewSessionButtonProps {
   className?: string;
@@ -27,15 +28,14 @@ export function NewSessionButton({ className, onAfterNewSession }: NewSessionBut
   };
 
   return (
-    <Button
-      type="button"
-      className={cn('shrink-0 flex items-center gap-2', className)}
-      onClick={handleClick}
-    >
-      <PlusIcon className="size-4" />
-      <span className="mt-0.5 hidden sm:block">
-        New request
-      </span>
-    </Button>
+    <Tooltip content="New request" position="bottom" className={className}>
+      <Button
+        type="button"
+        className={cn('shrink-0 flex items-center gap-2', className)}
+        onClick={handleClick}
+      >
+        <PlusIcon className="size-4 shrink-0" />
+      </Button>
+    </Tooltip>
   );
 }

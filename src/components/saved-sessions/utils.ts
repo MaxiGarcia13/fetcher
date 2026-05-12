@@ -1,7 +1,7 @@
 import type { HttpMethod } from '@/domain/http-request';
 import { decodeText, getUrlDomain } from '@maxigarcia/js-utils';
 import { getHttpMethod } from '@/domain/http-request';
-import { HTTP_REQUEST_METHOD_PARAM, HTTP_REQUEST_URL_PARAM } from '@/store/http-request/http-request.url';
+import { HTTP_REQUEST_METHOD_PARAM, HTTP_REQUEST_URL_PARAM } from '@/domain/http-request/url.consts';
 
 export interface SnapshotRequestMeta {
   method: HttpMethod | null;
