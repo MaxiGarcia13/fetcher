@@ -3,3 +3,7 @@
 /dist
 .astro
 .vercel
+
+test-results
+snapshots
+playwright-report
