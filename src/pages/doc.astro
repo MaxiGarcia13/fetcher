@@ -10,7 +10,9 @@ const requestDoc = parseRequestDocSearchParams(Astro.url.searchParams);
 ---
 
 <AppLayout>
-  <main class="mx-auto flex w-full max-w-4xl flex-col gap-8 p-6">
+  <main
+    class="mx-auto flex h-full w-full max-w-4xl flex-col gap-8 overflow-y-auto p-6"
+  >
     <Brand />
 
     <div class="space-y-3">
