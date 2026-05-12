@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { class: className } = Astro.props;
+const hideActions = Astro.url.pathname.includes('/doc');
 ---
 
 <div class={`flex w-full shrink-0 flex-col gap-4 sm:flex-row ${className}`}>
@@ -16,5 +17,9 @@ const { class: className } = Astro.props;
     <span class="mt-1 text-xs text-gray-500">v{pkg.version}</span>
   </div>
 
-  <ActionsSession client:only="react" className="flex sm:hidden" />
+  {
+    hideActions ? null : (
+      <ActionsSession client:only="react" className="flex sm:hidden" />
+    )
+  }
 </div>
