@@ -1,4 +1,4 @@
-import type { DocFieldRow } from '@/utils/request-doc';
+import type { DocFieldRow } from '@/domain/request-doc';
 
 interface RequestDocTableProps {
   title: string;

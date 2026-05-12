@@ -1,5 +1,5 @@
 import { map } from 'nanostores';
-import { isJsonString } from '@/domain/http-request';
+import { tryParseJson } from '@/utils/value';
 
 export type HttpResponseError = Record<string, unknown>;
 
@@ -72,13 +72,12 @@ function serializeHttpResponseError(error: unknown): HttpResponseError {
 }
 
 function mapHttpResponseBody(body: string): string {
-  try {
-    if (isJsonString(body)) {
-      return JSON.stringify(JSON.parse(body), null, 2);
-    }
+  const trimmed = body.trim();
+  const parsed = tryParseJson(trimmed);
 
-    return body;
-  } catch {
+  if (parsed === undefined || typeof parsed !== 'object' || parsed === null) {
     return body;
   }
+
+  return JSON.stringify(parsed, null, 2);
 }

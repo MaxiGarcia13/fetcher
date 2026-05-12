@@ -1,17 +1,6 @@
 import type { HttpMethod } from './types';
+import { tryParseJson } from '@/utils/value';
 import { METHODS_EXCLUDED_FROM_BODY } from './methods.consts';
-
-export function isJsonString(body: string): boolean {
-  return typeof body === 'string'
-    && body.trim() !== ''
-    && (
-      (
-        body.startsWith('{') && body.endsWith('}')
-      ) || (
-        body.startsWith('[') && body.endsWith(']')
-      )
-    );
-}
 
 export function parseBodyForRequest(method: HttpMethod, body: string) {
   if (METHODS_EXCLUDED_FROM_BODY.includes(method)) {
@@ -20,7 +9,13 @@ export function parseBodyForRequest(method: HttpMethod, body: string) {
 
   const trimmedBody = body.trim();
 
-  if (!isJsonString(trimmedBody)) {
+  if (trimmedBody === '') {
+    return undefined;
+  }
+
+  const parsed = tryParseJson(trimmedBody);
+
+  if (parsed === undefined || typeof parsed !== 'object' || parsed === null) {
     return undefined;
   }
 

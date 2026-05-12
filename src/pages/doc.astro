@@ -5,8 +5,8 @@ import { ChevronLeftIcon } from '@/components/icons/chevron-left';
 import { RequestDocTable } from '@/components/request-doc-table';
 import { RequestMethodBadge } from '@/components/saved-sessions/request-method-badge';
 import { ShareButton } from '@/components/share-button';
+import { parseRequestDocSearchParams } from '@/domain/request-doc';
 import AppLayout from '@/layouts/app-layout.astro';
-import { parseRequestDocSearchParams } from '@/utils/request-doc';
 
 const requestDoc = parseRequestDocSearchParams(Astro.url.searchParams);
 ---
