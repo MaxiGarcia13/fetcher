@@ -60,7 +60,6 @@ function serializeHttpResponseError(error: unknown): HttpResponseError {
     return {
       name: error.name,
       message: error.message,
-      ...(error.stack ? { stack: error.stack } : {}),
     };
   }
 
