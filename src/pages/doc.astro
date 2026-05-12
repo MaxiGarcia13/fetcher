@@ -3,6 +3,7 @@ import Brand from '@/components/brand.astro';
 import Footer from '@/components/footer.astro';
 import { ChevronLeftIcon } from '@/components/icons/chevron-left';
 import { RequestDocTable } from '@/components/request-doc-table';
+import { RequestMethodBadge } from '@/components/saved-sessions/request-method-badge';
 import AppLayout from '@/layouts/app-layout.astro';
 import { parseRequestDocSearchParams } from '@/utils/request-doc';
 
@@ -27,25 +28,37 @@ const requestDoc = parseRequestDocSearchParams(Astro.url.searchParams);
       </div>
     </div>
 
-    <section class="space-y-3">
+    <section class="flex flex-col gap-4">
       <h2 class="text-sm font-semibold tracking-wide text-gray-300 uppercase">
-        URL
+        Method
       </h2>
-      {
-        requestDoc.url ? (
-          <p class="rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm break-all text-gray-100">
-            {requestDoc.url}
-          </p>
-        ) : (
-          <p class="text-sm text-gray-500">No URL set.</p>
-        )
-      }
+
+      <RequestMethodBadge
+        method={requestDoc.method}
+        client:only="react"
+        className="text-lg!"
+      />
+
+      <section class="space-y-3">
+        <h2 class="text-sm font-semibold tracking-wide text-gray-300 uppercase">
+          URL
+        </h2>
+        {
+          requestDoc.url ? (
+            <p class="rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm break-all text-gray-100">
+              {requestDoc.url}
+            </p>
+          ) : (
+            <p class="text-sm text-gray-500">No URL set.</p>
+          )
+        }
+      </section>
+
+      <RequestDocTable title="Params" rows={requestDoc.params} />
+      <RequestDocTable title="Headers" rows={requestDoc.headers} />
+      <RequestDocTable title="Body" rows={requestDoc.body} />
+
+      <Footer />
     </section>
-
-    <RequestDocTable title="Params" rows={requestDoc.params} />
-    <RequestDocTable title="Headers" rows={requestDoc.headers} />
-    <RequestDocTable title="Body" rows={requestDoc.body} />
-
-    <Footer />
   </main>
 </AppLayout>

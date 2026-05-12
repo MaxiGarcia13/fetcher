@@ -1,8 +1,10 @@
 import type { KeyValueEntry } from '@/components/key-value-table/types';
-import { parseObjectFromKeyValueEntries } from '@/domain/http-request/request.utils';
+import type { HttpMethod } from '@/domain/http-request/types';
+import { getHttpMethod, parseObjectFromKeyValueEntries } from '@/domain/http-request/request.utils';
 import {
   HTTP_REQUEST_BODY_PARAM,
   HTTP_REQUEST_HEADERS_PARAM,
+  HTTP_REQUEST_METHOD_PARAM,
   HTTP_REQUEST_PARAMS_PARAM,
   HTTP_REQUEST_URL_PARAM,
 } from '@/domain/http-request/url.consts';
@@ -14,6 +16,7 @@ export interface DocFieldRow {
 }
 
 export interface RequestDocSections {
+  method: HttpMethod;
   url: string;
   params: DocFieldRow[];
   headers: DocFieldRow[];
@@ -179,6 +182,7 @@ export function parseRequestDocSearchParams(searchParams: URLSearchParams): Requ
   );
   const body = bodyToDocFieldRows(readBody(searchParams));
   const url = readEncodedSearchParam(searchParams, HTTP_REQUEST_URL_PARAM) ?? '';
+  const method = getHttpMethod(readEncodedSearchParam(searchParams, HTTP_REQUEST_METHOD_PARAM) ?? '');
 
-  return { url, params, headers, body };
+  return { method, url, params, headers, body };
 }
