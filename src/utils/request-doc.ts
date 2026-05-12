@@ -56,13 +56,47 @@ function readBody(searchParams: URLSearchParams): string {
   return readEncodedSearchParam(searchParams, HTTP_REQUEST_BODY_PARAM) ?? '';
 }
 
+const NUMERIC_STRING_PATTERN = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i;
+
+function isNumericString(value: string): boolean {
+  return NUMERIC_STRING_PATTERN.test(value.trim());
+}
+
 export function getValueType(value: unknown): string {
   if (value === null) {
     return 'null';
   }
 
+  if (value === undefined) {
+    return 'undefined';
+  }
+
   if (Array.isArray(value)) {
     return 'array';
+  }
+
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+
+    if (trimmed === '') {
+      return 'null';
+    }
+
+    if (trimmed === 'undefined') {
+      return 'undefined';
+    }
+
+    try {
+      const parsed: unknown = JSON.parse(trimmed);
+
+      if (typeof parsed === 'string') {
+        return 'string';
+      }
+
+      return getValueType(parsed);
+    } catch {
+      return isNumericString(trimmed) ? 'number' : 'string';
+    }
   }
 
   return typeof value;
