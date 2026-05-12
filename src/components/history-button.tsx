@@ -4,6 +4,7 @@ import { Button } from './button';
 import { HistoryIcon } from './icons/history';
 import { Modal } from './modal';
 import { SavedSessionList } from './saved-sessions/saved-session-list';
+import { Tooltip } from './tooltip';
 
 export interface HistoryButtonProps {
   className?: string;
@@ -14,9 +15,11 @@ export function HistoryButton({ className }: HistoryButtonProps) {
 
   return (
     <>
-      <Button className={cn(className)} onClick={() => setOpen(true)}>
-        <HistoryIcon className="size-4" />
-      </Button>
+      <Tooltip content="Saved requests" position="bottom">
+        <Button className={cn(className)} onClick={() => setOpen(true)}>
+          <HistoryIcon className="size-4" />
+        </Button>
+      </Tooltip>
       <Modal
         title="Saved requests"
         open={open}
