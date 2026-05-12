@@ -1,5 +1,5 @@
 import { cn } from '@maxigarcia/js-utils';
-import { resetHttpRequestState } from '@/store/http-request';
+import { resetHttpRequestState, useHttpRequestState } from '@/store/http-request';
 import { useSavedSessionsState } from '@/store/saved-sessions';
 import { Button } from './button';
 import { PlusIcon } from './icons/plus';
@@ -12,6 +12,7 @@ export interface NewSessionButtonProps {
 
 export function NewSessionButton({ className, onAfterNewSession }: NewSessionButtonProps) {
   const { appendSession, setActiveSession } = useSavedSessionsState();
+  const { url } = useHttpRequestState();
 
   const handleClick = () => {
     setActiveSession(null);
@@ -33,6 +34,7 @@ export function NewSessionButton({ className, onAfterNewSession }: NewSessionBut
         type="button"
         className={cn('shrink-0 flex items-center gap-2', className)}
         onClick={handleClick}
+        disabled={!url}
       >
         <PlusIcon className="size-4 shrink-0" />
       </Button>
