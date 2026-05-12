@@ -5,10 +5,12 @@ import { SavedSessionItem } from './saved-session-item';
 
 export interface SavedSessionListProps {
   className?: string;
+  onSessionSelect?: () => void;
 }
 
 export function SavedSessionList({
   className,
+  onSessionSelect,
 }: SavedSessionListProps) {
   const {
     sessions,
@@ -22,6 +24,7 @@ export function SavedSessionList({
 
   const handleSelectSession = (snapshot: SavedSessionSnapshot) => {
     selectSession(snapshot);
+    onSessionSelect?.();
   };
 
   const handleRemoveSession = (snapshot: SavedSessionSnapshot) => {

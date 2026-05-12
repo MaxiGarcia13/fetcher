@@ -22,7 +22,7 @@ export function HistoryButton({ className }: HistoryButtonProps) {
         open={open}
         onClose={() => setOpen(false)}
       >
-        <SavedSessionList />
+        <SavedSessionList onSessionSelect={() => setOpen(false)} />
       </Modal>
     </>
   );
