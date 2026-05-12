@@ -1,5 +1,6 @@
 ---
 import pkg from '../../package.json';
+import { GithubIcon } from '@/components/icons/github';
 
 interface Props {
   class?: string;
@@ -7,8 +8,9 @@ interface Props {
 
 const { class: className } = Astro.props;
 
-const version = pkg.version;
-const repositoryUrl = pkg.repository.url.replace('git+', '');
+const repositoryUrl = pkg.repository.url
+  .replace(/^git\+/, '')
+  .replace(/\.git$/, '');
 ---
 
 <footer
@@ -18,8 +20,10 @@ const repositoryUrl = pkg.repository.url.replace('git+', '');
     href={repositoryUrl}
     target="_blank"
     rel="noopener noreferrer"
-    class="hover:text-gray-300 text-orange-400 hover:underline"
+    aria-label="View repository on GitHub"
+    class="inline-flex items-center gap-1.5 transition-colors hover:text-gray-300"
   >
-    Repository
+    <GithubIcon className="size-4" />
+    <span class="mt-1">GitHub</span>
   </a>
 </footer>
