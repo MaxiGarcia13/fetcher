@@ -4,6 +4,7 @@ import Footer from '@/components/footer.astro';
 import { ChevronLeftIcon } from '@/components/icons/chevron-left';
 import { RequestDocTable } from '@/components/request-doc-table';
 import { RequestMethodBadge } from '@/components/saved-sessions/request-method-badge';
+import { ShareButton } from '@/components/share-button';
 import AppLayout from '@/layouts/app-layout.astro';
 import { parseRequestDocSearchParams } from '@/utils/request-doc';
 
@@ -25,6 +26,10 @@ const requestDoc = parseRequestDocSearchParams(Astro.url.searchParams);
           <ChevronLeftIcon className="size-6" />
         </a>
         <h1 class="text-2xl font-bold text-white">Documentation</h1>
+
+        <ShareButton className="ml-auto" client:only="react">
+          <span class="hidden sm:block">Share link</span>
+        </ShareButton>
       </div>
     </div>
 
