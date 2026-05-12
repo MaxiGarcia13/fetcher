@@ -5,13 +5,14 @@ import { EDITOR_CONSTRUCTION_OPTIONS } from './config';
 import { ContextMenu } from './context-menu';
 
 interface EditorProps {
-  className?: string;
-  value: string;
-  onChange?: (value: string) => void;
-  readOnly?: boolean;
+  'className'?: string;
+  'value': string;
+  'onChange'?: (value: string) => void;
+  'readOnly'?: boolean;
+  'data-testid'?: string;
 }
 
-export function Editor({ className, value, onChange, readOnly }: EditorProps) {
+export function Editor({ className, value, onChange, readOnly, 'data-testid': dataTestId }: EditorProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const editorInstanceRef = useRef<editor.IStandaloneCodeEditor>(null);
 
@@ -60,7 +61,7 @@ export function Editor({ className, value, onChange, readOnly }: EditorProps) {
       className={cn('relative box-border h-full min-h-0 w-full overflow-hidden', className)}
       editor={editorInstanceRef}
     >
-      <div ref={editorContainerRef} className="h-full w-full" />
+      <div ref={editorContainerRef} className="h-full w-full" data-testid={dataTestId} />
     </ContextMenu>
   );
 }

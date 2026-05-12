@@ -1,6 +1,7 @@
 import { cn } from '@maxigarcia/js-utils';
 import { LazyEditor } from '@/components/editor';
 import { EditorSkeleton } from '@/components/skeleton';
+import { HTTP_REQUEST_TEST_ID } from '@/constants/tests/http-request';
 import { useHttpResponseState } from '@/store/http-response';
 
 interface Props {
@@ -19,6 +20,7 @@ export function RequestResponse({ className }: Props) {
       <LazyEditor
         className={cn('min-h-0 flex-1', className)}
         value={JSON.stringify(error, null, 2)}
+        data-testid={HTTP_REQUEST_TEST_ID.RESPONSE_EDITOR}
         readOnly
       />
     );
@@ -26,7 +28,10 @@ export function RequestResponse({ className }: Props) {
 
   if (status === null) {
     return (
-      <div className={cn('min-h-0 flex-1 flex items-center justify-center bg-gray-800', className)}>
+      <div
+        className={cn('min-h-0 flex-1 flex items-center justify-center bg-gray-800', className)}
+        data-testid={HTTP_REQUEST_TEST_ID.RESPONSE_EDITOR}
+      >
         <p className={cn(' p-4 text-sm text-gray-400', className)}>
           Send a request to see the response here.
         </p>
@@ -38,6 +43,7 @@ export function RequestResponse({ className }: Props) {
     <LazyEditor
       className={cn('min-h-0 flex-1', className)}
       value={body}
+      data-testid={HTTP_REQUEST_TEST_ID.RESPONSE_EDITOR}
       readOnly
     />
   );
