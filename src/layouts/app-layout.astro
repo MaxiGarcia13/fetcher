@@ -1,11 +1,15 @@
 ---
+import { capitalize } from '@maxigarcia/js-utils';
 import pkg from '../../package.json';
 
 import '../styles/global.css';
 
 const description = pkg.description;
-const title = 'Fetcher';
+const keywords = pkg.keywords.join(', ');
+const title = capitalize(pkg.name);
+
 const image = '/favicon.png';
+const url = 'https://fetcherapi.vercel.app';
 ---
 
 <html>
@@ -15,20 +19,27 @@ const image = '/favicon.png';
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#1F2937" />
     <meta name="description" content={description} />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, interactive-widget=overlays-content"
-    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content={keywords} />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
-    <meta property="og:url" content="https://fetcher-steel.vercel.app" />
+    <meta property="og:url" content={url} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content={title} />
     <meta property="og:image:width" content="256" />
     <meta property="og:image:height" content="256" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <meta name="twitter:url" content={url} />
+    <meta name="twitter:image:width" content="256" />
+    <meta name="twitter:image:height" content="256" />
   </head>
   <body class="fixed inset-0 box-border overflow-hidden bg-gray-900 text-white">
     <slot />
