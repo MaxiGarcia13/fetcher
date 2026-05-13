@@ -76,6 +76,7 @@ export function KeyValueTableRow({
             onClick={onMaskToggle}
             className="shrink-0 rounded-none border-r-0"
             aria-label={`${isMasked ? 'Show value' : 'Mask value'} for row ${rowNumber}`}
+            data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TABLE_ROW_MASK_BUTTON}-${rowNumber}`}
           >
             <LockPasswordIcon className={cn('size-4', !isMasked ? 'text-gray-400' : 'text-gray-200')} />
           </Button>
@@ -95,6 +96,7 @@ export function KeyValueTableRow({
                   onClick={onVisibilityToggle}
                   className="shrink-0 rounded-none border-r-0"
                   aria-label={`${isHidden ? 'Show' : 'Hide'} row ${rowNumber}`}
+                  data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TABLE_ROW_VISIBILITY_BUTTON}-${rowNumber}`}
                 >
                   {isHidden
                     ? <EyeOffIcon className="size-4 text-gray-200" />
@@ -109,6 +111,7 @@ export function KeyValueTableRow({
             onClick={onRemoveRow}
             className="shrink-0 rounded-l-none"
             aria-label={`Remove row ${rowNumber}`}
+            data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TABLE_ROW_DELETE_BUTTON}-${rowNumber}`}
           >
             <BinIcon className="size-4 text-gray-400" />
           </Button>

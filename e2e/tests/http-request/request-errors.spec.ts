@@ -5,13 +5,17 @@ import {
   mockHttpRequestNetworkError,
   mockHttpRequestSuccess,
 } from '../../mocks/mock-routes';
-import { sendRequest } from '../../utils/send-request';
+import { sendRequest } from '../../utils/request';
 
 HTTP_METHODS.forEach((method) => {
   test(`shows a mocked 500 response for ${method}`, async ({ page }) => {
     await mockHttpRequestSuccess(page, 500, {
       message: 'Internal Server Error',
     });
+
+    await page.goto('/');
+    await page.waitForLoadState('load');
+
     await sendRequest(page, { method });
 
     await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.RESPONSE_EDITOR)).toBeVisible();
@@ -21,6 +25,9 @@ HTTP_METHODS.forEach((method) => {
   });
   test(`shows a mocked network error for ${method}`, async ({ page }) => {
     await mockHttpRequestNetworkError(page);
+
+    await page.goto('/');
+    await page.waitForLoadState('load');
 
     await sendRequest(page, { method });
 

@@ -11,19 +11,13 @@ interface SendRequestOptions {
   body?: string;
 }
 
-export async function sendRequest(
-  page: Page,
-  {
-    method = 'GET',
-    url = 'https://example.test/api',
-    params,
-    headers,
-    body,
-  }: SendRequestOptions = {},
-) {
-  await page.goto('/');
-  await page.waitForLoadState('load');
-
+export async function fillRequest(page: Page, {
+  method = 'GET',
+  url = 'https://example.test/api',
+  params,
+  headers,
+  body,
+}: SendRequestOptions = {}) {
   await page.getByTestId(HTTP_REQUEST_TEST_ID.METHOD_SELECT).selectOption(method);
   await page.getByTestId(HTTP_REQUEST_TEST_ID.URL_INPUT).fill(url);
 
@@ -51,9 +45,25 @@ export async function sendRequest(
 
     await page.waitForTimeout(1000);
   }
+}
 
+export async function sendRequest(
+  page: Page,
+  {
+    method = 'GET',
+    url = 'https://example.test/api',
+    params,
+    headers,
+    body,
+  }: SendRequestOptions = {},
+) {
+  await fillRequest(page, { method, url, params, headers, body });
+
+  return sendButtonClick(page);
+}
+
+export async function sendButtonClick(page: Page) {
   const requestFinished = waitForMockHttpRequest(page);
   await page.getByTestId(HTTP_REQUEST_TEST_ID.SEND_BUTTON).click();
-
   return requestFinished;
 }

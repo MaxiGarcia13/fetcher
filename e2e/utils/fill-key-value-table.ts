@@ -12,8 +12,55 @@ export async function fillKeyValueTable(
     await page
       .getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_INPUT_KEY}-${rowNumber}`)
       .fill(key);
-    await page
-      .getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_INPUT_VALUE}-${rowNumber}`)
+    await getInputFieldValue(page, rowNumber)
       .fill(value);
   }
+}
+
+export async function deleteKeyValueTableRow(
+  page: Page,
+  tab: 'params' | 'headers',
+  index: number,
+): Promise<void> {
+  await page
+    .getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TAB}-${tab}`)
+    .click();
+
+  await page
+    .getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TABLE_ROW_DELETE_BUTTON}-${index}`)
+    .click();
+}
+
+export async function maskKeyValueTableRow(
+  page: Page,
+  tab: 'params' | 'headers',
+  rowNumber: number,
+): Promise<void> {
+  await page
+    .getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TAB}-${tab}`)
+    .click();
+  await page
+    .getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TABLE_ROW_MASK_BUTTON}-${rowNumber}`)
+    .click();
+}
+
+export async function toggleKeyValueTableRowVisibility(
+  page: Page,
+  tab: 'params' | 'headers',
+  rowNumber: number,
+): Promise<void> {
+  await page
+    .getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TAB}-${tab}`)
+    .click();
+  await page
+    .getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TABLE_ROW_VISIBILITY_BUTTON}-${rowNumber}`)
+    .click();
+}
+
+export function getInputFieldValue(
+  page: Page,
+  rowNumber: number,
+) {
+  return page
+    .getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_INPUT_VALUE}-${rowNumber}`);
 }

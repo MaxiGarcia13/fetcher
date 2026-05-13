@@ -4,7 +4,7 @@ import { METHODS_WITH_BODY } from '@/domain/http-request/methods.consts';
 import {
   mockHttpRequestSuccess,
 } from '../../mocks/mock-routes';
-import { sendRequest } from '../../utils/send-request';
+import { sendRequest } from '../../utils/request';
 
 METHODS_WITH_BODY.forEach((method) => {
   test(`shows a mocked 200 response for ${method}`, async ({ page }) => {
@@ -22,6 +22,9 @@ METHODS_WITH_BODY.forEach((method) => {
     const expectedRequestBody = JSON.stringify({ greeting: 'hello' });
 
     const requestUrl = 'https://example.test/api/params';
+
+    await page.goto('/');
+    await page.waitForLoadState('load');
 
     const response = await sendRequest(page, {
       method,
