@@ -16,9 +16,6 @@ export default defineConfig({
         '@': srcDir,
       },
     },
-    ssr: {
-      noExternal: ['@maxigarcia/js-utils'],
-    },
   },
   integrations: [react()],
   adapter: vercel(),
