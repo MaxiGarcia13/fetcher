@@ -24,7 +24,7 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
     variant: 'default',
     icon: (
       <>
-        <LinkIcon className="size-5" />
+        <LinkIcon className="size-4" />
         {' '}
         {children}
       </>
