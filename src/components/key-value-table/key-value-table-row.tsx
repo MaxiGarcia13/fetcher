@@ -7,6 +7,7 @@ import { EyeIcon } from '@/components/icons/eye';
 import { EyeOffIcon } from '@/components/icons/eye-off';
 import { LockPasswordIcon } from '@/components/icons/lock-password';
 import { Tooltip } from '@/components/tooltip';
+import { HTTP_REQUEST_TEST_ID } from '@/constants/tests/http-request';
 
 export interface KeyValueTableRowProps {
   entry: KeyValueEntry;
@@ -49,6 +50,7 @@ export function KeyValueTableRow({
         suggestions={suggestedKeys}
         aria-label={`Key row ${rowNumber}`}
         className="rounded-r-none border-r-0"
+        data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_INPUT_KEY}-${rowNumber}`}
       />
       <AutocompleteInput
         value={entry.value}
@@ -58,6 +60,7 @@ export function KeyValueTableRow({
         suggestions={suggestedValues}
         aria-label={`Value row ${rowNumber}`}
         className="rounded-l-none rounded-r-none border-r-0"
+        data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_INPUT_VALUE}-${rowNumber}`}
       />
       <div className="flex">
         <Tooltip

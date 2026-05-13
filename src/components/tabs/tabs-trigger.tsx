@@ -1,5 +1,6 @@
 import type { TabsTriggerProps } from './types';
 import { cn } from '@maxigarcia/js-utils';
+import { HTTP_REQUEST_TEST_ID } from '@/constants/tests/http-request';
 import { useTabsContext } from './context';
 
 export function TabsTrigger<T extends string>({
@@ -18,6 +19,7 @@ export function TabsTrigger<T extends string>({
       type="button"
       role="tab"
       id={`tab-${value}`}
+      data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TAB}-${value}`}
       aria-selected={isActive}
       aria-controls={`tabpanel-${value}`}
       aria-disabled={disabled}
