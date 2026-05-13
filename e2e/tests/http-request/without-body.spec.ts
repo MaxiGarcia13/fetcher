@@ -38,5 +38,7 @@ METHODS_EXCLUDED_FROM_BODY.forEach((method) => {
       headers: expectedRequestHeaders,
       body: '{}',
     });
+
+    expect(await page.getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TAB}-body`).isDisabled()).toBe(true);
   });
 });
