@@ -7,7 +7,7 @@ test('should save and load a session', async ({ page }) => {
 
   await page.waitForLoadState('load');
 
-  expect(await page.getByTestId('new-session-button').nth(1).isVisible()).toBeFalsy();
+  expect(await page.getByTestId('new-session-button').isVisible()).toBeFalsy();
 
   await fillRequest(page, {
     method: 'GET',
@@ -16,7 +16,6 @@ test('should save and load a session', async ({ page }) => {
 
   await page
     .getByTestId('new-session-button')
-    .nth(1)
     .click();
 
   const item = page.getByTestId(SAVED_SESSIONS_TEST_ID.SAVED_SESSIONS_LIST_ITEM).nth(0);
@@ -38,7 +37,6 @@ test('should remove a session', async ({ page }) => {
 
   await page
     .getByTestId('new-session-button')
-    .nth(1)
     .click();
 
   await page.getByTestId(SAVED_SESSIONS_TEST_ID.SAVED_SESSIONS_LIST_ITEM_REMOVE_BUTTON).nth(0).click();
