@@ -1,7 +1,7 @@
 import { cn } from '@maxigarcia/js-utils';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
-import { HTTP_REQUEST_TEST_ID } from '@/constants/tests/http-request';
+import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { sendHttpRequest } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
 import {

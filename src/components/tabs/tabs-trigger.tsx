@@ -1,6 +1,6 @@
 import type { TabsTriggerProps } from './types';
 import { cn } from '@maxigarcia/js-utils';
-import { HTTP_REQUEST_TEST_ID } from '@/constants/tests/http-request';
+import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { useTabsContext } from './context';
 
 export function TabsTrigger<T extends string>({

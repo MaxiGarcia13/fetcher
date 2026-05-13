@@ -1,7 +1,7 @@
 import { cn } from '@maxigarcia/js-utils';
 import { LazyEditor } from '@/components/editor';
 import { EditorSkeleton } from '@/components/skeleton';
-import { HTTP_REQUEST_TEST_ID } from '@/constants/tests/http-request';
+import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { useHttpResponseState } from '@/store/http-response';
 
 interface Props {

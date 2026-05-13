@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test';
-import { HTTP_REQUEST_TEST_ID } from '@/constants/tests/http-request';
+import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 
 export async function fillKeyValueTable(
   page: Page,

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { HTTP_REQUEST_TEST_ID } from '@/constants/tests/http-request';
+import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { HTTP_METHODS } from '@/domain/http-request/methods.consts';
 import {
   mockHttpRequestNetworkError,
