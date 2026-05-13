@@ -1,6 +1,7 @@
 ---
-import pkg from '../../package.json';
+import { cn } from '@maxigarcia/js-utils';
 import { GithubIcon } from '@/components/icons/github';
+import pkg from '../../package.json';
 
 interface Props {
   class?: string;
@@ -14,7 +15,10 @@ const repositoryUrl = pkg.repository.url
 ---
 
 <footer
-  class={`mt-auto flex items-center justify-center gap-2 text-xs text-gray-500 ${className}`}
+  class={cn(
+    'mt-auto flex items-center justify-center gap-2 text-xs text-gray-500',
+    className,
+  )}
 >
   <a
     href={repositoryUrl}

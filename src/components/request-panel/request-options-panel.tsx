@@ -1,6 +1,6 @@
 import type { TabItem } from '@/components/tabs/types';
 import { cn } from '@maxigarcia/js-utils';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { TabsContent } from '@/components/tabs/tabs-content';
 import { TabsHeader } from '@/components/tabs/tabs-header';
 import { TabsRoot } from '@/components/tabs/tabs-root';

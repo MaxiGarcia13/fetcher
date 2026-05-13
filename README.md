@@ -62,15 +62,15 @@ Open the URL printed in the terminal (Astro defaults to `http://localhost:4321`)
 
 ### Scripts
 
-| Command            | Description                        |
-| ------------------ | ---------------------------------- |
-| `npm run dev`      | Start the development server       |
-| `npm run build`    | Production build                   |
-| `npm run preview`  | Serve the production build locally |
-| `npm run lint`     | Run ESLint                         |
-| `npm run lint:fix` | Run ESLint with auto-fix           |
+| Command            | Description                             |
+| ------------------ | --------------------------------------- |
+| `npm run dev`      | Start the development server            |
+| `npm run build`    | Production build                        |
+| `npm run preview`  | Serve the production build locally      |
+| `npm run lint`     | Run ESLint                              |
+| `npm run lint:fix` | Run ESLint with auto-fix                |
 | `npm run clean`    | Remove build artifacts and dependencies |
-| `npm run phoenix`  | Clean install from scratch         |
+| `npm run phoenix`  | Clean install from scratch              |
 
 ## How requests flow
 

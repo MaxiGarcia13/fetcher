@@ -49,11 +49,13 @@ const requestDoc = parseRequestDocSearchParams(Astro.url.searchParams);
           URL
         </h2>
         {
-          requestDoc.url ? (
+          requestDoc.url
+? (
             <p class="rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm break-all text-gray-100">
               {requestDoc.url}
             </p>
-          ) : (
+          )
+: (
             <p class="text-sm text-gray-500">No URL set.</p>
           )
         }

@@ -17,11 +17,13 @@ export function ShareButton({ className, children }: { className?: string; child
   let data: ShareButtonData = {
     tooltip: 'Share link',
     variant: 'default',
-    icon: <>
-      <LinkIcon className="size-5" />
-      {' '}
-      {children}
-    </>,
+    icon: (
+      <>
+        <LinkIcon className="size-5" />
+        {' '}
+        {children}
+      </>
+    ),
   };
 
   if (isCopied) {
