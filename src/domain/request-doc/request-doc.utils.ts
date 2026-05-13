@@ -38,9 +38,13 @@ function readKeyValueEntries(searchParams: URLSearchParams, key: string): KeyVal
 }
 
 function keyValueParamToDocFieldRows(searchParams: URLSearchParams, key: string): DocFieldRow[] {
-  return objectToDocFieldRows(
-    parseObjectFromKeyValueEntries(readKeyValueEntries(searchParams, key)),
-  );
+  const data = parseObjectFromKeyValueEntries(readKeyValueEntries(searchParams, key));
+
+  if (Object.keys(data).length === 0) {
+    return [];
+  }
+
+  return objectToDocFieldRows(data);
 }
 
 function joinDocFieldKey(prefix: string, segment: string): string {

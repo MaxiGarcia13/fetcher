@@ -5,10 +5,12 @@ import { ChevronLeftIcon } from '@/components/icons/chevron-left';
 import { RequestDocTable } from '@/components/request-doc-table';
 import { RequestMethodBadge } from '@/components/saved-sessions/request-method-badge';
 import { ShareButton } from '@/components/share-button';
+import { METHODS_EXCLUDED_FROM_BODY } from '@/domain/http-request/methods.consts';
 import { parseRequestDocSearchParams } from '@/domain/request-doc';
 import AppLayout from '@/layouts/app-layout.astro';
 
 const requestDoc = parseRequestDocSearchParams(Astro.url.searchParams);
+const showBodySection = !METHODS_EXCLUDED_FROM_BODY.includes(requestDoc.method);
 ---
 
 <AppLayout>
@@ -61,9 +63,13 @@ const requestDoc = parseRequestDocSearchParams(Astro.url.searchParams);
         }
       </section>
 
-      <RequestDocTable title="Params" rows={requestDoc.params} />
       <RequestDocTable title="Headers" rows={requestDoc.headers} />
-      <RequestDocTable title="Body" rows={requestDoc.body} />
+      <RequestDocTable title="Params" rows={requestDoc.params} />
+      {
+        showBodySection && (
+          <RequestDocTable title="Body" rows={requestDoc.body} />
+        )
+      }
 
       <Footer />
     </section>
