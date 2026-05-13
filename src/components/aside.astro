@@ -1,6 +1,5 @@
 ---
 import { cn } from '@maxigarcia/js-utils';
-import { ActionsSession } from './actions-session';
 import Brand from './brand.astro';
 import Footer from './footer.astro';
 import { SavedSessionsPanel } from './saved-sessions';
@@ -14,7 +13,6 @@ const { class: className } = Astro.props;
 
 <aside class={cn('flex h-full w-64 min-h-0 flex-col gap-4', className)}>
   <Brand />
-  <ActionsSession client:only="react" />
   <SavedSessionsPanel className="min-h-0 flex-1" client:only="react" />
   <Footer />
 </aside>

@@ -11,7 +11,12 @@ interface ShareButtonData {
   icon: ReactNode;
 }
 
-export function ShareButton({ className, children }: { className?: string; children?: ReactNode }) {
+export interface ShareButtonProps extends ComponentProps<typeof Button> {
+  className?: string;
+  children?: ReactNode;
+}
+
+export function ShareButton({ className, children, size }: ShareButtonProps) {
   const [isCopied, setIsCopied] = useState(false);
 
   let data: ShareButtonData = {
@@ -50,6 +55,7 @@ export function ShareButton({ className, children }: { className?: string; child
         onClick={handleShare}
         variant={data.variant}
         className={className}
+        size={size}
       >
         {data.icon}
       </Button>

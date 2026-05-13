@@ -1,3 +1,4 @@
+import type { ComponentProps } from 'react';
 import { cn } from '@maxigarcia/js-utils';
 import { SAVED_SESSIONS_TEST_ID } from '@/constants/test-ids';
 import { resetHttpRequestState, useHttpRequestState } from '@/store/http-request';
@@ -6,12 +7,12 @@ import { Button } from './button';
 import { PlusIcon } from './icons/plus';
 import { Tooltip } from './tooltip';
 
-export interface NewSessionButtonProps {
+export interface NewSessionButtonProps extends ComponentProps<typeof Button> {
   className?: string;
   onAfterNewSession?: () => void;
 }
 
-export function NewSessionButton({ className, onAfterNewSession }: NewSessionButtonProps) {
+export function NewSessionButton({ className, onAfterNewSession, size }: NewSessionButtonProps) {
   const { appendSession, setActiveSession } = useSavedSessionsState();
   const { url } = useHttpRequestState();
 
@@ -37,6 +38,7 @@ export function NewSessionButton({ className, onAfterNewSession }: NewSessionBut
         onClick={handleClick}
         disabled={!url}
         data-testid={SAVED_SESSIONS_TEST_ID.NEW_SESSION_BUTTON}
+        size={size}
       >
         <PlusIcon className="size-4 shrink-0" />
       </Button>

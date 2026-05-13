@@ -1,3 +1,4 @@
+import type { ComponentProps } from 'react';
 import { cn } from '@maxigarcia/js-utils';
 import { useState } from 'react';
 import { Button } from './button';
@@ -6,17 +7,17 @@ import { Modal } from './modal';
 import { SavedSessionList } from './saved-sessions/saved-session-list';
 import { Tooltip } from './tooltip';
 
-export interface HistoryButtonProps {
+export interface HistoryButtonProps extends ComponentProps<typeof Button> {
   className?: string;
 }
 
-export function HistoryButton({ className }: HistoryButtonProps) {
+export function HistoryButton({ className, size }: HistoryButtonProps) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <Tooltip content="Saved requests" position="bottom" className={className}>
-        <Button className={cn(className)} onClick={() => setOpen(true)}>
+        <Button className={cn(className)} onClick={() => setOpen(true)} size={size}>
           <HistoryIcon className="size-4" />
         </Button>
       </Tooltip>

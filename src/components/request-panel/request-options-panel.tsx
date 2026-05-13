@@ -7,6 +7,7 @@ import { TabsRoot } from '@/components/tabs/tabs-root';
 import { METHODS_WITH_BODY } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
 import { storage } from '@/utils/storage';
+import { ActionsSession } from '../actions-session';
 import { RequestBody } from './request-body';
 import { RequestHeaders } from './request-headers';
 import { RequestParams } from './request-params';
@@ -70,8 +71,9 @@ export function RequestOptionsPanel({ defaultTab = 'headers', className }: Reque
       onValueChange={handleValueChange}
       className={cn('h-full', className)}
     >
-      <div className="border-b border-gray-700 px-4">
-        <TabsHeader className="border-b-0" />
+      <div className="flex flex-col-reverse justify-between border-b border-gray-700 px-4 sm:flex-row sm:items-center sm:gap-4">
+        <TabsHeader className="h-full flex-1 border-b-0" />
+        <ActionsSession className="w-full pb-4 sm:max-w-[200px]" />
       </div>
       <TabsContent />
     </TabsRoot>

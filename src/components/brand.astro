@@ -1,14 +1,12 @@
 ---
 import { capitalize, cn } from '@maxigarcia/js-utils';
 import pkg from '../../package.json';
-import { ActionsSession } from './actions-session';
 
 interface Props {
   class?: string;
 }
 
 const { class: className } = Astro.props;
-const hideActions = Astro.url.pathname.includes('/doc');
 ---
 
 <div class={cn('flex w-full shrink-0 flex-col gap-4 sm:flex-row', className)}>
@@ -17,12 +15,4 @@ const hideActions = Astro.url.pathname.includes('/doc');
     <h1 class="mt-1 text-lg font-bold">{capitalize(pkg.name)}</h1>
     <span class="mt-1 text-xs text-gray-500">v{pkg.version}</span>
   </div>
-
-  {
-    hideActions
-? null
-: (
-      <ActionsSession client:only="react" className="flex sm:hidden" />
-    )
-  }
 </div>
