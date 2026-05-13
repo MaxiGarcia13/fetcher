@@ -1,5 +1,6 @@
 import type { SavedSessionSnapshot } from '@/domain/saved-sessions';
 import { cn } from '@maxigarcia/js-utils';
+import { SAVED_SESSIONS_TEST_ID } from '@/constants/test-ids';
 import { formatShortDate } from '@/utils/date';
 import { Button } from '../button';
 import { BinIcon } from '../icons/bin';
@@ -37,6 +38,7 @@ export function SavedSessionItem({
         className,
       )}
       onClick={() => onSelect?.(snapshot)}
+      data-testid={SAVED_SESSIONS_TEST_ID.SAVED_SESSIONS_LIST_ITEM}
     >
 
       <div className="flex flex-1 flex-col truncate p-2">
@@ -61,6 +63,7 @@ export function SavedSessionItem({
           e.stopPropagation();
           onRemove?.(snapshot);
         }}
+        data-testid={SAVED_SESSIONS_TEST_ID.SAVED_SESSIONS_LIST_ITEM_REMOVE_BUTTON}
       >
         <BinIcon className="size-4 text-gray-400" />
       </Button>

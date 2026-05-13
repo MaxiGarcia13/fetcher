@@ -1,4 +1,5 @@
 import { cn } from '@maxigarcia/js-utils';
+import { SAVED_SESSIONS_TEST_ID } from '@/constants/test-ids';
 import { resetHttpRequestState, useHttpRequestState } from '@/store/http-request';
 import { useSavedSessionsState } from '@/store/saved-sessions';
 import { Button } from './button';
@@ -35,6 +36,7 @@ export function NewSessionButton({ className, onAfterNewSession }: NewSessionBut
         className={cn('shrink-0 flex items-center gap-2', className)}
         onClick={handleClick}
         disabled={!url}
+        data-testid={SAVED_SESSIONS_TEST_ID.NEW_SESSION_BUTTON}
       >
         <PlusIcon className="size-4 shrink-0" />
       </Button>
