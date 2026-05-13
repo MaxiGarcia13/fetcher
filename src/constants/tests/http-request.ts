@@ -9,4 +9,5 @@ export const HTTP_REQUEST_TEST_ID = {
   PARAMS_TABLE: 'params-table',
   HEADERS_TABLE: 'headers-table',
   BODY_TABLE: 'body-table',
+  REQUEST_BODY_EDITOR: 'request-body-editor',
 };
