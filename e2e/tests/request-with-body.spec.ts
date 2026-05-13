@@ -1,12 +1,12 @@
 import { expect, test } from '@playwright/test';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/tests/http-request';
-import { METHODS_EXCLUDED_FROM_BODY } from '@/domain/http-request/methods.consts';
+import { METHODS_WITH_BODY } from '@/domain/http-request/methods.consts';
 import {
   mockHttpRequestSuccess,
-} from '../../mocks/mock-routes';
-import { sendRequest } from '../../utils/request';
+} from '../mocks/mock-routes';
+import { sendRequest } from '../utils/request';
 
-METHODS_EXCLUDED_FROM_BODY.forEach((method) => {
+METHODS_WITH_BODY.forEach((method) => {
   test(`shows a mocked 200 response for ${method}`, async ({ page }) => {
     await mockHttpRequestSuccess(page, 200, { method, message: 'Mocked OK' });
 
@@ -19,6 +19,8 @@ METHODS_EXCLUDED_FROM_BODY.forEach((method) => {
       param2: 'value2',
     };
 
+    const expectedRequestBody = JSON.stringify({ greeting: 'hello' });
+
     const requestUrl = 'https://example.test/api/params';
 
     await page.goto('/');
@@ -29,6 +31,7 @@ METHODS_EXCLUDED_FROM_BODY.forEach((method) => {
       url: requestUrl,
       params: expectedRequestParameters,
       headers: expectedRequestHeaders,
+      body: expectedRequestBody,
     });
 
     await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.RESPONSE_EDITOR)).toBeVisible();
@@ -39,9 +42,7 @@ METHODS_EXCLUDED_FROM_BODY.forEach((method) => {
       method,
       params: expectedRequestParameters,
       headers: expectedRequestHeaders,
-      body: '{}',
+      body: expectedRequestBody,
     });
-
-    expect(await page.getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TAB}-body`).isDisabled()).toBe(true);
   });
 });

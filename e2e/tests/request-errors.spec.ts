@@ -4,8 +4,8 @@ import { HTTP_METHODS } from '@/domain/http-request/methods.consts';
 import {
   mockHttpRequestNetworkError,
   mockHttpRequestSuccess,
-} from '../../mocks/mock-routes';
-import { sendRequest } from '../../utils/request';
+} from '../mocks/mock-routes';
+import { sendRequest } from '../utils/request';
 
 HTTP_METHODS.forEach((method) => {
   test(`shows a mocked 500 response for ${method}`, async ({ page }) => {

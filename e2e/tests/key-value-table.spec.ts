@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { fillRequest, sendButtonClick, sendRequest } from 'e2e/utils/request';
-import { deleteKeyValueTableRow, getInputFieldValue, maskKeyValueTableRow, toggleKeyValueTableRowVisibility } from '../../utils/fill-key-value-table';
+import { deleteKeyValueTableRow, getInputFieldValue, maskKeyValueTableRow, toggleKeyValueTableRowVisibility } from '../utils/fill-key-value-table';
 
 const url = 'https://example.test/api';
 const method = 'GET';
