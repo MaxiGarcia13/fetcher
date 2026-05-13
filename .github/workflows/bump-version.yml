@@ -9,67 +9,14 @@ permissions:
   contents: write
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run lint
-        run: npm run lint
-
-  e2e:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run E2E tests
-        run: npm run test:e2e
+  lint-and-e2e:
+    uses: ./.github/workflows/lint-and-e2e.yml
 
   bump:
-    needs: [lint, e2e]
+    needs: lint-and-e2e
     uses: MaxiGarcia13/gh-actions/.github/workflows/bump-version.yml@main
 
   deploy:
     needs: bump
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Pull latest changes
-        run: git pull origin main
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Install dependencies
-        run: npm install
-
-      - run: npm install -g vercel
-
-      - run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-
-      - run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-
-      - run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+    uses: MaxiGarcia13/gh-actions/.github/workflows/deploy-to-vercel.yml@main
+    secrets: inherit
