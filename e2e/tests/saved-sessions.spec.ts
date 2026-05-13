@@ -7,6 +7,8 @@ test('should save and load a session', async ({ page }) => {
 
   await page.waitForLoadState('load');
 
+  expect(await page.getByTestId('new-session-button').nth(1).isVisible()).toBeFalsy();
+
   await fillRequest(page, {
     method: 'GET',
     url: 'https://example.test/api',
