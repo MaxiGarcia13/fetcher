@@ -18,7 +18,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
+    command: process.env.CI ? 'npm run preview' : 'npm run dev',
     url: BASE_URL,
     reuseExistingServer: !process.env.CI,
   },
