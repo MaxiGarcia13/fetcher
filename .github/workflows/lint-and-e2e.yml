@@ -2,6 +2,7 @@ name: Lint and E2E
 
 on:
   workflow_call:
+  pull_request:
 
 jobs:
   lint:
