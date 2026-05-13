@@ -2,8 +2,6 @@ import { expect, test } from '@playwright/test';
 import { fillRequest } from 'e2e/utils/request';
 import { SAVED_SESSIONS_TEST_ID } from '@/constants/test-ids';
 
-const sessionId = '1234567890-1234-5678-9012-345678901234';
-
 test('should save and load a session', async ({ page }) => {
   await page.goto('/');
 
