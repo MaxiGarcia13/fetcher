@@ -10,7 +10,7 @@ test('should save and load a session', async ({ page }) => {
   expect(await page.getByTestId('new-session-button').isVisible()).toBeFalsy();
 
   await fillRequest(page, {
-    method: 'GET',
+    method: 'POST',
     url: 'https://example.test/api',
   });
 
@@ -21,7 +21,7 @@ test('should save and load a session', async ({ page }) => {
   const item = page.getByTestId(SAVED_SESSIONS_TEST_ID.SAVED_SESSIONS_LIST_ITEM).nth(0);
 
   await expect(item).toBeVisible();
-  await expect(item).toContainText('GET');
+  await expect(item).toContainText('POST');
   await expect(item).toContainText('example.test');
 });
 
