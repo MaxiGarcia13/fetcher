@@ -1,4 +1,4 @@
-import type { HttpMethod } from './types';
+import type { HttpMethod } from '../domain/http-request/types';
 
 export const METHODS_EXCLUDED_FROM_BODY: ReadonlyArray<HttpMethod> = ['GET', 'HEAD', 'DELETE', 'OPTIONS'];
 export const METHODS_WITH_BODY: ReadonlyArray<HttpMethod> = ['POST', 'PUT', 'PATCH'];

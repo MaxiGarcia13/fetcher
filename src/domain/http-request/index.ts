@@ -1,4 +1,4 @@
-export * from './methods.consts';
+export * from '../../constants/methods';
 export * from './request.utils';
 export * from './response.utils';
 export * from './service';

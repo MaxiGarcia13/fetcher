@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
+import { METHODS_WITH_BODY } from '@/constants/methods';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
-import { METHODS_WITH_BODY } from '@/domain/http-request/methods.consts';
 import {
   mockHttpRequestSuccess,
 } from '../mocks/mock-routes';

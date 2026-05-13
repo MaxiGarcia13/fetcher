@@ -1,6 +1,6 @@
 import type { HttpMethod } from './types';
 import type { KeyValueEntry } from '@/components/key-value-table';
-import { HTTP_METHODS } from './methods.consts';
+import { HTTP_METHODS } from '../../constants/methods';
 
 export function getHttpMethod(value: unknown): HttpMethod {
   if (typeof value === 'string' && HTTP_METHODS.includes(value as HttpMethod)) {

@@ -1,6 +1,6 @@
 import type { HttpMethod } from './types';
 import { tryParseJson } from '@/utils/value';
-import { METHODS_EXCLUDED_FROM_BODY } from './methods.consts';
+import { METHODS_EXCLUDED_FROM_BODY } from '../../constants/methods';
 
 export function parseBodyForRequest(method: HttpMethod, body: string) {
   if (METHODS_EXCLUDED_FROM_BODY.includes(method)) {
