@@ -40,6 +40,7 @@ Fetcher is intentionally scoped: it focuses on request construction, execution, 
 | UI        | [React](https://react.dev/) islands, [Tailwind CSS](https://tailwindcss.com/) |
 | State     | [Nanostores](https://github.com/nanostores/nanostores)                        |
 | Editor    | [Monaco Editor](https://microsoft.github.io/monaco-editor/)                   |
+| Testing   | [Playwright](https://playwright.dev/) (Chromium, `e2e/`)                      |
 | Utilities | [`@maxigarcia/js-utils`](https://www.npmjs.com/package/@maxigarcia/js-utils)  |
 
 ## Getting started
@@ -60,17 +61,23 @@ npm run dev
 
 Open the URL printed in the terminal (Astro defaults to `http://localhost:4321`).
 
+### End-to-end tests
+
+`npm run test:e2e` starts the dev server when needed (or reuses one already on port 4321 outside CI), installs the Playwright Chromium browser if missing, and runs specs under `e2e/`. Test output goes to `test-results/`; the HTML reporter writes `playwright-report/` (both are gitignored). Use `npm run test:e2e:ui` to step through tests interactively.
+
 ### Scripts
 
-| Command            | Description                             |
-| ------------------ | --------------------------------------- |
-| `npm run dev`      | Start the development server            |
-| `npm run build`    | Production build                        |
-| `npm run preview`  | Serve the production build locally      |
-| `npm run lint`     | Run ESLint                              |
-| `npm run lint:fix` | Run ESLint with auto-fix                |
-| `npm run clean`    | Remove build artifacts and dependencies |
-| `npm run phoenix`  | Clean install from scratch              |
+| Command               | Description                                                      |
+| --------------------- | ---------------------------------------------------------------- |
+| `npm run dev`         | Start the development server                                     |
+| `npm run build`       | Production build                                                 |
+| `npm run preview`     | Serve the production build locally                               |
+| `npm run lint`        | Run ESLint                                                       |
+| `npm run lint:fix`    | Run ESLint with auto-fix                                         |
+| `npm run clean`       | Remove build artifacts and dependencies                          |
+| `npm run phoenix`     | Clean install from scratch                                       |
+| `npm run test:e2e`    | Install Chromium (if needed) and run Playwright end-to-end tests |
+| `npm run test:e2e:ui` | Same as `test:e2e`, with the Playwright UI for debugging         |
 
 ## How requests flow
 
@@ -92,11 +99,16 @@ Fetcher ships a web app manifest and launcher icons under `public/`. Supported b
 ## Project layout
 
 ```
+e2e/
+  tests/          Playwright specs (request flows, errors, saved sessions, key-value UI)
+  mocks/          Route mocks for stable tests
+  utils/          Test helpers
 public/
   manifest.webmanifest   PWA manifest and install metadata
   icons/                 Launcher icons for installed clients
 src/
   components/     UI (request editor, panels, tabs, Monaco wrapper, saved sessions, doc actions)
+  constants/      Shared constants (e.g. `data-testid` keys for e2e)
   domain/         HTTP and session types and helpers
   layouts/        App shell (manifest link, theme color, viewport)
   pages/          Index and documentation routes, API routes
