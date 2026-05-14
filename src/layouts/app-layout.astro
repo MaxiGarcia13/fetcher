@@ -16,6 +16,20 @@ const image = `${url}/favicon.png`;
   <head>
     <title>{title}</title>
     <link rel="icon" href={image} />
+    <link
+      rel="preload"
+      href="/assets/fonts/FiraCode-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/fonts/FiraCode-Bold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#1F2937" />
     <meta name="description" content={description} />
