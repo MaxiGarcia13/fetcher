@@ -24,14 +24,18 @@ const initialHttpResponseState: HttpResponseState = {
 export const $httpResponse = map<HttpResponseState>(initialHttpResponseState);
 
 export async function saveHttpResponse(response: Response): Promise<void> {
-  const body = await response.text();
+  const contentTypeHeader = response.headers.get('content-type') ?? '';
+  const mime = contentTypeHeader.split(';')[0]?.trim().toLowerCase() ?? '';
+  const body = mime.startsWith('image/')
+    ? await blobToDataUrl(await response.blob())
+    : mapHttpResponseBody(await response.text());
 
   $httpResponse.set({
     ...$httpResponse.get(),
     status: response.status,
     statusText: response.statusText,
     headers: Object.fromEntries(response.headers.entries()),
-    body: mapHttpResponseBody(body),
+    body,
     error: null,
   });
 }
@@ -68,6 +72,22 @@ function serializeHttpResponseError(error: unknown): HttpResponseError {
   }
 
   return { message: String(error) };
+}
+
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result;
+      if (typeof result === 'string') {
+        resolve(result);
+        return;
+      }
+      reject(new Error('Failed to read image response as data URL'));
+    };
+    reader.onerror = () => reject(reader.error ?? new Error('FileReader error'));
+    reader.readAsDataURL(blob);
+  });
 }
 
 function mapHttpResponseBody(body: string): string {
