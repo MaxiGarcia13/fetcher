@@ -1,3 +1,4 @@
+import type { ClipboardEvent } from 'react';
 import type { KeyValueEntry } from './types';
 import { cn } from '@maxigarcia/js-utils';
 import { AutocompleteInput } from '@/components/autocomplete-input';
@@ -22,6 +23,7 @@ export interface KeyValueTableRowProps {
   onMaskToggle: () => void;
   onVisibilityToggle: () => void;
   onRemoveRow: () => void;
+  onPasteObject?: (clipboardText: string) => boolean;
 }
 
 export function KeyValueTableRow({
@@ -37,15 +39,25 @@ export function KeyValueTableRow({
   onMaskToggle,
   onVisibilityToggle,
   onRemoveRow,
+  onPasteObject,
 }: KeyValueTableRowProps) {
   const rowNumber = index + 1;
   const { hidden: isHidden, masked: isMasked } = entry;
+
+  function handlePasteObject(event: ClipboardEvent<HTMLInputElement>) {
+    if (!onPasteObject)
+      return;
+    const text = event.clipboardData.getData('text/plain');
+    if (onPasteObject(text))
+      event.preventDefault();
+  }
 
   return (
     <div className="grid grid-cols-[1fr_1fr_auto]">
       <AutocompleteInput
         value={entry.key}
         onChange={onKeyChange}
+        onPaste={handlePasteObject}
         placeholder={keyFieldPlaceholder}
         suggestions={suggestedKeys}
         aria-label={`Key row ${rowNumber}`}
@@ -55,6 +67,7 @@ export function KeyValueTableRow({
       <AutocompleteInput
         value={entry.value}
         onChange={onValueChange}
+        onPaste={handlePasteObject}
         type={isMasked ? 'password' : 'text'}
         placeholder={valueFieldPlaceholder}
         suggestions={suggestedValues}

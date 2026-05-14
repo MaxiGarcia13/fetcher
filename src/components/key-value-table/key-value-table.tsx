@@ -1,6 +1,7 @@
 import type { KeyValueEntry } from './types';
-import { cn } from '@maxigarcia/js-utils';
+import { cn, isRecord, toFlatObject } from '@maxigarcia/js-utils';
 import { useMemo } from 'react';
+import { tryParseJson } from '@/utils/value';
 import { KeyValueTableRow } from './key-value-table-row';
 import { applySpreadsheetTrailingBlankRow } from './utils';
 
@@ -80,6 +81,30 @@ export function KeyValueTable({
     emit(next);
   }
 
+  function replaceRowWithPastedObject(index: number, clipboardText: string) {
+    const parsed = tryParseJson(clipboardText);
+
+    if (!isRecord(parsed))
+      return false;
+
+    const flattened = toFlatObject(parsed);
+
+    const next = [
+      ...value.slice(0, index),
+      ...Object.entries(flattened).map(([key, value]) => ({
+        id: crypto.randomUUID(),
+        key,
+        value: typeof value === 'string' ? value : JSON.stringify(value),
+        hidden: false,
+        masked: false,
+      })),
+      ...value.slice(index + 1),
+    ];
+
+    emit(next);
+    return true;
+  }
+
   return (
     <section className={cn('space-y-3', className)}>
       <div className="grid grid-cols-[1fr_1fr_148px] gap-2 text-xs tracking-wide text-gray-400 uppercase">
@@ -113,6 +138,9 @@ export function KeyValueTable({
                     }}
                     onValueChange={(nextValue) => {
                       updateCell(index, 'value', nextValue);
+                    }}
+                    onPasteObject={(clipboardText) => {
+                      return replaceRowWithPastedObject(index, clipboardText);
                     }}
                     onMaskToggle={() => {
                       toggleRowMask(entry.id);

@@ -1,3 +1,5 @@
+import { removeTrailingCommas, unwrapString } from '@maxigarcia/js-utils';
+
 const NUMERIC_STRING_PATTERN = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i;
 
 function isNumericString(value: string): boolean {
@@ -6,7 +8,14 @@ function isNumericString(value: string): boolean {
 
 export function tryParseJson(value: string): unknown | undefined {
   try {
-    return JSON.parse(value);
+    const fixed = value.replace(
+      /([{,]\s*)([a-z_$][\w$]*)(\s*:)/gi,
+      '$1"$2"$3',
+    );
+    const unwrapped = unwrapString(fixed);
+    const removedTrailingCommas = removeTrailingCommas(unwrapped);
+
+    return JSON.parse(removedTrailingCommas);
   } catch {
     return undefined;
   }
