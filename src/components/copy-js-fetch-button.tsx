@@ -75,7 +75,13 @@ ${JSON.stringify(options, null, 2)})
       position="bottom"
       className={className}
     >
-      <Button variant={data.variant} className={className} {...props} onClick={handleCopy}>
+      <Button
+        variant={data.variant}
+        className={className}
+        disabled={!url}
+        {...props}
+        onClick={handleCopy}
+      >
         {data.icon}
       </Button>
     </Tooltip>
