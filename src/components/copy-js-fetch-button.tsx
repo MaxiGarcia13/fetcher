@@ -36,30 +36,37 @@ export function CopyJsFetchButton({ className, ...props }: CopyJsFetchButtonProp
 
   const handleCopy = () => {
     setIsCopied(true);
+    try {
+      const paramsObject = parseObjectFromKeyValueEntries(params);
+      const decodedParams = new URLSearchParams(paramsObject);
+      const decodedUrl = new URL(url);
+      const options = {
+        method,
+        headers: parseObjectFromKeyValueEntries(headers),
+        ...(METHODS_WITH_BODY.includes(method) ? { body } : {}),
+      };
+      if (decodedParams.size > 0) {
+        decodedUrl.search = decodedParams.toString();
+      }
 
-    const paramsObject = parseObjectFromKeyValueEntries(params);
-    const decodedParams = new URLSearchParams(paramsObject);
-    const decodedUrl = new URL(url);
-    const options = {
-      method,
-      headers: parseObjectFromKeyValueEntries(headers),
-      ...(METHODS_WITH_BODY.includes(method) ? { body } : {}),
-    };
-    if (decodedParams.size > 0) {
-      decodedUrl.search = decodedParams.toString();
-    }
-
-    navigator.clipboard.writeText(
-      `fetch('${decodedUrl}', 
+      navigator.clipboard.writeText(
+        `fetch('${decodedUrl}', 
 ${JSON.stringify(options, null, 2)})
 .then(response => response.json())
 .then(data => console.log(data))
 .catch(error => console.error(error));`,
-    );
+      );
 
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 1000);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 1000);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 1000);
+    }
   };
 
   return (
