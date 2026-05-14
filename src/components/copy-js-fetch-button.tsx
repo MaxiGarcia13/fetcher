@@ -35,7 +35,6 @@ export function CopyJsFetchButton({ className, ...props }: CopyJsFetchButtonProp
       };
 
   const handleCopy = () => {
-    setIsCopied(true);
     try {
       const paramsObject = parseObjectFromKeyValueEntries(params);
       const decodedParams = new URLSearchParams(paramsObject);
@@ -51,15 +50,12 @@ export function CopyJsFetchButton({ className, ...props }: CopyJsFetchButtonProp
 
       navigator.clipboard.writeText(
         `fetch('${decodedUrl}', 
-${JSON.stringify(options, null, 2)})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error(error));`,
+        ${JSON.stringify(options, null, 2)})
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));`,
       );
-
-      setTimeout(() => {
-        setIsCopied(false);
-      }, 1000);
+      setIsCopied(true);
     } catch (error) {
       console.error(error);
     } finally {

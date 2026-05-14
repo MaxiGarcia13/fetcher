@@ -40,13 +40,17 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
   }
 
   const handleShare = () => {
-    setIsCopied(true);
-    const url = window.location.href;
-    navigator.clipboard.writeText(url);
-
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 1000);
+    try {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url);
+      setIsCopied(true);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 1000);
+    }
   };
 
   return (
