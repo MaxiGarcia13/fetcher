@@ -10,9 +10,17 @@ interface EditorProps {
   'onChange'?: (value: string) => void;
   'readOnly'?: boolean;
   'data-testid'?: string;
+  'language'?: 'json' | 'html' | 'markdown';
 }
 
-export function Editor({ className, value, onChange, readOnly, 'data-testid': dataTestId }: EditorProps) {
+export function Editor({
+  className,
+  value,
+  onChange,
+  readOnly,
+  'data-testid': dataTestId,
+  language,
+}: EditorProps) {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const editorInstanceRef = useRef<editor.IStandaloneCodeEditor>(null);
 
@@ -48,6 +56,16 @@ export function Editor({ className, value, onChange, readOnly, 'data-testid': da
       };
     }
   }, []);
+
+  useEffect(() => {
+    const resolvedLanguage = language ?? EDITOR_CONSTRUCTION_OPTIONS.language ?? 'json';
+
+    const model = editorInstanceRef.current?.getModel();
+
+    if (model) {
+      editor.setModelLanguage(model, resolvedLanguage);
+    }
+  }, [language]);
 
   useEffect(() => {
     if (editorInstanceRef.current && value !== editorInstanceRef.current.getValue()) {

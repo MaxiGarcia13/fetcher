@@ -9,7 +9,6 @@ editor.defineTheme(THEME_NAME, draculaTheme);
 editor.setTheme(THEME_NAME);
 
 export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOptions = {
-  language: 'json',
   theme: THEME_NAME,
 
   fontFamily: 'Fira Code, monospace',

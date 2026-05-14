@@ -4,17 +4,10 @@ import { LazyEditor } from '@/components/editor';
 import { EditorSkeleton } from '@/components/skeleton';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { useHttpResponseState } from '@/store/http-response';
+import { errorEditorValueAndLanguage, isImageResponseBody, responseEditorLanguage } from '@/utils/http-response';
 
 interface Props {
   className?: string;
-}
-
-function isImageResponseBody(headers: Record<string, string>, body: string): boolean {
-  const contentType = (headers['content-type'] ?? '').split(';')[0]?.trim().toLowerCase() ?? '';
-  if (contentType.startsWith('image/')) {
-    return true;
-  }
-  return body.startsWith('data:image/');
 }
 
 export function RequestResponse({ className }: Props) {
@@ -25,10 +18,12 @@ export function RequestResponse({ className }: Props) {
   }
 
   if (error) {
+    const { value, language } = errorEditorValueAndLanguage(error);
     return (
       <LazyEditor
         className={cn('min-h-0 flex-1', className)}
-        value={JSON.stringify(error, null, 2)}
+        value={value}
+        language={language}
         data-testid={HTTP_REQUEST_TEST_ID.RESPONSE_EDITOR}
         readOnly
       />
@@ -61,6 +56,7 @@ export function RequestResponse({ className }: Props) {
     <LazyEditor
       className={cn('min-h-0 flex-1', className)}
       value={body}
+      language={responseEditorLanguage(headers, body)}
       data-testid={HTTP_REQUEST_TEST_ID.RESPONSE_EDITOR}
       readOnly
     />
