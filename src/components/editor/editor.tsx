@@ -38,7 +38,6 @@ export function Editor({
           ...EDITOR_CONSTRUCTION_OPTIONS,
           contextmenu: false,
           readOnly,
-          folding: !readOnly,
           value,
         },
       );
