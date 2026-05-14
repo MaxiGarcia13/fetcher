@@ -26,12 +26,12 @@ export function ContextMenuItem({ onClick, children, icon, command }: ContextMen
           </span>
         )
       }
-      <span className="flex-1">
+      <span className="mt-1 flex-1">
         {children}
       </span>
       {
         command && (
-          <span className="shrink-0">
+          <span className="mt-1 shrink-0">
             {command}
           </span>
         )

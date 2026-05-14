@@ -13,7 +13,7 @@ export function ContextMenuPanel({ x, y, editor, onActionClick }: ContextMenuPan
   return (
     <div
       role="menu"
-      className="fixed z-50 min-w-[160px] rounded-md border border-gray-600 bg-gray-700 py-2 shadow-xl"
+      className="fixed z-50 min-w-[160px] rounded-md border border-gray-700 bg-gray-800 py-2 shadow-xl"
       style={{ left: x, top: y }}
       onPointerDown={(event) => event.stopPropagation()}
     >
