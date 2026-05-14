@@ -2,6 +2,7 @@ import type { ComponentProps } from 'react';
 import { cn } from '@maxigarcia/js-utils';
 import { SAVED_SESSIONS_TEST_ID } from '@/constants/test-ids';
 import { resetHttpRequestState, useHttpRequestState } from '@/store/http-request';
+import { useHttpResponseState } from '@/store/http-response';
 import { useSavedSessionsState } from '@/store/saved-sessions';
 import { Button } from './button';
 import { PlusIcon } from './icons/plus';
@@ -14,6 +15,8 @@ export interface NewSessionButtonProps extends ComponentProps<typeof Button> {
 
 export function NewSessionButton({ className, onAfterNewSession, size }: NewSessionButtonProps) {
   const { appendSession, setActiveSession } = useSavedSessionsState();
+  const { clearResponse } = useHttpResponseState();
+
   const { url } = useHttpRequestState();
 
   const handleClick = () => {
@@ -26,6 +29,7 @@ export function NewSessionButton({ className, onAfterNewSession, size }: NewSess
     });
 
     resetHttpRequestState();
+    clearResponse();
 
     onAfterNewSession?.();
   };
