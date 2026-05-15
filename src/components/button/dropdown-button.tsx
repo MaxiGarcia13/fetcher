@@ -133,6 +133,7 @@ export function DropdownButton({
             <MenuItem
               key={item.id ?? index}
               disabled={item.disabled}
+              selected={index === selectedIndex}
               onClick={() => {
                 item.onClick?.();
                 closeMenu();
