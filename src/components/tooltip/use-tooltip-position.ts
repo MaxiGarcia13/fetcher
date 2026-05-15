@@ -1,12 +1,14 @@
-import type { TooltipCoordinates, TooltipPlacement } from './types';
+import type { RefObject } from 'react';
+import type { TooltipPlacement } from './types';
+import type { Coords } from '@/utils/clamp-to-viewport';
 import { useFloatingPosition } from '@/hooks/use-floating-position';
 import { getTooltipComputePlacement } from './tooltip-position';
 
 interface UseTooltipPositionOptions {
   isOpen: boolean;
   placement: TooltipPlacement;
-  triggerElement: HTMLDivElement | null;
-  tooltipElement: HTMLSpanElement | null;
+  triggerElement: RefObject<HTMLDivElement>;
+  tooltipElement: RefObject<HTMLSpanElement>;
 }
 
 export function useTooltipPosition({
@@ -14,7 +16,7 @@ export function useTooltipPosition({
   placement,
   triggerElement,
   tooltipElement,
-}: UseTooltipPositionOptions): TooltipCoordinates | null {
+}: UseTooltipPositionOptions): Coords | null {
   return useFloatingPosition({
     isOpen,
     anchorElement: triggerElement,

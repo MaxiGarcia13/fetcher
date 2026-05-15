@@ -1,32 +1,31 @@
-import type { ViewportCoordinates } from '@/utils/clamp-to-viewport';
+import type { RefObject } from 'react';
+import type { Coords } from '@/utils/clamp-to-viewport';
 import { useEffect, useState } from 'react';
-import { clampToViewport, toPointRect } from '@/utils/clamp-to-viewport';
+import { clampToViewport, coordsToRect } from '@/utils/clamp-to-viewport';
 
 export type ComputeFloatingPosition = (
   anchorRect: DOMRectReadOnly,
   floatingRect: DOMRectReadOnly,
-) => ViewportCoordinates;
+) => Coords;
 
 interface UseFloatingPositionOptions {
   isOpen: boolean;
-  anchorElement?: HTMLElement | null;
-  anchorX?: number;
-  anchorY?: number;
-  floatingElement: HTMLElement | null;
+  anchorElement?: RefObject<HTMLElement | null>;
+  anchorCoords?: Coords;
+  floatingElement: RefObject<HTMLElement | null>;
   computePosition: ComputeFloatingPosition;
 }
 
 function getAnchorRect(
   anchorElement: HTMLElement | null | undefined,
-  anchorX: number | undefined,
-  anchorY: number | undefined,
+  anchorCoords: Coords | undefined,
 ): DOMRectReadOnly | null {
   if (anchorElement) {
     return anchorElement.getBoundingClientRect();
   }
 
-  if (anchorX !== undefined && anchorY !== undefined) {
-    return toPointRect(anchorX, anchorY);
+  if (anchorCoords) {
+    return coordsToRect(anchorCoords);
   }
 
   return null;
@@ -35,12 +34,11 @@ function getAnchorRect(
 export function useFloatingPosition({
   isOpen,
   anchorElement,
-  anchorX,
-  anchorY,
+  anchorCoords,
   floatingElement,
   computePosition,
 }: UseFloatingPositionOptions) {
-  const [coords, setCoords] = useState<ViewportCoordinates | null>(null);
+  const [coords, setCoords] = useState<Coords | null>(null);
 
   useEffect(() => {
     if (!isOpen) {
@@ -48,33 +46,37 @@ export function useFloatingPosition({
     }
 
     const updatePosition = () => {
-      const anchorRect = getAnchorRect(anchorElement, anchorX, anchorY);
-      if (!anchorRect || !floatingElement) {
+      const anchorRect = getAnchorRect(anchorElement?.current, anchorCoords);
+      const floatingNode = floatingElement.current;
+      if (!anchorRect || !floatingNode) {
         return;
       }
 
-      const floatingRect = floatingElement.getBoundingClientRect();
+      const floatingRect = floatingNode.getBoundingClientRect();
       const { top, left } = computePosition(anchorRect, floatingRect);
       setCoords(clampToViewport(floatingRect, top, left));
     };
 
+    const animationFrameId = window.requestAnimationFrame(updatePosition);
     window.addEventListener('resize', updatePosition);
     window.addEventListener('scroll', updatePosition, true);
 
     let resizeObserver: ResizeObserver | undefined;
-    if (floatingElement) {
+    const floatingNode = floatingElement.current;
+    if (floatingNode) {
       resizeObserver = new ResizeObserver(() => {
         window.requestAnimationFrame(updatePosition);
       });
-      resizeObserver.observe(floatingElement);
+      resizeObserver.observe(floatingNode);
     }
 
     return () => {
+      window.cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', updatePosition);
       window.removeEventListener('scroll', updatePosition, true);
       resizeObserver?.disconnect();
     };
-  }, [isOpen, anchorElement, anchorX, anchorY, floatingElement, computePosition]);
+  }, [isOpen, anchorElement, anchorCoords?.top, anchorCoords?.left, floatingElement, computePosition]);
 
   return coords;
 }

@@ -1,6 +1,6 @@
 export const VIEWPORT_MARGIN = 8;
 
-export interface ViewportCoordinates {
+export interface Coords {
   top: number;
   left: number;
 }
@@ -10,7 +10,7 @@ export function clampToViewport(
   top: number,
   left: number,
   margin = VIEWPORT_MARGIN,
-): ViewportCoordinates {
+): Coords {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
 
@@ -23,6 +23,6 @@ export function clampToViewport(
   return { top: clampedTop, left: clampedLeft };
 }
 
-export function toPointRect(x: number, y: number): DOMRectReadOnly {
-  return new DOMRect(x, y, 0, 0);
+export function coordsToRect(coords: Coords): DOMRectReadOnly {
+  return new DOMRect(coords.left, coords.top, 0, 0);
 }

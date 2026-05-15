@@ -16,9 +16,9 @@ interface ContextMenuPanelProps {
 export function ContextMenuPanel({ x, y, editor, onActionClick, menuRef }: ContextMenuPanelProps) {
   return (
     <Menu
-      menuRef={menuRef}
+      ref={menuRef}
       placement="at-point"
-      anchorPoint={{ x, y }}
+      coords={{ top: y, left: x }}
       onClose={onActionClick}
     >
       <PasteActionMenuItem editor={editor} onActionClick={onActionClick} />

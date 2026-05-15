@@ -1,13 +1,15 @@
-import type { CSSProperties, ReactNode, RefObject } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactNode, RefObject } from 'react';
+import type { Coords } from '@/utils/clamp-to-viewport';
 import { cn } from '@maxigarcia/js-utils';
-import { useCallback, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useFloatingPosition } from '@/hooks/use-floating-position';
 import { computeAtPointPosition, computeBottomEndPosition } from './menu-position';
 import { useMenuDismiss } from './use-menu-dismiss';
 
 export type MenuPlacement = 'bottom-end' | 'at-point';
 
-interface MenuProps {
+interface MenuProps extends HTMLAttributes<HTMLDivElement> {
+  ref?: RefObject<HTMLDivElement | null>;
   id?: string;
   className?: string;
   style?: CSSProperties;
@@ -15,7 +17,7 @@ interface MenuProps {
   menuRef?: RefObject<HTMLDivElement | null>;
   anchorRef?: RefObject<HTMLElement | null>;
   placement?: MenuPlacement;
-  anchorPoint?: { x: number; y: number };
+  coords?: Coords;
   onClose: () => void;
 }
 
@@ -25,6 +27,7 @@ const placementComputePosition = {
 } as const;
 
 export function Menu({
+  ref,
   id,
   className,
   style,
@@ -32,31 +35,18 @@ export function Menu({
   menuRef,
   anchorRef,
   placement = 'bottom-end',
-  anchorPoint,
+  coords: anchorCoords,
   onClose,
 }: MenuProps) {
   const internalRef = useRef<HTMLDivElement | null>(null);
-  const [menuElement, setMenuElement] = useState<HTMLDivElement | null>(null);
-  const usesFloatingPosition = placement !== undefined;
-  const anchorElement = placement === 'bottom-end' ? anchorRef?.current ?? null : null;
 
-  const setMenuRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      internalRef.current = node;
-      setMenuElement(node);
-      if (menuRef) {
-        menuRef.current = node;
-      }
-    },
-    [menuRef],
-  );
+  const usesFloatingPosition = placement !== undefined;
 
   const coords = useFloatingPosition({
     isOpen: usesFloatingPosition,
-    anchorElement,
-    anchorX: placement === 'at-point' ? anchorPoint?.x : undefined,
-    anchorY: placement === 'at-point' ? anchorPoint?.y : undefined,
-    floatingElement: menuElement,
+    anchorElement: anchorRef,
+    anchorCoords: placement === 'at-point' ? anchorCoords : undefined,
+    floatingElement: ref ?? internalRef,
     computePosition: placement ? placementComputePosition[placement] : computeAtPointPosition,
   });
 
@@ -65,7 +55,7 @@ export function Menu({
   return (
     <div
       id={id}
-      ref={setMenuRef}
+      ref={ref ?? internalRef}
       role="menu"
       className={cn(
         'z-50 min-w-[160px] rounded-md border border-gray-700 bg-gray-800 py-2 shadow-xl',

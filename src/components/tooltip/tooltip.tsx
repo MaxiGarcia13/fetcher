@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { TooltipPlacement } from './types';
 import { cn } from '@maxigarcia/js-utils';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { TooltipContent } from './tooltip-content';
 import { useTooltipPosition } from './use-tooltip-position';
 
@@ -23,14 +23,14 @@ export function Tooltip({
   disabled,
 }: TooltipProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [triggerElement, setTriggerElement] = useState<HTMLDivElement | null>(null);
-  const [tooltipElement, setTooltipElement] = useState<HTMLSpanElement | null>(null);
+  const triggerElementRef = useRef<HTMLDivElement>(null);
+  const tooltipElementRef = useRef<HTMLSpanElement>(null);
 
   const coords = useTooltipPosition({
     isOpen,
     placement,
-    triggerElement,
-    tooltipElement,
+    triggerElement: triggerElementRef,
+    tooltipElement: tooltipElementRef,
   });
 
   const handleOpen = () => {
@@ -43,7 +43,7 @@ export function Tooltip({
 
   return (
     <div
-      ref={setTriggerElement}
+      ref={triggerElementRef}
       className={cn('relative inline-flex', className)}
       onMouseEnter={handleOpen}
       onMouseLeave={handleClose}
@@ -53,10 +53,10 @@ export function Tooltip({
       {children}
       {!disabled && isOpen && (
         <TooltipContent
-          content={content}
+          ref={tooltipElementRef}
+          children={content}
           coords={coords}
-          contentClassName={contentClassName}
-          setTooltipElement={setTooltipElement}
+          className={contentClassName}
         />
       )}
     </div>
