@@ -1,6 +1,7 @@
 import type { ComponentProps, ReactNode } from 'react';
 import { cn } from '@maxigarcia/js-utils';
 import { useEffect, useId, useRef, useState } from 'react';
+import { storage } from '@/utils/storage';
 import { ChevronDownIcon } from '../icons/chevron-down';
 import { Button } from './button';
 import { splitButtonOuterHeightClassName, variantClassName } from './button-styles';
@@ -31,7 +32,12 @@ export function DropdownButton({
   const menuId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const [selectedIndex, setSelectedIndex] = useState(defaultSelectedItemIndex);
+  const STORAGE_KEY = `fetcher.dropdown-button-selected-index-${menuId}`;
+
+  const [selectedIndex, setSelectedIndex] = useState(() => {
+    const storedIndex = storage.read(STORAGE_KEY);
+    return storedIndex ? Number.parseInt(storedIndex) : defaultSelectedItemIndex;
+  });
   const selectedItem = menuItems[selectedIndex];
 
   useEffect(() => {
@@ -134,6 +140,7 @@ export function DropdownButton({
               onClose={() => {
                 setOpen(false);
                 setSelectedIndex(index);
+                storage.write(STORAGE_KEY, index.toString());
               }}
             />
           ))}
