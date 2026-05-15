@@ -17,7 +17,12 @@ export function HistoryButton({ className, size }: HistoryButtonProps) {
   return (
     <>
       <Tooltip content="Saved requests" placement="bottom" className={className}>
-        <Button className={cn(className)} onClick={() => setOpen(true)} size={size}>
+        <Button
+          aria-label="Saved requests"
+          className={cn(className)}
+          onClick={() => setOpen(true)}
+          size={size}
+        >
           <HistoryIcon className="size-4" />
         </Button>
       </Tooltip>
