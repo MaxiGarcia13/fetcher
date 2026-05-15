@@ -57,7 +57,7 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
             </>
           ),
           children: (
-            <Tooltip content="Copy a link to this request, excluding masked parameters and headers." placement="bottom" className={className}>
+            <Tooltip content="Copy a link to this request, excluding masked parameters and headers.">
               <CopyToClipboardContent
                 success={isCopied}
                 error={error}
@@ -80,7 +80,7 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
           ),
           onClick: handleShareFullLink,
           children: (
-            <Tooltip content="Copy the current URL, including masked parameters and headers." placement="bottom" className={className}>
+            <Tooltip content="Copy the current URL, including masked parameters and headers.">
               <CopyToClipboardContent
                 success={isCopied}
                 error={error}
