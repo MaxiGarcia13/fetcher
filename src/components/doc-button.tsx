@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react';
+import { isValidHttpUrl } from '@maxigarcia/js-utils';
 import { useHttpRequestState } from '@/store/http-request';
 import { Button } from './button';
 import { DocIcon } from './icons/doc';
@@ -15,7 +16,13 @@ export function DocButton({ className, size }: DocButtonProps) {
 
   return (
     <Tooltip content="Generate documentation for this request" placement="bottom" className={className}>
-      <Button onClick={handleClick} className={className} disabled={!url} size={size}>
+      <Button
+        aria-label="Open request documentation"
+        onClick={handleClick}
+        className={className}
+        disabled={!isValidHttpUrl(url)}
+        size={size}
+      >
         <DocIcon className="size-4" />
       </Button>
     </Tooltip>
