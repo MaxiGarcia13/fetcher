@@ -1,14 +1,14 @@
 import type { ComponentProps, ReactNode } from 'react';
+import type { Button } from './button';
+import { encodeText } from '@maxigarcia/js-utils';
+import { HTTP_REQUEST_BODY_PARAM, HTTP_REQUEST_HEADERS_PARAM, HTTP_REQUEST_METHOD_PARAM, HTTP_REQUEST_PARAMS_PARAM, HTTP_REQUEST_URL_PARAM } from '@/domain/http-request';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
-import { Button } from './button';
+import { useHttpRequestState } from '@/store/http-request';
+import { DropdownButton } from './button';
 import { CopyToClipboardContent } from './copy-to-clipboard-content';
 import { LinkIcon } from './icons/link';
+import { LinkPlusIcon } from './icons/link-plus';
 import { Tooltip } from './tooltip';
-
-interface ShareButtonData {
-  tooltip: string;
-  variant: ComponentProps<typeof Button>['variant'];
-}
 
 export interface ShareButtonProps extends ComponentProps<typeof Button> {
   className?: string;
@@ -17,39 +17,83 @@ export interface ShareButtonProps extends ComponentProps<typeof Button> {
 
 export function ShareButton({ className, children, size }: ShareButtonProps) {
   const { isCopied, error, copyToClipboard } = useCopyToClipboard();
+  const requestState = useHttpRequestState();
 
-  const data: ShareButtonData = !isCopied
-    ? {
-        tooltip: 'Share link',
-        variant: 'default',
-      }
-    : {
-        tooltip: 'Link copied',
-        variant: 'success',
-      };
-
-  const handleShare = () => {
+  const handleShareFullLink = () => {
     const url = window.location.href;
     copyToClipboard(url);
   };
 
+  const handleShareWithoutMaskParams = () => {
+    const newUrlnew = new URL(window.location.origin + window.location.pathname);
+
+    const newParams = new URLSearchParams();
+    newParams.set(HTTP_REQUEST_METHOD_PARAM, encodeText(requestState.method));
+    newParams.set(HTTP_REQUEST_URL_PARAM, encodeText(requestState.url));
+    newParams.set(HTTP_REQUEST_BODY_PARAM, encodeText(requestState.body));
+
+    const filteredParams = requestState.params.filter((param) => !param.masked);
+    newParams.set(HTTP_REQUEST_PARAMS_PARAM, encodeText(JSON.stringify(filteredParams)));
+
+    const filteredHeaders = requestState.headers.filter((header) => !header.masked);
+    newParams.set(HTTP_REQUEST_HEADERS_PARAM, encodeText(JSON.stringify(filteredHeaders)));
+
+    newUrlnew.search = newParams.toString();
+
+    copyToClipboard(newUrlnew.toString());
+  };
+
   return (
-    <Tooltip content={data.tooltip} placement="bottom" className={className}>
-      <Button
-        onClick={handleShare}
-        variant={data.variant}
-        className={className}
-        size={size}
-      >
-        <CopyToClipboardContent
-          success={isCopied}
-          error={error}
-        >
-          <LinkIcon className="size-4" />
-          {' '}
-          {children}
-        </CopyToClipboardContent>
-      </Button>
-    </Tooltip>
+    <DropdownButton
+      variant={isCopied ? 'success' : 'default'}
+      className={className}
+      size={size}
+      menuItems={[
+        {
+          label: (
+            <>
+              <LinkIcon className="size-4" />
+              Share link
+            </>
+          ),
+          children: (
+            <Tooltip content="Copy a link to this request, excluding masked parameters and headers." placement="bottom" className={className}>
+              <CopyToClipboardContent
+                success={isCopied}
+                error={error}
+              >
+                <LinkIcon className="size-4" />
+                {' '}
+                {children}
+              </CopyToClipboardContent>
+            </Tooltip>
+          ),
+          onClick: handleShareWithoutMaskParams,
+        },
+        {
+          label: (
+            <>
+
+              <LinkPlusIcon className="size-4" />
+              Share full link
+            </>
+          ),
+          onClick: handleShareFullLink,
+          children: (
+            <Tooltip content="Copy the current URL, including masked parameters and headers." placement="bottom" className={className}>
+              <CopyToClipboardContent
+                success={isCopied}
+                error={error}
+              >
+                <LinkPlusIcon className="size-4" />
+                {' '}
+                {children}
+              </CopyToClipboardContent>
+            </Tooltip>
+          ),
+        },
+
+      ]}
+    />
   );
 }

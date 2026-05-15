@@ -16,9 +16,9 @@ export function ActionsSession({ className }: ActionsSessionProps) {
   return (
     <div className={cn('flex gap-2 w-full', className)}>
       <CopyRequestButton className="flex-1" size="sm" />
+      <ShareButton className="flex-1" size="sm" />
       <DocButton className="flex-1" size="sm" />
       <HistoryButton className="block flex-1 sm:hidden" size="sm" />
-      <ShareButton className="flex-1" size="sm" />
       <NewSessionButton onAfterNewSession={refresh} className="flex-1" size="sm" />
     </div>
   );
