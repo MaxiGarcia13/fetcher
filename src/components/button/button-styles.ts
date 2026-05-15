@@ -2,8 +2,12 @@ export type ButtonVariant = 'default' | 'primary' | 'success' | 'transparent' | 
 
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
+/** Disabled appearance for buttons (`disabled:`) and split-button wrappers (applied when `disabled` is true). */
+export const disabledButtonClassName
+  = 'cursor-not-allowed bg-gray-800 border-transparent hover:bg-gray-800 focus-visible:ring-0';
+
 /** Shared Tailwind classes for {@link import('./button').Button} and split-button wrappers. */
-export const buttonBaseClassName = 'inline-flex items-center justify-center cursor-pointer rounded font-medium outline-none transition-all duration-200 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-800 disabled:border-transparent';
+export const buttonBaseClassName = `inline-flex items-center justify-center cursor-pointer rounded font-medium outline-none transition-all duration-200 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-800 disabled:border-transparent disabled:hover:bg-gray-800 disabled:focus-visible:ring-0`;
 
 /** Shared Tailwind classes for {@link import('./button').Button} and split-button wrappers. */
 export const variantClassName: Record<ButtonVariant, string> = {

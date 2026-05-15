@@ -6,7 +6,7 @@ import { Menu, MenuItem } from '@/components/menu';
 import { storage } from '@/utils/storage';
 import { ChevronDownIcon } from '../icons/chevron-down';
 import { Button } from './button';
-import { buttonBaseClassName, splitButtonOuterHeightClassName, variantClassName } from './button-styles';
+import { buttonBaseClassName, disabledButtonClassName, splitButtonOuterHeightClassName, variantClassName } from './button-styles';
 
 interface DropdownButtonMenuItem
   extends Omit<ComponentProps<typeof MenuItem>, 'children' | 'onClick'> {
@@ -74,6 +74,7 @@ export function DropdownButton({
         'relative inline-flex rounded',
         splitButtonOuterHeightClassName[size],
         variantClassName[variant],
+        disabled && disabledButtonClassName,
         className,
       )}
     >
@@ -102,7 +103,10 @@ export function DropdownButton({
         variant="transparent"
         size={size}
         disabled={disabled}
-        className={cn('h-full rounded rounded-l-none border-l', borderSeparatorClassNames[variant])}
+        className={cn(
+          'h-full rounded rounded-l-none border-l',
+          disabled ? 'border-transparent' : borderSeparatorClassNames[variant],
+        )}
         aria-expanded={open}
         aria-haspopup="menu"
         aria-controls={menuId}
