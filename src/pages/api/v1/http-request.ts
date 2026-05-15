@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { parseBodyForRequest } from '@/domain/http-request/response.utils';
+import { fetchHttpRequest } from '@/domain/http-request/fetch-http-request';
 
 const HOP_BY_HOP_RESPONSE_HEADERS = new Set([
   'connection',
@@ -18,15 +18,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const { url, method, params, headers, body } = await request.json();
 
-    const urlParams = new URLSearchParams(params);
-    const urlWithParams = new URL(url);
-    urlWithParams.search = urlParams.toString();
-
-    const response = await fetch(urlWithParams.toString(), {
-      method,
-      headers,
-      body: parseBodyForRequest(method, body),
-    });
+    const response = await fetchHttpRequest(url, { method, params, headers, body });
 
     const proxyHeaders = new Headers();
 

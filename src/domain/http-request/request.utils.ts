@@ -15,6 +15,7 @@ export function parseObjectFromKeyValueEntries<T extends Record<string, string>>
     .map((entry) => [entry.key, entry.value]),
   ) as T;
 }
+
 export function filterNotVisibleAndEmptyKey(entry: KeyValueEntry) {
   return !entry.hidden && entry.key !== '';
 }

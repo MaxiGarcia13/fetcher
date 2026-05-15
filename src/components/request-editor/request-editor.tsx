@@ -2,7 +2,7 @@ import { cn } from '@maxigarcia/js-utils';
 import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
-import { sendHttpRequest } from '@/domain/http-request';
+import { submitHttpRequest } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
 import {
   saveHttpResponse,
@@ -24,7 +24,7 @@ export function RequestEditor({ className }: Props) {
   const handleSend = () => {
     setHttpResponseLoading(true);
 
-    sendHttpRequest()
+    submitHttpRequest()
       .then((response) => saveHttpResponse(response))
       .catch((error) => saveHttpResponseError(error))
       .finally(() => setHttpResponseLoading(false));

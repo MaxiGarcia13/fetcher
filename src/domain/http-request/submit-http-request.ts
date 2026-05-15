@@ -1,7 +1,7 @@
 import { $httpRequest } from '@/store/http-request';
 import { getHttpMethod, parseObjectFromKeyValueEntries } from './request.utils';
 
-export function sendHttpRequest() {
+export function submitHttpRequest() {
   const { url, method, params, headers, body } = $httpRequest.get();
 
   return fetch('/api/v1/http-request', {
