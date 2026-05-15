@@ -2,7 +2,7 @@ import type { ComponentProps, ReactNode } from 'react';
 import type { Button } from './button';
 import type { KeyValueEntry } from './key-value-table';
 import { encodeText } from '@maxigarcia/js-utils';
-import { HTTP_REQUEST_BODY_PARAM, HTTP_REQUEST_HEADERS_PARAM, HTTP_REQUEST_METHOD_PARAM, HTTP_REQUEST_PARAMS_PARAM, HTTP_REQUEST_URL_PARAM } from '@/domain/http-request';
+import { filterNotVisibleAndEmptyKey, HTTP_REQUEST_BODY_PARAM, HTTP_REQUEST_HEADERS_PARAM, HTTP_REQUEST_METHOD_PARAM, HTTP_REQUEST_PARAMS_PARAM, HTTP_REQUEST_URL_PARAM } from '@/domain/http-request';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { useHttpRequestState } from '@/store/http-request';
 import { DropdownButton } from './button';
@@ -33,7 +33,7 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
     newParams.set(HTTP_REQUEST_URL_PARAM, encodeText(requestState.url));
     newParams.set(HTTP_REQUEST_BODY_PARAM, encodeText(requestState.body));
 
-    const toEntry = (param: KeyValueEntry) => {
+    const maskValue = (param: KeyValueEntry) => {
       if (param.masked) {
         return {
           ...param,
@@ -44,14 +44,11 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
 
       return param;
     };
-    const toFilterNotVisible = (entry: KeyValueEntry) => {
-      return !entry.hidden;
-    };
 
-    const filteredParams = requestState.params.filter(toFilterNotVisible).map(toEntry);
+    const filteredParams = requestState.params.filter(filterNotVisibleAndEmptyKey).map(maskValue);
     newParams.set(HTTP_REQUEST_PARAMS_PARAM, encodeText(JSON.stringify(filteredParams)));
 
-    const filteredHeaders = requestState.headers.filter(toFilterNotVisible).map(toEntry);
+    const filteredHeaders = requestState.headers.filter(filterNotVisibleAndEmptyKey).map(maskValue);
     newParams.set(HTTP_REQUEST_HEADERS_PARAM, encodeText(JSON.stringify(filteredHeaders)));
 
     newUrlnew.search = newParams.toString();
