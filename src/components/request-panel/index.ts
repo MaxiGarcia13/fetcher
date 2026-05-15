@@ -1,1 +1,1 @@
-export * from './request-panel';
+export * from './lazy-request-panel';

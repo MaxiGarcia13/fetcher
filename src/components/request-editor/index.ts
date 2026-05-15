@@ -1,1 +1,1 @@
-export * from './request-editor';
+export * from './lazy-request-editor';
