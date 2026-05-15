@@ -1,5 +1,5 @@
 import { cn } from '@maxigarcia/js-utils';
-import { LazyEditor } from '@/components/editor';
+import { LazyEditor } from '@/components/editor/lazy-editor';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { useHttpRequestState } from '@/store/http-request';
 
