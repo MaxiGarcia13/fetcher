@@ -19,6 +19,8 @@ interface DropdownButtonMenuItem
 interface DropdownButtonProps extends Omit<ComponentProps<typeof Button>, 'children' | 'onClick'> {
   menuItems: readonly DropdownButtonMenuItem[];
   defaultSelectedItemIndex?: number;
+  /** Accessible name for the menu toggle (chevron) control only. */
+  toggleMenuAriaLabel?: string;
 }
 
 const borderSeparatorClassNames: Record<ButtonVariant, string> = {
@@ -26,7 +28,7 @@ const borderSeparatorClassNames: Record<ButtonVariant, string> = {
   primary: 'border-l border-blue-500',
   success: 'border-l border-green-500',
   transparent: 'border-l border-gray-500',
-  secondary: 'border-l border-sky-400',
+  secondary: 'border-l border-sky-500',
 };
 
 export function DropdownButton({
@@ -36,6 +38,7 @@ export function DropdownButton({
   variant = 'default',
   size = 'md',
   defaultSelectedItemIndex = 0,
+  toggleMenuAriaLabel = 'More options',
   ...rest
 }: DropdownButtonProps) {
   const [open, setOpen] = useState(false);
@@ -68,7 +71,6 @@ export function DropdownButton({
   return (
     <div
       ref={containerRef}
-      role="button"
       className={cn(
         buttonBaseClassName,
         'relative inline-flex rounded',
@@ -110,6 +112,7 @@ export function DropdownButton({
         aria-expanded={open}
         aria-haspopup="menu"
         aria-controls={menuId}
+        aria-label={toggleMenuAriaLabel}
         tabIndex={0}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
