@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import { cn } from '@maxigarcia/js-utils';
 import { lazy, Suspense } from 'react';
-import { EditorSkeleton } from '@/components/skeleton';
+import { EditorSkeleton } from './editor-skeleton';
 
 const Editor = lazy(() =>
   import('./editor').then((m) => ({ default: m.Editor })),
