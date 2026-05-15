@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import { cn } from '@maxigarcia/js-utils';
+import { cn, isValidHttpUrl } from '@maxigarcia/js-utils';
 import { SAVED_SESSIONS_TEST_ID } from '@/constants/test-ids';
 import { resetHttpRequestState, useHttpRequestState } from '@/store/http-request';
 import { useHttpResponseState } from '@/store/http-response';
@@ -38,9 +38,10 @@ export function NewSessionButton({ className, onAfterNewSession, size }: NewSess
     <Tooltip content="New request" placement="bottom" className={className}>
       <Button
         type="button"
+        aria-label="New request"
         className={cn('shrink-0 flex items-center gap-2', className)}
         onClick={handleClick}
-        disabled={!url}
+        disabled={!isValidHttpUrl(url)}
         data-testid={SAVED_SESSIONS_TEST_ID.NEW_SESSION_BUTTON}
         size={size}
       >
