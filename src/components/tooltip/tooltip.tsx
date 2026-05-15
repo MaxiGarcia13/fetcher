@@ -3,6 +3,7 @@ import type { TooltipPlacement } from './types';
 import { cn } from '@maxigarcia/js-utils';
 import { useRef, useState } from 'react';
 import { TooltipContent } from './tooltip-content';
+import { useTooltipDismiss } from './use-tooltip-dismiss';
 import { useTooltipPosition } from './use-tooltip-position';
 
 export interface TooltipProps {
@@ -40,6 +41,8 @@ export function Tooltip({
   };
 
   const handleClose = () => setIsOpen(false);
+
+  useTooltipDismiss(isOpen, handleClose, triggerElementRef);
 
   return (
     <div
