@@ -56,7 +56,7 @@ export function KeyValueTableRow({
 
   return (
     <div className={cn(
-      'grid grid-cols-[1fr_1fr_auto] rounded border',
+      'grid grid-cols-[1fr_1fr_auto] rounded border focus-within:border-gray-200',
       rowBorderClass,
       isHidden && 'border-dashed opacity-80 italic text-gray-300',
     )}
