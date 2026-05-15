@@ -1,4 +1,5 @@
 import type { ComponentProps, ReactNode } from 'react';
+import type { ButtonVariant } from './button-styles';
 import { cn } from '@maxigarcia/js-utils';
 import { useId, useRef, useState } from 'react';
 import { Menu, MenuItem } from '@/components/menu';
@@ -20,6 +21,13 @@ interface DropdownButtonProps extends Omit<ComponentProps<typeof Button>, 'child
   defaultSelectedItemIndex?: number;
 }
 
+const borderSeparatorClassNames: Record<ButtonVariant, string> = {
+  default: 'border-l border-gray-500',
+  primary: 'border-l border-blue-500',
+  success: 'border-l border-green-500',
+  transparent: 'border-l border-gray-500',
+};
+
 export function DropdownButton({
   menuItems,
   className,
@@ -38,10 +46,11 @@ export function DropdownButton({
 
   const [selectedIndex, setSelectedIndex] = useState(() => {
     const storedIndex = storage.read(STORAGE_KEY);
+
     return storedIndex ? Number.parseInt(storedIndex) : defaultSelectedItemIndex;
   });
 
-  const selectedItem = menuItems[selectedIndex];
+  const selectedItem = menuItems[selectedIndex] ?? menuItems[defaultSelectedItemIndex];
 
   const closeMenu = () => setOpen(false);
 
@@ -91,7 +100,7 @@ export function DropdownButton({
         variant="transparent"
         size={size}
         disabled={disabled}
-        className="h-full rounded rounded-l-none border-l border-gray-500"
+        className={cn('h-full rounded rounded-l-none border-l', borderSeparatorClassNames[variant])}
         aria-expanded={open}
         aria-haspopup="menu"
         aria-controls={menuId}

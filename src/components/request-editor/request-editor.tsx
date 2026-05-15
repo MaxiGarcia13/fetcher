@@ -18,7 +18,7 @@ export function RequestEditor({ className }: Props) {
         <RequestMethodSelect
           value={method}
           onChange={setMethod}
-          className="rounded-r-none"
+          className="max-w-[80px] rounded-r-none sm:max-w-none"
           data-testid={HTTP_REQUEST_TEST_ID.METHOD_SELECT}
         />
         <Input
@@ -34,6 +34,7 @@ export function RequestEditor({ className }: Props) {
           data-testid={HTTP_REQUEST_TEST_ID.URL_INPUT}
         />
       </div>
+
       <SubmitButton />
     </header>
   );
