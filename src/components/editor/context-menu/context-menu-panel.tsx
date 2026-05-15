@@ -17,8 +17,8 @@ export function ContextMenuPanel({ x, y, editor, onActionClick, menuRef }: Conte
   return (
     <Menu
       menuRef={menuRef}
-      className="fixed"
-      style={{ left: x, top: y }}
+      placement="at-point"
+      anchorPoint={{ x, y }}
       onClose={onActionClick}
     >
       <PasteActionMenuItem editor={editor} onActionClick={onActionClick} />

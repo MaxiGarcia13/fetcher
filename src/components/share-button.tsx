@@ -54,7 +54,7 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
   };
 
   return (
-    <Tooltip content={data.tooltip} position="bottom" className={className}>
+    <Tooltip content={data.tooltip} placement="bottom" className={className}>
       <Button
         onClick={handleShare}
         variant={data.variant}

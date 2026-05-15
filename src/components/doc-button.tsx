@@ -14,7 +14,7 @@ export function DocButton({ className, size }: DocButtonProps) {
   };
 
   return (
-    <Tooltip content="Generate documentation for this request" position="bottom" className={className}>
+    <Tooltip content="Generate documentation for this request" placement="bottom" className={className}>
       <Button onClick={handleClick} className={className} disabled={!url} size={size}>
         <DocIcon className="size-4" />
       </Button>

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { TooltipPosition } from './types';
+import type { TooltipPlacement } from './types';
 import { cn } from '@maxigarcia/js-utils';
 import { useState } from 'react';
 import { TooltipContent } from './tooltip-content';
@@ -8,7 +8,7 @@ import { useTooltipPosition } from './use-tooltip-position';
 export interface TooltipProps {
   content: ReactNode;
   children: ReactNode;
-  position?: TooltipPosition;
+  placement?: TooltipPlacement;
   className?: string;
   contentClassName?: string;
   disabled?: boolean;
@@ -17,7 +17,7 @@ export interface TooltipProps {
 export function Tooltip({
   content,
   children,
-  position = 'top',
+  placement = 'top',
   className,
   contentClassName,
   disabled,
@@ -28,7 +28,7 @@ export function Tooltip({
 
   const coords = useTooltipPosition({
     isOpen,
-    position,
+    placement,
     triggerElement,
     tooltipElement,
   });

@@ -35,7 +35,7 @@ export function NewSessionButton({ className, onAfterNewSession, size }: NewSess
   };
 
   return (
-    <Tooltip content="New request" position="bottom" className={className}>
+    <Tooltip content="New request" placement="bottom" className={className}>
       <Button
         type="button"
         className={cn('shrink-0 flex items-center gap-2', className)}

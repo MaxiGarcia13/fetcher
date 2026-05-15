@@ -30,6 +30,7 @@ export function DropdownButton({
   ...rest
 }: DropdownButtonProps) {
   const [open, setOpen] = useState(false);
+
   const menuId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -43,6 +44,12 @@ export function DropdownButton({
   const selectedItem = menuItems[selectedIndex];
 
   const closeMenu = () => setOpen(false);
+
+  const handleToggleMenu = (event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setOpen((previous) => !previous);
+    event.stopPropagation();
+  };
 
   if (!selectedItem) {
     return null;
@@ -91,14 +98,10 @@ export function DropdownButton({
         tabIndex={0}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            setOpen((previous) => !previous);
-            event.stopPropagation();
+            handleToggleMenu(event);
           }
         }}
-        onClick={() => {
-          setOpen((previous) => !previous);
-        }}
+        onClick={handleToggleMenu}
       >
         <ChevronDownIcon
           className={cn('size-4 text-current transition-transform', open && 'rotate-180')}
@@ -108,8 +111,8 @@ export function DropdownButton({
       {open && (
         <Menu
           id={menuId}
+          anchorRef={containerRef}
           onClose={closeMenu}
-          className="absolute top-full right-0 mt-1"
         >
           {menuItems.map((item, index) => (
             <MenuItem

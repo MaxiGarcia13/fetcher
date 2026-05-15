@@ -3,7 +3,6 @@ import type { MouseEvent, ReactNode, TouchEvent } from 'react';
 import { cn } from '@maxigarcia/js-utils';
 import { useEffect, useRef, useState } from 'react';
 import { ContextMenuPanel } from './context-menu-panel';
-import { getContextMenuPosition } from './utils/menu-position';
 import { hasTouchMovedBeyondThreshold, LONG_PRESS_DURATION_MS } from './utils/touch';
 
 interface ContextMenuProps {
@@ -21,7 +20,7 @@ export function ContextMenu({ children, editor, className }: ContextMenuProps) {
   const closeMenu = () => setMenuPosition(null);
 
   const openMenuAt = (clientX: number, clientY: number) => {
-    setMenuPosition(getContextMenuPosition(clientX, clientY));
+    setMenuPosition({ x: clientX, y: clientY });
   };
 
   const clearLongPressTimer = () => {
