@@ -1,3 +1,4 @@
+import { isValidHttpUrl } from '@maxigarcia/js-utils';
 import { useState } from 'react';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids';
 import { submitHttpRequest } from '@/domain/http-request';
@@ -24,7 +25,7 @@ const SUBMIT_OPTIONS = {
 } as const;
 
 export function SubmitButton() {
-  const { url, urlError } = useHttpRequestState();
+  const { url } = useHttpRequestState();
   const { isLoading } = useHttpResponseState();
 
   const [selectedSubmitType, setSelectedSubmitType] = useState<'server' | 'client'>(() => {
@@ -43,11 +44,18 @@ export function SubmitButton() {
       .finally(() => setHttpResponseLoading(false));
   };
 
+  const sendAriaLabel
+    = selectedSubmitType === 'server'
+      ? 'Send request via server (proxy avoids CORS limits)'
+      : 'Send request from browser (subject to CORS)';
+
   return (
     <DropdownButton
       variant={selectedSubmitType === 'server' ? 'primary' : 'secondary'}
       className="min-w-0 shrink-0 sm:min-w-32"
-      disabled={!url || urlError !== undefined || isLoading}
+      disabled={!isValidHttpUrl(url) || isLoading}
+      aria-label={sendAriaLabel}
+      toggleMenuAriaLabel="Choose how to send the request"
       data-testid={HTTP_REQUEST_TEST_ID.SEND_BUTTON}
       menuItems={
         [
