@@ -18,7 +18,7 @@ export function Button({
   return (
     <button
       type={type}
-      className={cn(buttonBaseClassName, variantClassName[variant], sizeClassName[size], className)}
+      className={cn(buttonBaseClassName, variantClassName[variant], sizeClassName[size], 'gap-2', className)}
       {...props}
     />
   );

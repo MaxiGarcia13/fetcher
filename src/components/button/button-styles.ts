@@ -1,9 +1,9 @@
-export type ButtonVariant = 'default' | 'primary' | 'success' | 'transparent';
+export type ButtonVariant = 'default' | 'primary' | 'success' | 'transparent' | 'secondary';
 
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 /** Shared Tailwind classes for {@link import('./button').Button} and split-button wrappers. */
-export const buttonBaseClassName = 'inline-flex items-center justify-center gap-2 cursor-pointer rounded font-medium outline-none transition-all duration-200 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-800';
+export const buttonBaseClassName = 'inline-flex items-center justify-center cursor-pointer rounded font-medium outline-none transition-all duration-200 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-800 disabled:border-transparent';
 
 /** Shared Tailwind classes for {@link import('./button').Button} and split-button wrappers. */
 export const variantClassName: Record<ButtonVariant, string> = {
@@ -15,6 +15,8 @@ export const variantClassName: Record<ButtonVariant, string> = {
     'border border-transparent bg-green-600 text-white hover:bg-green-700 focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900',
   transparent:
     'border-0 bg-none text-current hover:bg-none focus-visible:border-gray-500 focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900',
+  secondary:
+    'border border-transparent bg-sky-500 text-white hover:bg-sky-600 focus-visible:border-sky-500 focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900',
 };
 /** Fixed outer height for split controls so a bordered wrapper matches {@link import('./button').Button} box sizing. */
 export const sizeClassName: Record<ButtonSize, string> = {

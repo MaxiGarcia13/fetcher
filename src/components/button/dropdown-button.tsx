@@ -6,7 +6,7 @@ import { Menu, MenuItem } from '@/components/menu';
 import { storage } from '@/utils/storage';
 import { ChevronDownIcon } from '../icons/chevron-down';
 import { Button } from './button';
-import { splitButtonOuterHeightClassName, variantClassName } from './button-styles';
+import { buttonBaseClassName, splitButtonOuterHeightClassName, variantClassName } from './button-styles';
 
 interface DropdownButtonMenuItem
   extends Omit<ComponentProps<typeof MenuItem>, 'children' | 'onClick'> {
@@ -26,6 +26,7 @@ const borderSeparatorClassNames: Record<ButtonVariant, string> = {
   primary: 'border-l border-blue-500',
   success: 'border-l border-green-500',
   transparent: 'border-l border-gray-500',
+  secondary: 'border-l border-sky-400',
 };
 
 export function DropdownButton({
@@ -69,6 +70,7 @@ export function DropdownButton({
       ref={containerRef}
       role="button"
       className={cn(
+        buttonBaseClassName,
         'relative inline-flex rounded',
         splitButtonOuterHeightClassName[size],
         variantClassName[variant],
