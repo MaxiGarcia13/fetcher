@@ -43,6 +43,7 @@ export function KeyValueTableRow({
 }: KeyValueTableRowProps) {
   const rowNumber = index + 1;
   const { hidden: isHidden, masked: isMasked } = entry;
+  const hiddenFieldClassName = isHidden ? 'border-gray-700 text-gray-500' : undefined;
 
   function handlePasteObject(event: ClipboardEvent<HTMLInputElement>) {
     if (!onPasteObject)
@@ -61,7 +62,7 @@ export function KeyValueTableRow({
         placeholder={keyFieldPlaceholder}
         suggestions={suggestedKeys}
         aria-label={`Key row ${rowNumber}`}
-        className="rounded-r-none border-r-0"
+        className={cn('rounded-r-none border-r-0', hiddenFieldClassName)}
         data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_INPUT_KEY}-${rowNumber}`}
       />
       <AutocompleteInput
@@ -72,7 +73,7 @@ export function KeyValueTableRow({
         placeholder={valueFieldPlaceholder}
         suggestions={suggestedValues}
         aria-label={`Value row ${rowNumber}`}
-        className="rounded-l-none rounded-r-none border-r-0"
+        className={cn('rounded-l-none rounded-r-none border-r-0', hiddenFieldClassName)}
         data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_INPUT_VALUE}-${rowNumber}`}
       />
       <div className="flex">
