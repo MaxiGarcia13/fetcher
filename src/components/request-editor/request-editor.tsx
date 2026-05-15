@@ -1,17 +1,9 @@
 import { cn } from '@maxigarcia/js-utils';
-import { Button } from '@/components/button';
 import { Input } from '@/components/input';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
-import { submitHttpRequest } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
-import {
-  saveHttpResponse,
-  saveHttpResponseError,
-  setHttpResponseLoading,
-  useHttpResponseState,
-} from '@/store/http-response';
-import { SendIcon } from '../icons/send';
 import { RequestMethodSelect } from './request-method-select';
+import { SubmitButton } from './submit-button';
 
 interface Props {
   className?: string;
@@ -19,16 +11,6 @@ interface Props {
 
 export function RequestEditor({ className }: Props) {
   const { method, url, urlError, setMethod, setUrl } = useHttpRequestState();
-  const { isLoading } = useHttpResponseState();
-
-  const handleSend = () => {
-    setHttpResponseLoading(true);
-
-    submitHttpRequest()
-      .then((response) => saveHttpResponse(response))
-      .catch((error) => saveHttpResponseError(error))
-      .finally(() => setHttpResponseLoading(false));
-  };
 
   return (
     <header className={cn('flex gap-2', className)}>
@@ -52,16 +34,7 @@ export function RequestEditor({ className }: Props) {
           data-testid={HTTP_REQUEST_TEST_ID.URL_INPUT}
         />
       </div>
-      <Button
-        variant="primary"
-        className="flex min-w-0 shrink-0 items-center gap-2 sm:min-w-24"
-        disabled={!url || urlError !== undefined || isLoading}
-        onClick={handleSend}
-        data-testid={HTTP_REQUEST_TEST_ID.SEND_BUTTON}
-      >
-        <span className="mt-0.5 hidden sm:block">Send</span>
-        <SendIcon className="size-4" />
-      </Button>
+      <SubmitButton />
     </header>
   );
 }
