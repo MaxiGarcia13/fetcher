@@ -75,8 +75,7 @@ export function DropdownButton({
         buttonBaseClassName,
         'relative inline-flex rounded',
         splitButtonOuterHeightClassName[size],
-        variantClassName[variant],
-        disabled && disabledButtonClassName,
+        disabled ? disabledButtonClassName : variantClassName[variant],
         className,
       )}
     >
@@ -86,7 +85,7 @@ export function DropdownButton({
         size={size}
         disabled={disabled}
         className="h-full shrink-0 rounded rounded-r-none"
-        tabIndex={0}
+        tabIndex={disabled ? -1 : 0}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
@@ -113,7 +112,7 @@ export function DropdownButton({
         aria-haspopup="menu"
         aria-controls={menuId}
         aria-label={toggleMenuAriaLabel}
-        tabIndex={0}
+        tabIndex={disabled ? -1 : 0}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             handleToggleMenu(event);
