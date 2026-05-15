@@ -2,17 +2,19 @@
 
 Fetcher is a lightweight REST API client for sending HTTP requests, inspecting responses, and keeping a local history of work in progress. It is aimed at developers who want a fast, browser-based alternative to desktop tools like Postman or Insomnia, without accounts, workspaces, or heavy setup.
 
-The app runs in the browser and proxies outbound calls through a small server endpoint so you can exercise APIs from a single page while still editing JSON bodies, headers, and query parameters in a familiar editor.
+The app runs in the browser. By default, outbound calls go through a small server proxy so you can exercise APIs without browser CORS limits. You can also send requests directly from the browser when you want to hit same-origin APIs or debug CORS behavior. Request bodies, headers, and query parameters are edited in a Monaco-based UI on a single page.
 
 ## What it is for
 
 Use Fetcher when you need to:
 
 - **Probe an API** — pick a method, enter a URL, and send a request to see status, headers, and body.
+- **Work around CORS or test it** — send **via server** (proxied) or **from browser** (native `fetch`, subject to CORS).
 - **Iterate on payloads** — edit JSON request bodies with syntax highlighting and a Monaco-based editor.
-- **Tune headers and query params** — manage key/value rows, including optional hidden values for sensitive fields.
+- **Tune headers and query params** — manage key/value rows, including optional hidden values and masked fields for sensitive data.
 - **Resume work later** — save requests in the sidebar (or the mobile history modal); each snapshot stores the full request state encoded in the page URL.
-- **Share or bookmark a request** — use **Share link** to copy the current URL, or copy the address bar directly; method, URL, headers, params, and body live in query parameters so the same setup can be reproduced.
+- **Share or bookmark a request** — copy a **share link** (hidden rows omitted, masked values redacted) or a **full link** (exact address bar URL); method, URL, headers, params, and body live in query parameters so the same setup can be reproduced.
+- **Reuse a request elsewhere** — copy the current setup as **JavaScript `fetch`** or **cURL** from the session actions.
 - **Document a request** — open the **Documentation** view to see method, URL, and field tables for params, headers, and body with inferred types and example values.
 
 Fetcher is intentionally scoped: it focuses on request construction, execution, and inspection, not collections, environments, or team collaboration.
@@ -20,17 +22,18 @@ Fetcher is intentionally scoped: it focuses on request construction, execution, 
 ## Features
 
 - HTTP methods: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, and `OPTIONS`
+- **Send via server** or **send from browser** (dropdown on the submit control; last choice persisted in `localStorage`)
 - Request editor with URL validation
 - Tabs for **Headers**, **Params**, and **Body** (body enabled for methods that accept one)
 - Read-only response panel backed by the same editor component
 - Resizable split between request options and response
 - Saved requests in `localStorage`, keyed off URL search state, with method badges and active-session highlighting
-- Session actions: **Documentation**, **Share link**, **New request**, and **Saved requests** (history modal on small screens)
+- Session actions: **Copy** (as JS or cURL), **Share link** / **Share full link**, **Documentation**, **New request**, and **Saved requests** (history modal on small screens)
 - Request documentation page at `/doc`, driven by the same URL query state as the main editor
 - Installable web app via `manifest.webmanifest`, app icons, and theme color for standalone use
 - Responsive layout: persistent sidebar on larger viewports; compact header actions and history modal on mobile
-- Server-side proxy at `/api/v1/http-request` to perform the outbound `fetch`
-- Health check at `/api/health`
+- Server-side proxy at `POST /api/v1/http-request` for proxied outbound `fetch`
+- Health check at `GET /api/health`
 
 ## Tech stack
 
@@ -61,6 +64,8 @@ npm run dev
 
 Open the URL printed in the terminal (Astro defaults to `http://localhost:4321`).
 
+`npm install` registers a pre-commit hook (via [simple-git-hooks](https://github.com/toplenboren/simple-git-hooks)) that runs ESLint with auto-fix on staged files.
+
 ### End-to-end tests
 
 `npm run test:e2e` starts the dev server when needed (or reuses one already on port 4321 outside CI), installs the Playwright Chromium browser if missing, and runs specs under `e2e/`. Test output goes to `test-results/`; the HTML reporter writes `playwright-report/` (both are gitignored). Use `npm run test:e2e:ui` to step through tests interactively.
@@ -82,9 +87,10 @@ Open the URL printed in the terminal (Astro defaults to `http://localhost:4321`)
 ## How requests flow
 
 1. The UI keeps request state in Nanostores and mirrors it into the browser URL query string.
-2. **Send** posts the composed request to `/api/v1/http-request`.
-3. That API route calls the target URL with the chosen method, headers, query string, and JSON body when applicable.
-4. The response stream is returned to the client and shown in the response editor.
+2. **Send** runs the request using the selected mode (stored in `localStorage`):
+   - **Via server** — the client `POST`s the composed request to `/api/v1/http-request`; that route calls the target URL with the chosen method, headers, query string, and JSON body when applicable, then streams the response back.
+   - **From browser** — the client calls the target URL with `fetch` directly (same method, headers, params, and body), subject to browser CORS policy.
+3. The response is shown in the response editor (status, headers, and body).
 
 Saved sessions persist the query string (and metadata such as save time) so selecting an entry restores the same request shape.
 
@@ -110,6 +116,7 @@ src/
   components/     UI (request editor, panels, tabs, Monaco wrapper, saved sessions, doc actions)
   constants/      Shared constants (e.g. `data-testid` keys for e2e)
   domain/         HTTP and session types and helpers
+  hooks/          React hooks (clipboard, floating UI positioning)
   layouts/        App shell (manifest link, theme color, viewport)
   pages/          Index and documentation routes, API routes
   store/          Nanostores for requests, responses, and saved sessions
