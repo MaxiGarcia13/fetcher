@@ -1,5 +1,6 @@
 import type { ComponentProps, ReactNode } from 'react';
 import type { Button } from './button';
+import type { KeyValueEntry } from './key-value-table';
 import { encodeText } from '@maxigarcia/js-utils';
 import { HTTP_REQUEST_BODY_PARAM, HTTP_REQUEST_HEADERS_PARAM, HTTP_REQUEST_METHOD_PARAM, HTTP_REQUEST_PARAMS_PARAM, HTTP_REQUEST_URL_PARAM } from '@/domain/http-request';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
@@ -32,10 +33,25 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
     newParams.set(HTTP_REQUEST_URL_PARAM, encodeText(requestState.url));
     newParams.set(HTTP_REQUEST_BODY_PARAM, encodeText(requestState.body));
 
-    const filteredParams = requestState.params.filter((param) => !param.masked);
+    const toEntry = (param: KeyValueEntry) => {
+      if (param.masked) {
+        return {
+          ...param,
+          value: '********',
+          masked: false,
+        };
+      }
+
+      return param;
+    };
+    const toFilterNotVisible = (entry: KeyValueEntry) => {
+      return !entry.hidden;
+    };
+
+    const filteredParams = requestState.params.filter(toFilterNotVisible).map(toEntry);
     newParams.set(HTTP_REQUEST_PARAMS_PARAM, encodeText(JSON.stringify(filteredParams)));
 
-    const filteredHeaders = requestState.headers.filter((header) => !header.masked);
+    const filteredHeaders = requestState.headers.filter(toFilterNotVisible).map(toEntry);
     newParams.set(HTTP_REQUEST_HEADERS_PARAM, encodeText(JSON.stringify(filteredHeaders)));
 
     newUrlnew.search = newParams.toString();
@@ -57,7 +73,7 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
             </>
           ),
           children: (
-            <Tooltip content="Copy a link to this request, excluding masked parameters and headers.">
+            <Tooltip content="Copy a shareable link. Hidden entries are omitted and masked values are redacted.">
               <CopyToClipboardContent
                 success={isCopied}
                 error={error}
@@ -80,7 +96,7 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
           ),
           onClick: handleShareFullLink,
           children: (
-            <Tooltip content="Copy the current URL, including masked parameters and headers.">
+            <Tooltip content="Copy the current URL as shown in the address bar.">
               <CopyToClipboardContent
                 success={isCopied}
                 error={error}
