@@ -2,7 +2,7 @@
 import { cn } from '@maxigarcia/js-utils';
 import Brand from './brand.astro';
 import Footer from './footer.astro';
-import { SavedSessionsPanel } from './saved-sessions';
+import { LazySavedSessionsPanel } from './saved-sessions';
 
 interface Props {
   class?: string;
@@ -13,6 +13,6 @@ const { class: className } = Astro.props;
 
 <aside class={cn('flex h-full w-64 min-h-0 flex-col gap-4', className)}>
   <Brand />
-  <SavedSessionsPanel className="min-h-0 flex-1" client:only="react" />
+  <LazySavedSessionsPanel className="min-h-0 flex-1" client:only="react" />
   <Footer />
 </aside>

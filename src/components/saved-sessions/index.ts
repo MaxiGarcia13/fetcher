@@ -1,1 +1,1 @@
-export * from './saved-sessions-panel';
+export * from './lazy-saved-sessions-panel';
