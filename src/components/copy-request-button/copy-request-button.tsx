@@ -1,11 +1,11 @@
 import type { ComponentProps } from 'react';
-import { useState } from 'react';
 import { DropdownButton } from '@/components/button';
-import { CheckIcon } from '@/components/icons/check';
 import { JsIcon } from '@/components/icons/js';
 import { Tooltip } from '@/components/tooltip';
 import { METHODS_WITH_BODY, parseObjectFromKeyValueEntries } from '@/domain/http-request';
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { useHttpRequestState } from '@/store/http-request';
+import { CopyToClipboardContent } from '../copy-to-clipboard-content';
 import { TerminalIcon } from '../icons/terminal';
 import { getCopyToCurlText, getCopyToFetchText } from './utils';
 
@@ -15,8 +15,7 @@ interface CopyRequestButtonProps extends Omit<ComponentProps<typeof DropdownButt
 
 export function CopyRequestButton({ className, ...props }: CopyRequestButtonProps) {
   const { url, method, headers, body, params } = useHttpRequestState();
-
-  const [isCopied, setIsCopied] = useState(false);
+  const { isCopied, error, copyToClipboard } = useCopyToClipboard();
 
   const getOptions = () => {
     const paramsObject = parseObjectFromKeyValueEntries(params);
@@ -44,20 +43,10 @@ export function CopyRequestButton({ className, ...props }: CopyRequestButtonProp
   };
 
   const handleCopy = (callback: (url: string, options: Parameters<typeof fetch>[1]) => string) => {
-    try {
+    copyToClipboard(() => {
       const { url, options } = getOptions();
-      navigator.clipboard.writeText(
-        callback(url, options),
-      );
-
-      setIsCopied(true);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setTimeout(() => {
-        setIsCopied(false);
-      }, 1000);
-    }
+      return callback(url, options);
+    });
   };
 
   const handleCopyAsJavaScriptFetch = () => {
@@ -82,11 +71,17 @@ export function CopyRequestButton({ className, ...props }: CopyRequestButtonProp
             </>
           ),
           children: (
-            <Tooltip
-              content={isCopied ? 'Copied' : 'Copy this request as JavaScript Fetch to the clipboard.'}
+            <CopyToClipboardContent
+              success={isCopied}
+              error={error}
             >
-              { isCopied ? <CheckIcon className="size-4 " /> : <JsIcon className="size-4" />}
-            </Tooltip>
+              <Tooltip
+                content="Copy this request as JavaScript Fetch to the clipboard."
+              >
+                <JsIcon className="size-4" />
+              </Tooltip>
+            </CopyToClipboardContent>
+
           ),
           onClick: handleCopyAsJavaScriptFetch,
         },
@@ -98,11 +93,16 @@ export function CopyRequestButton({ className, ...props }: CopyRequestButtonProp
             </>
           ),
           children: (
-            <Tooltip
-              content={isCopied ? 'Copied' : 'Copy this request as cURL to the clipboard.'}
+            <CopyToClipboardContent
+              success={isCopied}
+              error={error}
             >
-              { isCopied ? <CheckIcon className="size-4" /> : <TerminalIcon className="size-4" />}
-            </Tooltip>
+              <Tooltip
+                content="Copy this request as cURL to the clipboard."
+              >
+                <TerminalIcon className="size-4" />
+              </Tooltip>
+            </CopyToClipboardContent>
           ),
           onClick: handleCopyAsCurl,
         },
