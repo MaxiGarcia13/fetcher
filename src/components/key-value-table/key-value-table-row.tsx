@@ -43,7 +43,6 @@ export function KeyValueTableRow({
 }: KeyValueTableRowProps) {
   const rowNumber = index + 1;
   const { hidden: isHidden, masked: isMasked } = entry;
-  const hiddenFieldClassName = isHidden ? 'border-gray-700 text-gray-500' : undefined;
 
   function handlePasteObject(event: ClipboardEvent<HTMLInputElement>) {
     if (!onPasteObject)
@@ -53,16 +52,23 @@ export function KeyValueTableRow({
       event.preventDefault();
   }
 
+  const rowBorderClass = isHidden ? 'border-app-border-muted' : 'border-app-border';
+
   return (
-    <div className="grid grid-cols-[1fr_1fr_auto]">
+    <div className={cn(
+      'grid grid-cols-[1fr_1fr_auto] rounded border',
+      rowBorderClass,
+      isHidden && 'border-dashed opacity-80 italic text-gray-300',
+    )}
+    >
       <AutocompleteInput
         value={entry.key}
         onChange={onKeyChange}
         onPaste={handlePasteObject}
         placeholder={keyFieldPlaceholder}
         suggestions={suggestedKeys}
-        aria-label={`Key row ${rowNumber}`}
-        className={cn('rounded-r-none border-r-0', hiddenFieldClassName)}
+        aria-label={`Key row ${rowNumber}${isHidden ? ', excluded from request' : ''}`}
+        className="rounded-r-none border-0"
         data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_INPUT_KEY}-${rowNumber}`}
       />
       <AutocompleteInput
@@ -72,8 +78,8 @@ export function KeyValueTableRow({
         type={isMasked ? 'password' : 'text'}
         placeholder={valueFieldPlaceholder}
         suggestions={suggestedValues}
-        aria-label={`Value row ${rowNumber}`}
-        className={cn('rounded-l-none rounded-r-none border-r-0', hiddenFieldClassName)}
+        aria-label={`Value row ${rowNumber}${isHidden ? ', excluded from request' : ''}`}
+        className={cn('rounded-l-none rounded-r-none border-0 border-l', rowBorderClass)}
         data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_INPUT_VALUE}-${rowNumber}`}
       />
       <div className="flex">
@@ -88,11 +94,15 @@ export function KeyValueTableRow({
           <Button
             type="button"
             onClick={onMaskToggle}
-            className="shrink-0 rounded-none border-r-0"
+            className={cn(
+              'shrink-0 rounded-none border-0 border-l',
+              rowBorderClass,
+              !isMasked ? 'text-app-text-muted!' : 'bg-app-bg-muted! text-app-text!',
+            )}
             aria-label={`${isMasked ? 'Show value' : 'Mask value'} for row ${rowNumber}`}
             data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TABLE_ROW_MASK_BUTTON}-${rowNumber}`}
           >
-            <LockPasswordIcon className={cn('size-4', !isMasked ? 'text-gray-400' : 'text-gray-200')} />
+            <LockPasswordIcon className="size-4" />
           </Button>
         </Tooltip>
         {showVisibilityToggle
@@ -108,13 +118,17 @@ export function KeyValueTableRow({
                 <Button
                   type="button"
                   onClick={onVisibilityToggle}
-                  className="shrink-0 rounded-none border-r-0"
+                  className={cn(
+                    'shrink-0 rounded-none border-0 border-l',
+                    rowBorderClass,
+                    !isHidden ? 'text-app-text-muted!' : 'bg-app-bg-muted! text-app-text!',
+                  )}
                   aria-label={`${isHidden ? 'Show' : 'Hide'} row ${rowNumber}`}
                   data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TABLE_ROW_VISIBILITY_BUTTON}-${rowNumber}`}
                 >
                   {isHidden
-                    ? <EyeOffIcon className="size-4 text-gray-200" />
-                    : <EyeIcon className="size-4 text-gray-400" />}
+                    ? <EyeOffIcon className="size-4" />
+                    : <EyeIcon className="size-4" />}
                 </Button>
               </Tooltip>
             )
@@ -123,11 +137,11 @@ export function KeyValueTableRow({
           <Button
             type="button"
             onClick={onRemoveRow}
-            className="shrink-0 rounded-l-none"
+            className={cn('shrink-0 rounded-l-none border-0 border-l', rowBorderClass)}
             aria-label={`Remove row ${rowNumber}`}
             data-testid={`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TABLE_ROW_DELETE_BUTTON}-${rowNumber}`}
           >
-            <BinIcon className="size-4 text-gray-400" />
+            <BinIcon className="size-4 text-app-text-muted" />
           </Button>
         </Tooltip>
       </div>

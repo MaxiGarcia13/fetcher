@@ -68,7 +68,7 @@ export function Modal({
       ref={dialogRef}
       className={cn(
         'm-auto w-[calc(100%-2rem)] max-w-xl overflow-hidden rounded-xl p-0 shadow-2xl outline-none',
-        'border-gray-700 text-inherit border bg-gray-800 backdrop:bg-gray-800/80 backdrop:backdrop-blur-sm',
+        'border-app-border text-inherit border bg-app-bg-surface backdrop:bg-app-bg-surface/80 backdrop:backdrop-blur-sm',
         className,
       )}
       onClick={handleBackdropClick}
@@ -77,7 +77,7 @@ export function Modal({
     >
       <div className={cn('flex max-h-[85vh] flex-col gap-4 p-5', contentClassName)}>
         {(title || showCloseButton) && (
-          <div className="flex items-center justify-between gap-4 border-b border-gray-600 pb-4">
+          <div className="flex items-center justify-between gap-4 border-b border-app-border pb-4">
             {title && <h2 className="text-lg font-semibold text-white">{title}</h2>}
             {showCloseButton && (
               <Button

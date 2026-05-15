@@ -26,10 +26,12 @@ export function TabsTrigger<T extends string>({
       disabled={disabled}
       tabIndex={isActive ? 0 : -1}
       className={cn(
-        'border-b-2 px-4 py-2.5 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-900',
-        isActive ? 'border-blue-600' : 'border-transparent text-gray-400 hover:text-gray-200',
+        'border-b-2 px-4 py-2.5 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-app-bg-base',
+        isActive
+          ? 'border-blue-600'
+          : 'border-transparent text-app-text-muted hover:text-app-text-primary',
         isActive ? activeClassName : inactiveClassName,
-        disabled ? 'cursor-not-allowed opacity-60 hover:text-gray-400' : 'cursor-pointer',
+        disabled ? 'cursor-not-allowed opacity-60 hover:text-app-text-muted!' : 'cursor-pointer',
         className,
       )}
       onClick={() => {

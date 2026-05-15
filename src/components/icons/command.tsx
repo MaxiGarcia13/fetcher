@@ -1,7 +1,7 @@
 export function CommandIcon({ className, combination }: { className?: string; combination?: string }) {
   if (combination) {
     return (
-      <span className="flex items-center justify-center gap-1 text-gray-400">
+      <span className="flex items-center justify-center gap-1 text-app-text-muted">
         <BaseCommandIcon className={className} />
 
         <span className="mt-0.5 text-xs">{combination}</span>

@@ -17,8 +17,8 @@ export function MenuItem({ onClick, children, disabled, selected, className, ...
       disabled={disabled}
       aria-selected={selected}
       className={cn(
-        'flex w-full cursor-pointer items-center gap-2 p-2 text-left text-sm text-inherit transition-colors hover:bg-gray-600 disabled:cursor-not-allowed disabled:opacity-50',
-        selected && 'bg-gray-700 text-sky-400 hover:bg-gray-600',
+        'flex w-full cursor-pointer items-center gap-2 p-2 text-left text-sm text-inherit transition-colors hover:bg-app-bg-hover disabled:cursor-not-allowed disabled:opacity-50',
+        selected && 'bg-app-bg-muted text-sky-300 hover:bg-app-bg-hover',
         className,
       )}
       onClick={(event) => {

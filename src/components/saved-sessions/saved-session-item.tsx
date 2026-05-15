@@ -31,10 +31,10 @@ export function SavedSessionItem({
   return (
     <li
       className={cn(
-        'flex gap-2 items-center rounded border text-xs cursor-pointer overflow-hidden',
+        'flex gap-2 items-center rounded border text-xs cursor-pointer overflow-hidden hover:border-blue-500',
         isActive
           ? 'border-blue-500'
-          : 'border-gray-700',
+          : 'border-app-border',
         className,
       )}
       onClick={() => onSelect?.(snapshot)}
@@ -45,19 +45,19 @@ export function SavedSessionItem({
         <div className="flex min-w-0 items-center gap-2">
           <RequestMethodBadge method={method} />
           <span
-            className="min-w-0 truncate text-gray-300"
+            className="min-w-0 truncate text-app-text-primary"
             title={domain ?? undefined}
           >
             {display(domain)}
           </span>
         </div>
-        <time className="mt-1 block text-[11px] text-gray-500" dateTime={snapshot.savedAt}>
+        <time className="mt-1 block text-[11px] text-app-text-muted" dateTime={snapshot.savedAt}>
           {formatShortDate(snapshot.savedAt)}
         </time>
       </div>
 
       <Button
-        className="h-full shrink-0 rounded border-none hover:bg-gray-700"
+        className="h-full shrink-0 rounded border-none  hover:bg-app-bg-muted"
         aria-label="Remove saved session"
         onClick={(e) => {
           e.stopPropagation();
@@ -65,7 +65,7 @@ export function SavedSessionItem({
         }}
         data-testid={SAVED_SESSIONS_TEST_ID.SAVED_SESSIONS_LIST_ITEM_REMOVE_BUTTON}
       >
-        <BinIcon className="size-4 text-gray-400" />
+        <BinIcon className="size-4 text-app-text-muted" />
       </Button>
     </li>
   );

@@ -16,7 +16,7 @@ const repositoryUrl = pkg.repository.url
 
 <footer
   class={cn(
-    'mt-auto flex items-center justify-center gap-2 text-xs text-gray-500',
+    'mt-auto flex items-center justify-center gap-2 text-xs text-app-text-muted',
     className,
   )}
 >
@@ -25,7 +25,7 @@ const repositoryUrl = pkg.repository.url
     target="_blank"
     rel="noopener noreferrer"
     aria-label="View repository on GitHub"
-    class="inline-flex items-center gap-1.5 transition-colors hover:text-gray-300"
+    class="inline-flex items-center gap-1.5 text-app-text-muted transition-colors hover:text-app-text"
   >
     <GithubIcon className="size-4" />
     <span class="mt-1">GitHub</span>

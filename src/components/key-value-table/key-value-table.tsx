@@ -107,7 +107,7 @@ export function KeyValueTable({
 
   return (
     <section className={cn('space-y-3', className)}>
-      <div className="grid grid-cols-[1fr_1fr_148px] gap-2 text-xs tracking-wide text-gray-400 uppercase">
+      <div className="grid grid-cols-[1fr_1fr_148px] gap-2 text-xs tracking-wide text-app-text-muted uppercase">
         <span>Key</span>
         <span>Value</span>
         <span>Actions</span>
@@ -115,7 +115,7 @@ export function KeyValueTable({
 
       {value.length === 0
         ? (
-            <p className="text-sm text-gray-500">{emptyMessage}</p>
+            <p className="text-sm text-app-text-muted">{emptyMessage}</p>
           )
         : (
             <div className="space-y-2">

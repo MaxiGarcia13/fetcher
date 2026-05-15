@@ -24,10 +24,10 @@ interface DropdownButtonProps extends Omit<ComponentProps<typeof Button>, 'child
 }
 
 const borderSeparatorClassNames: Record<ButtonVariant, string> = {
-  default: 'border-l border-gray-500',
+  default: 'border-l border-app-border',
   primary: 'border-l border-blue-500',
   success: 'border-l border-green-500',
-  transparent: 'border-l border-gray-500',
+  transparent: 'border-l border-app-border',
   secondary: 'border-l border-sky-500',
 };
 

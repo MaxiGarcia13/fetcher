@@ -21,7 +21,7 @@ export function TooltipContent({
       role="tooltip"
       className={cn(
         'pointer-events-none z-1000 fixed max-w-[min(20rem,calc(100vw-16px))] px-2 py-1 text-xs',
-        'wrap-break-word rounded-md border border-gray-700 bg-gray-800',
+        'wrap-break-word rounded-md border border-app-border bg-app-bg-surface',
         !coords && 'invisible',
         className,
       )}

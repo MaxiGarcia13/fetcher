@@ -128,17 +128,17 @@ export function bodyToDocFieldRows(body: string): DocFieldRow[] {
 
 export function docFieldRowsToHtml(title: string, rows: DocFieldRow[]): string {
   if (rows.length === 0) {
-    return `<section class="space-y-3"><h2 class="text-sm font-semibold tracking-wide text-gray-300 uppercase">${escapeHtml(title)}</h2><p class="text-sm text-gray-500">No fields yet.</p></section>`;
+    return `<section class="space-y-3"><h2 class="text-sm font-semibold tracking-wide text-app-text-muted uppercase">${escapeHtml(title)}</h2><p class="text-sm text-app-text-muted">No fields yet.</p></section>`;
   }
 
   const tableRows = rows.map((row) => `
-      <tr class="border-t border-gray-700">
-        <td class="px-3 py-2 font-medium text-gray-100">${escapeHtml(row.key)}</td>
-        <td class="px-3 py-2 text-gray-400">${escapeHtml(row.type)}</td>
-        <td class="px-3 py-2 break-all text-gray-300">${escapeHtml(row.example)}</td>
+      <tr class="border-t border-app-border">
+        <td class="px-3 py-2 font-medium text-app-text-primary">${escapeHtml(row.key)}</td>
+        <td class="px-3 py-2 text-app-text-muted">${escapeHtml(row.type)}</td>
+        <td class="px-3 py-2 break-all text-app-text-primary">${escapeHtml(row.example)}</td>
       </tr>`).join('');
 
-  return `<section class="space-y-3"><h2 class="text-sm font-semibold tracking-wide text-gray-300 uppercase">${escapeHtml(title)}</h2><div class="overflow-x-auto rounded border border-gray-700"><table class="min-w-full text-left text-sm"><thead class="bg-gray-800 text-xs tracking-wide text-gray-400 uppercase"><tr><th class="px-3 py-2 font-medium">Key</th><th class="px-3 py-2 font-medium">Type</th><th class="px-3 py-2 font-medium">Example</th></tr></thead><tbody>${tableRows}</tbody></table></div></section>`;
+  return `<section class="space-y-3"><h2 class="text-sm font-semibold tracking-wide text-app-text-muted uppercase">${escapeHtml(title)}</h2><div class="overflow-x-auto rounded border border-app-border"><table class="min-w-full text-left text-sm"><thead class="bg-app-bg-surface text-xs tracking-wide text-app-text-muted uppercase"><tr><th class="px-3 py-2 font-medium">Key</th><th class="px-3 py-2 font-medium">Type</th><th class="px-3 py-2 font-medium">Example</th></tr></thead><tbody>${tableRows}</tbody></table></div></section>`;
 }
 
 export function parseRequestDocSearchParams(searchParams: URLSearchParams): RequestDocSections {

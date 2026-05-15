@@ -15,7 +15,7 @@ export function ContextMenuItem({ children, icon, command, ...props }: ContextMe
       <span className="mt-1 flex-1">
         {children}
       </span>
-      <span className="mt-1 shrink-0 text-gray-400">
+      <span className="mt-1 shrink-0 text-app-text-muted">
         {command}
       </span>
     </MenuItem>

@@ -9,20 +9,20 @@ export interface RequestMethodBadgeProps {
 function methodTextClass(method: HttpMethod): string {
   switch (method.toUpperCase()) {
     case 'GET':
-      return 'text-sky-400';
+      return 'text-sky-300';
     case 'POST':
-      return 'text-emerald-400';
+      return 'text-emerald-300';
     case 'PUT':
-      return 'text-amber-400';
+      return 'text-amber-300';
     case 'PATCH':
-      return 'text-orange-400';
+      return 'text-orange-300';
     case 'DELETE':
-      return 'text-rose-400';
+      return 'text-rose-300';
     case 'HEAD':
     case 'OPTIONS':
-      return 'text-gray-400';
+      return 'text-app-text-muted';
     default:
-      return 'text-slate-400';
+      return 'text-slate-300';
   }
 }
 

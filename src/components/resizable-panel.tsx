@@ -83,7 +83,7 @@ export function ResizablePanel({
         {firstContent}
       </div>
       <div
-        className={cn(dividerClassName, 'shrink-0 bg-gray-700', cursorClassName)}
+        className={cn(dividerClassName, 'shrink-0 bg-app-bg-muted', cursorClassName)}
         onMouseDown={handleMouseDown}
       >
       </div>

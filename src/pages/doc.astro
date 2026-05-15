@@ -23,7 +23,8 @@ const showBodySection = !METHODS_EXCLUDED_FROM_BODY.includes(requestDoc.method);
       <div class="flex items-center gap-2">
         <a
           href={`/${Astro.url.search}`}
-          class="text-sm text-gray-400 hover:text-gray-300"
+          class="text-sm text-app-text-primary hover:text-app-text"
+          aria-label="Back to request editor"
         >
           <ChevronLeftIcon className="size-6" />
         </a>
@@ -36,7 +37,7 @@ const showBodySection = !METHODS_EXCLUDED_FROM_BODY.includes(requestDoc.method);
     </div>
 
     <section class="flex flex-col gap-4">
-      <h2 class="text-sm font-semibold tracking-wide text-gray-300 uppercase">
+      <h2 class="text-sm font-semibold tracking-wide text-app-text-muted uppercase">
         Method
       </h2>
 
@@ -47,18 +48,18 @@ const showBodySection = !METHODS_EXCLUDED_FROM_BODY.includes(requestDoc.method);
       />
 
       <section class="space-y-3">
-        <h2 class="text-sm font-semibold tracking-wide text-gray-300 uppercase">
+        <h2 class="text-sm font-semibold tracking-wide text-app-text-muted uppercase">
           URL
         </h2>
         {
           requestDoc.url
 ? (
-            <p class="rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm break-all text-gray-100">
+            <p class="rounded border border-app-border bg-app-bg-surface px-3 py-2 text-sm break-all text-app-text-primary">
               {requestDoc.url}
             </p>
           )
 : (
-            <p class="text-sm text-gray-500">No URL set.</p>
+            <p class="text-sm text-app-text-muted">No URL set.</p>
           )
         }
       </section>

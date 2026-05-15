@@ -58,7 +58,7 @@ export function Menu({
       ref={ref ?? internalRef}
       role="menu"
       className={cn(
-        'z-50 min-w-[160px] rounded-md border border-gray-700 bg-gray-800 py-2 shadow-xl',
+        'z-50 min-w-[160px] rounded-md border border-app-border bg-app-bg-surface py-2 shadow-xl',
         usesFloatingPosition && 'fixed',
         !coords && usesFloatingPosition && 'invisible',
         className,

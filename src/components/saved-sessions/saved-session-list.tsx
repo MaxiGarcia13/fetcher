@@ -41,7 +41,7 @@ export function SavedSessionList({
     >
       {sortedSessions.length === 0
         ? (
-            <li className={cn('text-xs text-gray-500')}>No saved requests yet.</li>
+            <li className={cn('text-xs text-app-text-muted')}>No saved requests yet.</li>
           )
         : (
             sortedSessions.map((session) => (

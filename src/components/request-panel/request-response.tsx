@@ -33,7 +33,7 @@ export function RequestResponse({ className }: Props) {
   if (status === null) {
     return (
       <ContentWrapper className={className}>
-        <p className={cn(' p-4 text-sm text-gray-400', className)}>
+        <p className={cn(' p-4 text-sm text-app-text-muted', className)}>
           Send a request to see the response here.
         </p>
       </ContentWrapper>
@@ -66,7 +66,7 @@ export function RequestResponse({ className }: Props) {
 function ContentWrapper({ className, children }: { className?: string; children: ReactNode }) {
   return (
     <div
-      className={cn('min-h-0 flex-1 flex items-center justify-center bg-gray-800 p-4', className)}
+      className={cn('min-h-0 flex-1 flex items-center justify-center bg-app-bg-surface p-4', className)}
       data-testid={HTTP_REQUEST_TEST_ID.RESPONSE_EDITOR}
     >
       {children}
