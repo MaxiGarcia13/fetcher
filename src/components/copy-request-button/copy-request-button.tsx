@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react';
+import { isValidHttpUrl } from '@maxigarcia/js-utils';
 import { DropdownButton } from '@/components/button';
 import { JsIcon } from '@/components/icons/js';
 import { Tooltip } from '@/components/tooltip';
@@ -61,7 +62,9 @@ export function CopyRequestButton({ className, ...props }: CopyRequestButtonProp
     <DropdownButton
       variant={isCopied ? 'success' : 'default'}
       className={className}
-      disabled={!url}
+      disabled={!isValidHttpUrl(url)}
+      aria-label="Copy request"
+      toggleMenuAriaLabel="Choose copy format"
       menuItems={[
         {
           label: (
