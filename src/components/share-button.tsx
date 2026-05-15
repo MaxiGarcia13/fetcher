@@ -61,6 +61,8 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
       variant={isCopied ? 'success' : 'default'}
       className={className}
       size={size}
+      aria-label="Share request"
+      toggleMenuAriaLabel="Choose sharing option"
       menuItems={[
         {
           label: (
@@ -105,7 +107,6 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
             </Tooltip>
           ),
         },
-
       ]}
     />
   );
