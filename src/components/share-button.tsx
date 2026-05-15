@@ -1,14 +1,13 @@
 import type { ComponentProps, ReactNode } from 'react';
-import { useState } from 'react';
+import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { Button } from './button';
-import { CheckIcon } from './icons/check';
+import { CopyToClipboardContent } from './copy-to-clipboard-content';
 import { LinkIcon } from './icons/link';
 import { Tooltip } from './tooltip';
 
 interface ShareButtonData {
   tooltip: string;
   variant: ComponentProps<typeof Button>['variant'];
-  icon: ReactNode;
 }
 
 export interface ShareButtonProps extends ComponentProps<typeof Button> {
@@ -17,40 +16,21 @@ export interface ShareButtonProps extends ComponentProps<typeof Button> {
 }
 
 export function ShareButton({ className, children, size }: ShareButtonProps) {
-  const [isCopied, setIsCopied] = useState(false);
+  const { isCopied, error, copyToClipboard } = useCopyToClipboard();
 
-  let data: ShareButtonData = {
-    tooltip: 'Share link',
-    variant: 'default',
-    icon: (
-      <>
-        <LinkIcon className="size-4" />
-        {' '}
-        {children}
-      </>
-    ),
-  };
-
-  if (isCopied) {
-    data = {
-      tooltip: 'Link copied',
-      variant: 'success',
-      icon: <CheckIcon className="size-5" />,
-    };
-  }
+  const data: ShareButtonData = !isCopied
+    ? {
+        tooltip: 'Share link',
+        variant: 'default',
+      }
+    : {
+        tooltip: 'Link copied',
+        variant: 'success',
+      };
 
   const handleShare = () => {
-    try {
-      const url = window.location.href;
-      navigator.clipboard.writeText(url);
-      setIsCopied(true);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setTimeout(() => {
-        setIsCopied(false);
-      }, 1000);
-    }
+    const url = window.location.href;
+    copyToClipboard(url);
   };
 
   return (
@@ -61,7 +41,14 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
         className={className}
         size={size}
       >
-        {data.icon}
+        <CopyToClipboardContent
+          success={isCopied}
+          error={error}
+        >
+          <LinkIcon className="size-4" />
+          {' '}
+          {children}
+        </CopyToClipboardContent>
       </Button>
     </Tooltip>
   );
