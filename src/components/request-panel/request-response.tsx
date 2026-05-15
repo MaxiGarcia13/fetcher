@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { cn } from '@maxigarcia/js-utils';
 import { LazyEditor } from '@/components/editor';
-import { EditorSkeleton } from '@/components/skeleton';
+import { EditorSkeleton } from '@/components/editor/editor-skeleton';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { useHttpResponseState } from '@/store/http-response';
 import { errorEditorValueAndLanguage, isImageResponseBody, responseEditorLanguage } from '@/utils/http-response';
