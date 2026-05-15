@@ -30,7 +30,7 @@ export function Select({
         }}
         className={cn(
           'border border-gray-600 focus:border-gray-600 cursor-pointer',
-          'h-10 w-full appearance-none rounded  py-2 pr-9 pl-3 text-sm outline-none',
+          'h-10 w-full appearance-none rounded  py-2 pr-9 pl-3 text-sm',
           className,
         )}
         {...props}

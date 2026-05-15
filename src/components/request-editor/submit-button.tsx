@@ -62,7 +62,7 @@ export function SubmitButton() {
               handleSend('server');
             },
             children: (
-              <Tooltip content={SUBMIT_OPTIONS.server.tooltip} className="flex items-center gap-2">
+              <Tooltip content={SUBMIT_OPTIONS.server.tooltip} placement="bottom" className="flex items-center gap-2">
                 <span className="mt-0.5 hidden sm:block">Send</span>
                 <SendIcon className="size-4" />
               </Tooltip>
@@ -79,7 +79,7 @@ export function SubmitButton() {
               handleSend('client');
             },
             children: (
-              <Tooltip content={SUBMIT_OPTIONS.client.tooltip} className="flex items-center gap-2">
+              <Tooltip content={SUBMIT_OPTIONS.client.tooltip} placement="bottom" className="flex items-center gap-2">
                 <span className="mt-0.5 hidden sm:block">Send</span>
                 <SendIcon className="size-4" />
               </Tooltip>
