@@ -1,17 +1,18 @@
 import type { ComponentProps, ReactNode } from 'react';
 import { cn } from '@maxigarcia/js-utils';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
+import { Menu, MenuItem } from '@/components/menu';
 import { storage } from '@/utils/storage';
 import { ChevronDownIcon } from '../icons/chevron-down';
 import { Button } from './button';
 import { splitButtonOuterHeightClassName, variantClassName } from './button-styles';
 
-interface DropdownButtonMenuItem {
+interface DropdownButtonMenuItem
+  extends Omit<ComponentProps<typeof MenuItem>, 'children' | 'onClick'> {
   id?: string;
   label: ReactNode;
-  onClick?: () => void;
-  disabled?: boolean;
   children?: ReactNode;
+  onClick?: () => void;
 }
 
 interface DropdownButtonProps extends Omit<ComponentProps<typeof Button>, 'children' | 'onClick'> {
@@ -38,33 +39,10 @@ export function DropdownButton({
     const storedIndex = storage.read(STORAGE_KEY);
     return storedIndex ? Number.parseInt(storedIndex) : defaultSelectedItemIndex;
   });
+
   const selectedItem = menuItems[selectedIndex];
 
-  useEffect(() => {
-    if (!open) {
-      return;
-    }
-
-    const handlePointerDown = (event: PointerEvent) => {
-      if (!containerRef.current?.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setOpen(false);
-      }
-    };
-
-    window.addEventListener('pointerdown', handlePointerDown);
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('pointerdown', handlePointerDown);
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [open]);
+  const closeMenu = () => setOpen(false);
 
   if (!selectedItem) {
     return null;
@@ -128,53 +106,27 @@ export function DropdownButton({
       </Button>
 
       {open && (
-        <div
+        <Menu
           id={menuId}
-          role="menu"
-          className="absolute top-full right-0 z-50 mt-1 min-w-40 rounded-md border border-gray-700 bg-gray-800 py-2 shadow-xl"
+          onClose={closeMenu}
+          className="absolute top-full right-0 mt-1"
         >
           {menuItems.map((item, index) => (
-            <MenuRow
+            <MenuItem
               key={item.id ?? index}
-              item={item}
-              onClose={() => {
-                setOpen(false);
+              disabled={item.disabled}
+              onClick={() => {
+                item.onClick?.();
+                closeMenu();
                 setSelectedIndex(index);
                 storage.write(STORAGE_KEY, index.toString());
               }}
-            />
+            >
+              {item.label}
+            </MenuItem>
           ))}
-        </div>
+        </Menu>
       )}
     </div>
-  );
-}
-
-function MenuRow({
-  item,
-  onClose,
-}: {
-  item: DropdownButtonMenuItem;
-  onClose: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      role="menuitem"
-      disabled={item.disabled}
-      className={cn(
-        'flex w-full cursor-pointer items-center gap-2 p-2 text-left text-sm text-inherit transition-colors hover:bg-gray-600',
-        'disabled:cursor-not-allowed disabled:opacity-50',
-      )}
-      onClick={() => {
-        if (item.disabled) {
-          return;
-        }
-        item.onClick?.();
-        onClose();
-      }}
-    >
-      <span className="flex flex-1 items-center gap-2">{item.label}</span>
-    </button>
   );
 }

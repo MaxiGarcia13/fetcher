@@ -14,8 +14,11 @@ interface ContextMenuProps {
 
 export function ContextMenu({ children, editor, className }: ContextMenuProps) {
   const [menuPosition, setMenuPosition] = useState<{ x: number; y: number } | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const longPressTimerRef = useRef<number | null>(null);
   const touchStartPositionRef = useRef<{ x: number; y: number } | null>(null);
+
+  const closeMenu = () => setMenuPosition(null);
 
   const openMenuAt = (clientX: number, clientY: number) => {
     setMenuPosition(getContextMenuPosition(clientX, clientY));
@@ -79,30 +82,6 @@ export function ContextMenu({ children, editor, className }: ContextMenuProps) {
     };
   }, []);
 
-  useEffect(() => {
-    if (!menuPosition) {
-      return;
-    }
-
-    const handlePointerDown = () => {
-      setMenuPosition(null);
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setMenuPosition(null);
-      }
-    };
-
-    window.addEventListener('pointerdown', handlePointerDown);
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      window.removeEventListener('pointerdown', handlePointerDown);
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [menuPosition]);
-
   return (
     <section
       className={cn('h-full w-full', className)}
@@ -115,10 +94,11 @@ export function ContextMenu({ children, editor, className }: ContextMenuProps) {
       {children}
       {menuPosition && editor.current && (
         <ContextMenuPanel
+          menuRef={menuRef}
           x={menuPosition.x}
           y={menuPosition.y}
           editor={editor.current}
-          onActionClick={() => setMenuPosition(null)}
+          onActionClick={closeMenu}
         />
       )}
     </section>
