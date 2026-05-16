@@ -21,26 +21,6 @@ export function tryParseJson(value: string): unknown | undefined {
   }
 }
 
-export function normalizeJsonObjectValue(value: unknown): unknown {
-  if (typeof value !== 'string') {
-    return value;
-  }
-
-  const trimmed = value.trim();
-
-  if (trimmed === '') {
-    return value;
-  }
-
-  const parsed = tryParseJson(trimmed);
-
-  if (parsed !== undefined && parsed !== null && typeof parsed === 'object') {
-    return parsed;
-  }
-
-  return value;
-}
-
 export function getValueType(value: unknown): string {
   if (value === null) {
     return 'null';
@@ -79,12 +59,4 @@ export function getValueType(value: unknown): string {
   }
 
   return typeof value;
-}
-
-export function formatExampleValue(value: unknown): string {
-  if (typeof value === 'string') {
-    return value;
-  }
-
-  return JSON.stringify(value);
 }

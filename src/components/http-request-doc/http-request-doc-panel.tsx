@@ -3,7 +3,7 @@ import { toFlatObject } from '@maxigarcia/js-utils';
 import { METHODS_EXCLUDED_FROM_BODY } from '@/constants/methods';
 import { filterNotVisibleAndEmptyKey } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
-import { tryParseJson } from '@/utils/value';
+import { getValueType, tryParseJson } from '@/utils/value';
 import { RequestMethodBadge } from '../request-method-badge';
 import { EmptyRequestOption } from './empty-request-option';
 import { RequestDocTable } from './request-doc-table';
@@ -15,13 +15,13 @@ export function HttpRequestDocPanel() {
 
   const paramsRows: DocFieldRow[] = params.filter(filterNotVisibleAndEmptyKey).map((param) => ({
     key: param.key,
-    type: typeof param.value,
+    type: getValueType(param.value),
     example: param.value,
   }));
 
   const headersRows: DocFieldRow[] = headers.filter(filterNotVisibleAndEmptyKey).map((header) => ({
     key: header.key,
-    type: typeof header.value,
+    type: getValueType(header.value),
     example: header.value,
   }));
 
@@ -29,7 +29,7 @@ export function HttpRequestDocPanel() {
 
   const bodyRows: DocFieldRow[] = Object.entries(toFlatObject(parsedBody)).map(([key, value]) => ({
     key,
-    type: typeof value,
+    type: getValueType(value),
     example: value,
   }));
 
