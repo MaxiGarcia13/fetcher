@@ -1,6 +1,6 @@
 import type { RefObject } from 'react';
 import type { Coords } from '@/utils/clamp-to-viewport';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { clampToViewport, coordsToRect } from '@/utils/clamp-to-viewport';
 
 export type ComputeFloatingPosition = (
@@ -40,44 +40,50 @@ export function useFloatingPosition({
 }: UseFloatingPositionOptions) {
   const [coords, setCoords] = useState<Coords | null>(null);
 
+  const windowResizeObserverRef: RefObject<ResizeObserver | undefined> = useRef(undefined);
+  const floatingResizeObserverRef: RefObject<ResizeObserver | undefined> = useRef(undefined);
+
   useEffect(() => {
     if (!isOpen) {
+      setCoords(null);
+      windowResizeObserverRef.current?.disconnect();
+      floatingResizeObserverRef.current?.disconnect();
       return;
     }
 
     const updatePosition = () => {
       const anchorRect = getAnchorRect(anchorElement?.current, anchorCoords);
       const floatingNode = floatingElement.current;
+
       if (!anchorRect || !floatingNode) {
         return;
       }
 
       const floatingRect = floatingNode.getBoundingClientRect();
       const { top, left } = computePosition(anchorRect, floatingRect);
+
       setCoords(clampToViewport(floatingRect, top, left));
     };
 
-    let floatingResizeObserver: ResizeObserver | undefined;
-
-    const windowResizeObserver = new ResizeObserver(() => {
+    windowResizeObserverRef.current = new ResizeObserver(() => {
       window.requestAnimationFrame(updatePosition);
     });
 
-    windowResizeObserver.observe(window.document.body);
+    windowResizeObserverRef.current?.observe(window.document.body);
 
     if (floatingElement.current) {
-      floatingResizeObserver = new ResizeObserver(() => {
+      floatingResizeObserverRef.current = new ResizeObserver(() => {
         window.requestAnimationFrame(updatePosition);
       });
 
-      floatingResizeObserver.observe(floatingElement.current);
+      floatingResizeObserverRef.current?.observe(floatingElement.current);
     }
 
     return () => {
-      windowResizeObserver.disconnect();
-      floatingResizeObserver?.disconnect();
+      windowResizeObserverRef.current?.disconnect();
+      floatingResizeObserverRef.current?.disconnect();
     };
-  }, [isOpen, anchorElement, anchorCoords?.top, anchorCoords?.left, floatingElement.current, computePosition]);
+  }, [isOpen]);
 
   return coords;
 }
