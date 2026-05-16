@@ -77,9 +77,10 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
                 success={isCopied}
                 error={error}
               >
-                <LinkIcon className="size-4" />
-                {' '}
-                {children}
+                <span className="flex items-center gap-2">
+                  <LinkIcon className="size-4" />
+                  {children}
+                </span>
               </CopyToClipboardContent>
             </Tooltip>
           ),
@@ -100,9 +101,10 @@ export function ShareButton({ className, children, size }: ShareButtonProps) {
                 success={isCopied}
                 error={error}
               >
-                <LinkPlusIcon className="size-4" />
-                {' '}
-                {children}
+                <span className="flex items-center gap-2">
+                  <LinkPlusIcon className="size-4 shrink-0" />
+                  {children}
+                </span>
               </CopyToClipboardContent>
             </Tooltip>
           ),
