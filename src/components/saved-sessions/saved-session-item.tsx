@@ -30,13 +30,25 @@ export function SavedSessionItem({
 
   return (
     <li
-      className={cn(
-        'flex gap-2 items-center rounded border text-xs cursor-pointer overflow-hidden hover:border-blue-500',
-        isActive
-          ? 'border-blue-500'
-          : 'border-app-border',
-        className,
-      )}
+      role="button"
+      tabIndex={0}
+      aria-label={`Select saved session ${snapshot.id}`}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onSelect?.(snapshot);
+          event.stopPropagation();
+        }
+      }}
+      className={
+        cn(
+          'flex gap-2 items-center shrink-0 rounded border text-xs cursor-pointer overflow-hidden hover:border-blue-500',
+          isActive
+            ? 'border-blue-500'
+            : 'border-app-border',
+          className,
+        )
+      }
       onClick={() => onSelect?.(snapshot)}
       data-testid={SAVED_SESSIONS_TEST_ID.SAVED_SESSIONS_LIST_ITEM}
     >
@@ -59,6 +71,13 @@ export function SavedSessionItem({
       <Button
         className="h-full shrink-0 rounded border-none  hover:bg-app-bg-muted"
         aria-label="Remove saved session"
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            onRemove?.(snapshot);
+            event.stopPropagation();
+          }
+        }}
         onClick={(e) => {
           e.stopPropagation();
           onRemove?.(snapshot);
