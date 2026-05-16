@@ -5,6 +5,7 @@ import Footer from '@/components/footer.astro';
 import { LazyHttpRequestDocPanel } from '@/components/http-request-doc';
 import { ChevronLeftIcon } from '@/components/icons/chevron-left';
 import { ShareButton } from '@/components/share-button';
+import { getHttpMethod } from '@/domain/http-request/request.utils';
 import {
   HTTP_REQUEST_METHOD_PARAM,
   HTTP_REQUEST_URL_PARAM,
@@ -17,8 +18,8 @@ const url = new URLSearchParams(params);
 const decodedUrl = decodeText(
   decodeURIComponent(url.get(HTTP_REQUEST_URL_PARAM) ?? ''),
 );
-const method = decodeText(
-  decodeURIComponent(url.get(HTTP_REQUEST_METHOD_PARAM) ?? ''),
+const method = getHttpMethod(
+  decodeText(decodeURIComponent(url.get(HTTP_REQUEST_METHOD_PARAM))),
 );
 
 const title = `${method.toUpperCase()} - Request documentation for ${getUrlDomain(decodedUrl)}`;
