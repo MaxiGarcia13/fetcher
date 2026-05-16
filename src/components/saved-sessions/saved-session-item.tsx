@@ -2,6 +2,7 @@ import type { SavedSessionSnapshot } from '@/domain/saved-sessions';
 import { cn } from '@maxigarcia/js-utils';
 import { SAVED_SESSIONS_TEST_ID } from '@/constants/test-ids';
 import { formatShortDate } from '@/utils/date';
+import { handleKeyPressEvent } from '@/utils/key-press-event';
 import { Button } from '../button';
 import { BinIcon } from '../icons/bin';
 import { RequestMethodBadge } from '../request-method-badge';
@@ -33,13 +34,7 @@ export function SavedSessionItem({
       role="button"
       tabIndex={0}
       aria-label={`Select saved session ${snapshot.id}`}
-      onKeyDown={(event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          onSelect?.(snapshot);
-          event.stopPropagation();
-        }
-      }}
+      onKeyDown={handleKeyPressEvent(() => onSelect?.(snapshot))}
       className={
         cn(
           'flex gap-2 items-center shrink-0 rounded border text-xs cursor-pointer overflow-hidden hover:border-blue-500',
@@ -71,13 +66,7 @@ export function SavedSessionItem({
       <Button
         className="h-full shrink-0 rounded border-none  hover:bg-app-bg-muted"
         aria-label="Remove saved session"
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            onRemove?.(snapshot);
-            event.stopPropagation();
-          }
-        }}
+        onKeyDown={handleKeyPressEvent(() => onRemove?.(snapshot))}
         onClick={(e) => {
           e.stopPropagation();
           onRemove?.(snapshot);

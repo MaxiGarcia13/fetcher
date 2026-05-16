@@ -3,6 +3,7 @@ import type { ButtonVariant } from './button-styles';
 import { cn } from '@maxigarcia/js-utils';
 import { useId, useRef, useState } from 'react';
 import { Menu, MenuItem } from '@/components/menu';
+import { handleKeyPressEvent } from '@/utils/key-press-event';
 import { storage } from '@/utils/storage';
 import { ChevronDownIcon } from '../icons/chevron-down';
 import { Button } from './button';
@@ -58,10 +59,8 @@ export function DropdownButton({
 
   const closeMenu = () => setOpen(false);
 
-  const handleToggleMenu = (event: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const handleToggleMenu = () => {
     setOpen((previous) => !previous);
-    event.stopPropagation();
   };
 
   if (!selectedItem) {
@@ -86,12 +85,7 @@ export function DropdownButton({
         disabled={disabled}
         className="h-full shrink-0 rounded rounded-r-none"
         tabIndex={disabled ? -1 : 0}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            selectedItem.onClick?.();
-          }
-        }}
+        onKeyDown={handleKeyPressEvent(() => selectedItem.onClick?.())}
         onClick={() => {
           selectedItem?.onClick?.();
         }}
@@ -113,11 +107,9 @@ export function DropdownButton({
         aria-controls={menuId}
         aria-label={toggleMenuAriaLabel}
         tabIndex={disabled ? -1 : 0}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            handleToggleMenu(event);
-          }
-        }}
+        onKeyDown={
+          handleKeyPressEvent(() => handleToggleMenu())
+        }
         onClick={handleToggleMenu}
       >
         <ChevronDownIcon
