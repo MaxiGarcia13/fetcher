@@ -1,4 +1,5 @@
 import type { DocFieldRow } from './type';
+import { EmptyRequestOption } from './empty-request-option';
 
 interface RequestDocTableProps {
   title: string;
@@ -12,7 +13,7 @@ export function RequestDocTable({ title, rows }: RequestDocTableProps) {
 
       {rows.length === 0
         ? (
-            <p className="text-sm text-app-text-muted">No fields yet.</p>
+            <EmptyRequestOption />
           )
         : (
             <div className="overflow-x-auto rounded border border-app-border">

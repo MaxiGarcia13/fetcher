@@ -5,6 +5,7 @@ import { filterNotVisibleAndEmptyKey } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
 import { tryParseJson } from '@/utils/value';
 import { RequestMethodBadge } from '../request-method-badge';
+import { EmptyRequestOption } from './empty-request-option';
 import { RequestDocTable } from './request-doc-table';
 
 export function HttpRequestDocPanel() {
@@ -57,7 +58,7 @@ export function HttpRequestDocPanel() {
                 </p>
               )
             : (
-                <p className="text-sm text-app-text-muted">No URL set.</p>
+                <EmptyRequestOption />
               )
         }
       </section>
