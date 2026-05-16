@@ -46,6 +46,11 @@
   src: url('/assets/fonts/FiraCode-Bold.woff2') format('woff2');
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 :root {
   font-family: 'Fira Code', ui-monospace, monospace;
   font-variant-ligatures: contextual;
