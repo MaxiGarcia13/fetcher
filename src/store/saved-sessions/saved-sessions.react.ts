@@ -1,14 +1,14 @@
-import type { SavedSessionsState } from './saved-sessions.store';
+import type { SavedSessionsState } from './type';
 import { useSyncExternalStore } from 'react';
 import {
-  $savedSessions,
   appendSavedSession,
   refreshSavedSessions,
   removeSavedSession,
   selectSavedSession,
   setActiveSession,
   setSavedSessions,
-} from './saved-sessions.store';
+} from './saved-sessions.action';
+import { $savedSessions } from './saved-sessions.store';
 
 export function useSavedSessionsState(): SavedSessionsState & {
   refresh: typeof refreshSavedSessions;
