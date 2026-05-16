@@ -12,7 +12,7 @@ const { class: className } = Astro.props;
 ---
 
 <aside class={cn('flex h-full w-64 min-h-0 flex-col gap-4', className)}>
-  <Brand />
-  <LazySavedSessionsPanel className="min-h-0 flex-1" client:only="react" />
-  <Footer />
+  <Brand class="px-4 pt-4" />
+  <LazySavedSessionsPanel className="min-h-0 flex-1 px-3" client:only="react" />
+  <Footer class="px-4 pb-4" />
 </aside>
