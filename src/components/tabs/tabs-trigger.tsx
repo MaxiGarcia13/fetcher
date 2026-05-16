@@ -26,7 +26,7 @@ export function TabsTrigger<T extends string>({
       disabled={disabled}
       tabIndex={isActive ? 0 : -1}
       className={cn(
-        'border-b-2 px-4 py-2.5 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-app-bg-base',
+        'border-b-2 px-4 py-2.5 text-sm font-medium',
         isActive
           ? 'border-blue-600'
           : 'border-transparent text-app-text-muted hover:text-app-text-primary',

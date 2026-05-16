@@ -12,9 +12,9 @@ export function Input({ className, error, ...props }: InputProps) {
   const name = props.name ?? props.id ?? id;
 
   return (
-    <Field error={error} className={cn('border border-gray-600 focus:border-gray-600 rounded h-10', className)}>
+    <Field error={error} className={cn('border border-gray-600 rounded h-10', className)}>
       <input
-        className="w-full flex-1 px-3 py-2 text-sm outline-none"
+        className="w-full flex-1 px-3 py-2 text-sm"
         name={name}
         {...props}
       />

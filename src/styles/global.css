@@ -51,6 +51,38 @@ html {
   text-size-adjust: 100%;
 }
 
+@layer base {
+  a[href],
+  button,
+  input,
+  select,
+  textarea,
+  [role='button'],
+  [role='tab'],
+  [role='menuitem'] {
+    @apply outline-none;
+  }
+
+  a[href]:focus-visible,
+  button:enabled:focus-visible,
+  input:enabled:focus-visible,
+  select:enabled:focus-visible,
+  textarea:enabled:focus-visible,
+  [role='button']:focus-visible,
+  [role='tab']:focus-visible,
+  [role='menuitem']:focus-visible {
+    @apply rounded border border-gray-500 ring-2 ring-gray-500 ring-offset-2 ring-offset-app-bg-base;
+  }
+
+  div.rounded.border:focus-within:has(:is(input, select, textarea)) {
+    @apply border-gray-500 ring-2 ring-gray-500 ring-offset-2 ring-offset-app-bg-base;
+  }
+
+  div.rounded.border:focus-within:has(:is(input, select, textarea)) :is(input, select, textarea):focus-visible {
+    @apply ring-0 ring-offset-0;
+  }
+}
+
 :root {
   font-family: 'Fira Code', ui-monospace, monospace;
   font-variant-ligatures: contextual;

@@ -37,7 +37,7 @@ export function SavedSessionItem({
       onKeyDown={handleKeyPressEvent(() => onSelect?.(snapshot))}
       className={
         cn(
-          'flex gap-2 items-center shrink-0 rounded border text-xs cursor-pointer overflow-hidden hover:border-blue-500',
+          'flex gap-2 items-center shrink-0 rounded border text-xs cursor-pointer overflow-hidden transition-all duration-200 ease-in-out hover:border-blue-500',
           isActive
             ? 'border-blue-500'
             : 'border-app-border',

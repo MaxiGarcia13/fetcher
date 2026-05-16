@@ -29,7 +29,7 @@ export function AutocompleteInput({
     <Field
       className={
         cn(
-          'relative appearance-none rounded border border-gray-600 text-sm focus:border-gray-500',
+          'relative appearance-none rounded border border-gray-600 text-sm',
           className,
         )
       }
@@ -45,7 +45,7 @@ export function AutocompleteInput({
           onChange(event.target.value);
         }}
         list={hasSuggestions ? datalistId : undefined}
-        className="h-full w-full p-2 outline-none"
+        className="h-full w-full p-2"
         {...props}
       />
       {hasSuggestions
