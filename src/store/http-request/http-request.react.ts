@@ -1,14 +1,14 @@
-import type { HttpRequestState } from './http-request.store';
+import type { HttpRequestState } from './type';
 import { useSyncExternalStore } from 'react';
 import {
-  $httpRequest,
   httpRequestUrlValidationError,
   setHttpRequestBody,
   setHttpRequestHeaders,
   setHttpRequestMethod,
   setHttpRequestParams,
   setHttpRequestUrl,
-} from './http-request.store';
+} from './http-request.action';
+import { $httpRequest } from './http-request.store';
 
 export function useHttpRequestState(): HttpRequestState & {
   urlError: string | undefined;
