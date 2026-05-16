@@ -2,7 +2,6 @@ import type { CSSProperties, HTMLAttributes, ReactNode, RefObject } from 'react'
 import type { Coords } from '@/utils/clamp-to-viewport';
 import { cn } from '@maxigarcia/js-utils';
 import { useRef } from 'react';
-import { createPortal } from 'react-dom';
 import { useDismiss } from '@/hooks/use-dismiss';
 import { useFloatingPosition } from '@/hooks/use-floating-position';
 import { computeAtPointPosition, computeBottomEndPosition } from './menu-position';
@@ -38,6 +37,7 @@ export function Menu({
   placement = 'bottom-end',
   coords: anchorCoords,
   onClose,
+  ...props
 }: MenuProps) {
   const internalRef = useRef<HTMLDivElement | null>(null);
 
@@ -53,7 +53,7 @@ export function Menu({
 
   useDismiss(onClose, menuRef ?? internalRef);
 
-  return createPortal(
+  return (
     <div
       id={id}
       ref={ref ?? internalRef}
@@ -69,9 +69,9 @@ export function Menu({
           ? { top: coords?.top ?? 0, left: coords?.left ?? 0, ...style }
           : style
       }
+      {...props}
     >
       {children}
-    </div>,
-    document.body,
+    </div>
   );
 }

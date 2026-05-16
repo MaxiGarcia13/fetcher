@@ -11,6 +11,7 @@ interface MenuItemProps
 
 export function MenuItem({ onClick, children, disabled, selected, className, ...props }: MenuItemProps) {
   return (
+
     <button
       type="button"
       role="menuitem"
@@ -22,13 +23,7 @@ export function MenuItem({ onClick, children, disabled, selected, className, ...
         selected && 'bg-app-bg-muted text-sky-300 hover:bg-app-bg-hover',
         className,
       )}
-      onClick={(event) => {
-        if (disabled) {
-          return;
-        }
-
-        onClick?.(event);
-      }}
+      onClick={onClick}
       {...props}
     >
       {children}

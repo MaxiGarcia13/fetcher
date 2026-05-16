@@ -45,6 +45,7 @@ export function DropdownButton({
   const [open, setOpen] = useState(false);
 
   const menuId = useId();
+  const triggerId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const STORAGE_KEY = `fetcher.dropdown-button-selected-index-${menuId}`;
@@ -94,6 +95,7 @@ export function DropdownButton({
         <span className="flex shrink-0 items-center">{selectedItem.children}</span>
       </Button>
       <Button
+        id={triggerId}
         type="button"
         variant="transparent"
         size={size}
@@ -103,7 +105,7 @@ export function DropdownButton({
           disabled ? 'border-transparent' : borderSeparatorClassNames[variant],
         )}
         aria-expanded={open}
-        aria-haspopup="menu"
+        aria-haspopup="true"
         aria-controls={menuId}
         aria-label={toggleMenuAriaLabel}
         tabIndex={disabled ? -1 : 0}
@@ -122,6 +124,7 @@ export function DropdownButton({
           id={menuId}
           anchorRef={containerRef}
           onClose={closeMenu}
+          aria-labelledby={triggerId}
         >
           {menuItems.map((item, index) => (
             <MenuItem
