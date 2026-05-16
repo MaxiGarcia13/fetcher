@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { TabsContent } from '@/components/tabs/tabs-content';
 import { TabsHeader } from '@/components/tabs/tabs-header';
 import { TabsRoot } from '@/components/tabs/tabs-root';
-import { METHODS_WITH_BODY } from '@/domain/http-request';
+import { METHODS_WITH_BODY } from '@/constants/methods';
 import { useHttpRequestState } from '@/store/http-request';
 import { storage } from '@/utils/storage';
 import { ActionsSession } from '../actions-session';

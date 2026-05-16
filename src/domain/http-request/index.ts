@@ -1,4 +1,3 @@
-export * from '../../constants/methods';
 export * from './fetch-http-request';
 export * from './request.utils';
 export * from './response.utils';
