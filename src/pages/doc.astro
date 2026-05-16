@@ -1,16 +1,10 @@
 ---
 import Brand from '@/components/brand.astro';
 import Footer from '@/components/footer.astro';
+import { HttpRequestDocPanel } from '@/components/http-request-doc';
 import { ChevronLeftIcon } from '@/components/icons/chevron-left';
-import { RequestDocTable } from '@/components/request-doc-table';
-import { RequestMethodBadge } from '@/components/saved-sessions/request-method-badge';
 import { ShareButton } from '@/components/share-button';
-import { METHODS_EXCLUDED_FROM_BODY } from '@/constants/methods';
-import { parseRequestDocSearchParams } from '@/domain/request-doc';
 import AppLayout from '@/layouts/app-layout.astro';
-
-const requestDoc = parseRequestDocSearchParams(Astro.url.searchParams);
-const showBodySection = !METHODS_EXCLUDED_FROM_BODY.includes(requestDoc.method);
 ---
 
 <AppLayout>
@@ -36,43 +30,8 @@ const showBodySection = !METHODS_EXCLUDED_FROM_BODY.includes(requestDoc.method);
       </div>
     </div>
 
-    <section class="flex flex-col gap-4">
-      <h2 class="text-sm font-semibold tracking-wide text-app-text-muted uppercase">
-        Method
-      </h2>
+    <HttpRequestDocPanel client:only="react" />
 
-      <RequestMethodBadge
-        method={requestDoc.method}
-        client:only="react"
-        className="text-lg!"
-      />
-
-      <section class="space-y-3">
-        <h2 class="text-sm font-semibold tracking-wide text-app-text-muted uppercase">
-          URL
-        </h2>
-        {
-          requestDoc.url
-? (
-            <p class="rounded border border-app-border bg-app-bg-surface px-3 py-2 text-sm break-all text-app-text-primary">
-              {requestDoc.url}
-            </p>
-          )
-: (
-            <p class="text-sm text-app-text-muted">No URL set.</p>
-          )
-        }
-      </section>
-
-      <RequestDocTable title="Headers" rows={requestDoc.headers} />
-      <RequestDocTable title="Params" rows={requestDoc.params} />
-      {
-        showBodySection && (
-          <RequestDocTable title="Body" rows={requestDoc.body} />
-        )
-      }
-
-      <Footer />
-    </section>
+    <Footer />
   </main>
 </AppLayout>
