@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { fetchHttpRequest } from '@/domain/http-request/fetch-http-request';
+import { isSameOriginRequest } from '@/utils/is-same-origin-request';
 
 const HOP_BY_HOP_RESPONSE_HEADERS = new Set([
   'connection',
@@ -15,6 +16,13 @@ const HOP_BY_HOP_RESPONSE_HEADERS = new Set([
 ]);
 
 export const POST: APIRoute = async ({ request }) => {
+  if (!isSameOriginRequest(request)) {
+    return new Response(JSON.stringify({ message: 'Forbidden' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   try {
     const { url, method, params, headers, body } = await request.json();
 
