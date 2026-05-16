@@ -57,26 +57,27 @@ export function useFloatingPosition({
       setCoords(clampToViewport(floatingRect, top, left));
     };
 
-    const animationFrameId = window.requestAnimationFrame(updatePosition);
-    window.addEventListener('resize', updatePosition);
-    window.addEventListener('scroll', updatePosition, true);
+    let floatingResizeObserver: ResizeObserver | undefined;
 
-    let resizeObserver: ResizeObserver | undefined;
-    const floatingNode = floatingElement.current;
-    if (floatingNode) {
-      resizeObserver = new ResizeObserver(() => {
+    const windowResizeObserver = new ResizeObserver(() => {
+      window.requestAnimationFrame(updatePosition);
+    });
+
+    windowResizeObserver.observe(window.document.body);
+
+    if (floatingElement.current) {
+      floatingResizeObserver = new ResizeObserver(() => {
         window.requestAnimationFrame(updatePosition);
       });
-      resizeObserver.observe(floatingNode);
+
+      floatingResizeObserver.observe(floatingElement.current);
     }
 
     return () => {
-      window.cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', updatePosition);
-      window.removeEventListener('scroll', updatePosition, true);
-      resizeObserver?.disconnect();
+      windowResizeObserver.disconnect();
+      floatingResizeObserver?.disconnect();
     };
-  }, [isOpen, anchorElement, anchorCoords?.top, anchorCoords?.left, floatingElement, computePosition]);
+  }, [isOpen, anchorElement, anchorCoords?.top, anchorCoords?.left, floatingElement.current, computePosition]);
 
   return coords;
 }

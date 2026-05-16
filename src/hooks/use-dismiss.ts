@@ -1,10 +1,10 @@
 import type { RefObject } from 'react';
 import { useEffect } from 'react';
 
-export function useTooltipDismiss(
-  isOpen: boolean,
+export function useDismiss(
   onClose: () => void,
-  ignoreRef: RefObject<HTMLElement | null>,
+  ignoreRef?: RefObject<HTMLElement | null>,
+  isOpen = true,
 ) {
   useEffect(() => {
     if (!isOpen) {
@@ -14,7 +14,7 @@ export function useTooltipDismiss(
     const handlePointerDown = (event: PointerEvent) => {
       const target = event.target as Node;
 
-      if (ignoreRef.current?.contains(target)) {
+      if (ignoreRef?.current?.contains(target)) {
         return;
       }
 

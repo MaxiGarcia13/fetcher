@@ -2,9 +2,10 @@ import type { CSSProperties, HTMLAttributes, ReactNode, RefObject } from 'react'
 import type { Coords } from '@/utils/clamp-to-viewport';
 import { cn } from '@maxigarcia/js-utils';
 import { useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { useDismiss } from '@/hooks/use-dismiss';
 import { useFloatingPosition } from '@/hooks/use-floating-position';
 import { computeAtPointPosition, computeBottomEndPosition } from './menu-position';
-import { useMenuDismiss } from './use-menu-dismiss';
 
 export type MenuPlacement = 'bottom-end' | 'at-point';
 
@@ -50,9 +51,9 @@ export function Menu({
     computePosition: placement ? placementComputePosition[placement] : computeAtPointPosition,
   });
 
-  useMenuDismiss(onClose, menuRef ?? internalRef);
+  useDismiss(onClose, menuRef ?? internalRef);
 
-  return (
+  return createPortal(
     <div
       id={id}
       ref={ref ?? internalRef}
@@ -70,6 +71,7 @@ export function Menu({
       }
     >
       {children}
-    </div>
+    </div>,
+    document.body,
   );
 }

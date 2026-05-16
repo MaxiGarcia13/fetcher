@@ -2,9 +2,11 @@ import type { ReactNode } from 'react';
 import type { TooltipPlacement } from './types';
 import { cn } from '@maxigarcia/js-utils';
 import { useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useDismiss } from '@/hooks/use-dismiss';
+import { useFloatingPosition } from '@/hooks/use-floating-position';
 import { TooltipContent } from './tooltip-content';
-import { useTooltipDismiss } from './use-tooltip-dismiss';
-import { useTooltipPosition } from './use-tooltip-position';
+import { getTooltipComputePlacement } from './tooltip-position';
 
 export interface TooltipProps {
   content: ReactNode;
@@ -24,14 +26,15 @@ export function Tooltip({
   disabled,
 }: TooltipProps) {
   const [isOpen, setIsOpen] = useState(false);
+
   const triggerElementRef = useRef<HTMLDivElement>(null);
   const tooltipElementRef = useRef<HTMLSpanElement>(null);
 
-  const coords = useTooltipPosition({
+  const coords = useFloatingPosition({
     isOpen,
-    placement,
-    triggerElement: triggerElementRef,
-    tooltipElement: tooltipElementRef,
+    anchorElement: triggerElementRef,
+    floatingElement: tooltipElementRef,
+    computePosition: getTooltipComputePlacement(placement),
   });
 
   const handleOpen = () => {
@@ -42,7 +45,7 @@ export function Tooltip({
 
   const handleClose = () => setIsOpen(false);
 
-  useTooltipDismiss(isOpen, handleClose, triggerElementRef);
+  useDismiss(handleClose, triggerElementRef, isOpen);
 
   return (
     <div
@@ -55,12 +58,15 @@ export function Tooltip({
     >
       {children}
       {!disabled && isOpen && (
-        <TooltipContent
-          ref={tooltipElementRef}
-          children={content}
-          coords={coords}
-          className={contentClassName}
-        />
+        createPortal(
+          <TooltipContent
+            ref={tooltipElementRef}
+            children={content}
+            coords={coords}
+            className={cn(contentClassName)}
+          />,
+          document.body,
+        )
       )}
     </div>
   );
