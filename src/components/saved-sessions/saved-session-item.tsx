@@ -4,7 +4,7 @@ import { SAVED_SESSIONS_TEST_ID } from '@/constants/test-ids';
 import { formatShortDate } from '@/utils/date';
 import { Button } from '../button';
 import { BinIcon } from '../icons/bin';
-import { RequestMethodBadge } from './request-method-badge';
+import { RequestMethodBadge } from '../request-method-badge';
 import { getSnapshotRequestMeta } from './utils';
 
 export interface SavedSessionItemProps {
