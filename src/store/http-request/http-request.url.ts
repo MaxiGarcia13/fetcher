@@ -11,7 +11,7 @@ export function readHttpRequestUrlParam<T>(key: string, defaultValue?: T): T | u
   const param = getUrlParam(key);
 
   if (param) {
-    const decoded = decodeText(param);
+    const decoded = decodeText(decodeURIComponent(param));
 
     const paramsToParse = [HTTP_REQUEST_HEADERS_PARAM, HTTP_REQUEST_PARAMS_PARAM];
 
