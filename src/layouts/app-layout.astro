@@ -4,9 +4,14 @@ import pkg from '../../package.json';
 
 import '../styles/global.css';
 
-const description = pkg.description;
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const title = capitalize(Astro.props.title || pkg.name);
+const description = Astro.props.description || pkg.description;
 const keywords = pkg.keywords.join(', ');
-const title = capitalize(pkg.name);
 
 const url = 'https://fetcherapi.vercel.app';
 const image = `${url}/favicon.png`;

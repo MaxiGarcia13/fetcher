@@ -1,13 +1,21 @@
 ---
+import { decodeText, getUrlDomain } from '@maxigarcia/js-utils';
 import Brand from '@/components/brand.astro';
 import Footer from '@/components/footer.astro';
 import { LazyHttpRequestDocPanel } from '@/components/http-request-doc';
 import { ChevronLeftIcon } from '@/components/icons/chevron-left';
 import { ShareButton } from '@/components/share-button';
 import AppLayout from '@/layouts/app-layout.astro';
+
+const params = Astro.url.search;
+const url = new URLSearchParams(params);
+const decodedUrl = decodeText(url.get('url') ?? '');
+const method = decodeText(url.get('method') ?? '');
+
+const title = `${method.toUpperCase()} - Request documentation for ${getUrlDomain(decodedUrl)}`;
 ---
 
-<AppLayout>
+<AppLayout title={title}>
   <main
     class="mx-auto flex h-full w-full max-w-4xl flex-col gap-8 overflow-y-auto p-6"
   >
