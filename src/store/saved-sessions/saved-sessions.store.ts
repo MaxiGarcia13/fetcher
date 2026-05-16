@@ -1,6 +1,6 @@
 import type { SavedSessionSnapshot } from '@/domain/saved-sessions';
 import { map } from 'nanostores';
-import { applyHttpRequestFromSearch } from '@/store/http-request/http-request.store';
+import { applyHttpRequestFromSearch } from '@/store/http-request';
 import { storage } from '@/utils/storage';
 import { clearHttpResponse } from '../http-response';
 
