@@ -69,7 +69,7 @@ export function RequestOptionsPanel({ defaultTab = 'headers', className }: Reque
       defaultValue={defaultTab}
       value={activeTab}
       onValueChange={handleValueChange}
-      className={cn('h-full', className)}
+      className={cn('box-border h-full py-1', className)}
     >
       <div className="flex flex-col-reverse justify-between border-b border-app-border px-4 sm:flex-row sm:items-center sm:gap-4">
         <TabsHeader className="h-full flex-1 border-b-0" />

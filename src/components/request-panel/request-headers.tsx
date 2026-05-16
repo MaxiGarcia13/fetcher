@@ -67,7 +67,7 @@ export function RequestHeaders({ className }: Props) {
 
   return (
     <KeyValueTable
-      className={cn('p-4', className)}
+      className={cn('px-3 py-4', className)}
       value={headers}
       onChange={setHeaders}
       keyFieldPlaceholder="Header name"

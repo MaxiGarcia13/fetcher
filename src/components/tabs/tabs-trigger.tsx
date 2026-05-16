@@ -1,6 +1,7 @@
 import type { TabsTriggerProps } from './types';
 import { cn } from '@maxigarcia/js-utils';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
+import { handleKeyPressEvent } from '@/utils/key-press-event';
 import { useTabsContext } from './context';
 
 export function TabsTrigger<T extends string>({
@@ -24,7 +25,10 @@ export function TabsTrigger<T extends string>({
       aria-controls={`tabpanel-${value}`}
       aria-disabled={disabled}
       disabled={disabled}
-      tabIndex={isActive ? 0 : -1}
+      tabIndex={disabled ? -1 : 0}
+      onKeyDown={handleKeyPressEvent(() => {
+        setActiveValue(value);
+      })}
       className={cn(
         'border-b-2 px-4 py-2.5 text-sm font-medium',
         isActive
