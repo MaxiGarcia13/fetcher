@@ -1,1 +1,1 @@
-export * from './http-request-doc-panel';
+export * from './lazy-http-request-doc-panel';

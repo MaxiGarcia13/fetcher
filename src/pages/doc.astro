@@ -1,7 +1,7 @@
 ---
 import Brand from '@/components/brand.astro';
 import Footer from '@/components/footer.astro';
-import { HttpRequestDocPanel } from '@/components/http-request-doc';
+import { LazyHttpRequestDocPanel } from '@/components/http-request-doc';
 import { ChevronLeftIcon } from '@/components/icons/chevron-left';
 import { ShareButton } from '@/components/share-button';
 import AppLayout from '@/layouts/app-layout.astro';
@@ -13,24 +13,22 @@ import AppLayout from '@/layouts/app-layout.astro';
   >
     <Brand />
 
-    <div class="space-y-3">
-      <div class="flex items-center gap-2">
-        <a
-          href={`/${Astro.url.search}`}
-          class="text-sm text-app-text-primary hover:text-app-text"
-          aria-label="Back to request editor"
-        >
-          <ChevronLeftIcon className="size-6" />
-        </a>
-        <h1 class="text-2xl font-bold text-white">Request documentation</h1>
+    <div class="flex items-center gap-2">
+      <a
+        href={`/${Astro.url.search}`}
+        class="text-sm text-app-text-primary hover:text-app-text"
+        aria-label="Back to request editor"
+      >
+        <ChevronLeftIcon className="size-6" />
+      </a>
+      <h1 class="text-2xl font-bold text-white">Request documentation</h1>
 
-        <ShareButton className="ml-auto" client:only="react" size="sm">
-          <span class="mt-1 hidden sm:block">Share link</span>
-        </ShareButton>
-      </div>
+      <ShareButton className="ml-auto" client:only="react" size="sm">
+        <span class="mt-1 hidden sm:block">Share link</span>
+      </ShareButton>
     </div>
 
-    <HttpRequestDocPanel client:only="react" />
+    <LazyHttpRequestDocPanel client:only="react" />
 
     <Footer />
   </main>
