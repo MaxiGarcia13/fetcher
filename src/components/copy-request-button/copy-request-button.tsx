@@ -7,6 +7,7 @@ import { METHODS_WITH_BODY } from '@/constants/methods';
 import { parseObjectFromKeyValueEntries } from '@/domain/http-request';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { useHttpRequestState } from '@/store/http-request';
+import { tryParseJson } from '@/utils/value';
 import { CopyToClipboardContent } from '../copy-to-clipboard-content';
 import { TerminalIcon } from '../icons/terminal';
 import { getCopyToCurlText, getCopyToFetchText } from './utils';
@@ -29,7 +30,7 @@ export function CopyRequestButton({ className, ...props }: CopyRequestButtonProp
       headers: parseObjectFromKeyValueEntries(headers),
       ...(METHODS_WITH_BODY.includes(method)
         && typeof body === 'string' && body.length > 0
-        ? { body }
+        ? { body: JSON.stringify(tryParseJson(body) ?? {}) }
         : undefined
       ),
     };
