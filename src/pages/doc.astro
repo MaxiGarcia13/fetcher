@@ -3,7 +3,9 @@ import { decodeText, getUrlDomain } from '@maxigarcia/js-utils';
 import Brand from '@/components/brand.astro';
 import Footer from '@/components/footer.astro';
 import { LazyHttpRequestDocPanel } from '@/components/http-request-doc';
+import { EmptyRequestOption } from '@/components/http-request-doc/empty-request-option';
 import { ChevronLeftIcon } from '@/components/icons/chevron-left';
+import { RequestMethodBadge } from '@/components/request-method-badge';
 import { ShareButton } from '@/components/share-button';
 import { getHttpMethod } from '@/domain/http-request/request.utils';
 import {
@@ -44,6 +46,38 @@ const title = `${method.toUpperCase()} - Request documentation for ${getUrlDomai
       <ShareButton className="ml-auto" client:only="react" size="sm">
         <span class="mt-1 hidden sm:block">Share link</span>
       </ShareButton>
+    </div>
+
+    <div class="space-y-2">
+      <h2
+        class="text-sm font-semibold tracking-wide text-app-text-muted uppercase"
+      >
+        Method
+      </h2>
+
+      <RequestMethodBadge
+        method={method}
+        className="text-lg!"
+        client:only="react"
+      />
+    </div>
+    <div class="space-y-2">
+      <h2
+        class="text-sm font-semibold tracking-wide text-app-text-muted uppercase"
+      >
+        URL
+      </h2>
+      {
+        decodedUrl
+? (
+          <p class="rounded border border-app-border bg-app-bg-surface px-3 py-2 text-sm break-all text-app-text-primary">
+            {decodedUrl}
+          </p>
+        )
+: (
+          <EmptyRequestOption />
+        )
+      }
     </div>
 
     <LazyHttpRequestDocPanel client:only="react" />

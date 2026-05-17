@@ -41,14 +41,6 @@ function DocTableSectionSkeleton({ title }: { title: string }) {
 export function HttpRequestDocPanelSkeleton() {
   return (
     <section className="flex flex-col gap-4">
-      <h2 className={sectionTitleClass}>Method</h2>
-      <Skeleton className="h-7 w-16" />
-
-      <section className="space-y-3">
-        <h2 className={sectionTitleClass}>URL</h2>
-        <Skeleton className="h-[42px] w-full rounded border border-app-border" />
-      </section>
-
       <DocTableSectionSkeleton title="Headers" />
       <DocTableSectionSkeleton title="Params" />
       <DocTableSectionSkeleton title="Body" />
