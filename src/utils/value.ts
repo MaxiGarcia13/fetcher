@@ -1,24 +1,9 @@
-import { removeTrailingCommas, unwrapString } from '@maxigarcia/js-utils';
+import { tryParseJson } from '@maxigarcia/js-utils';
 
 const NUMERIC_STRING_PATTERN = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i;
 
 function isNumericString(value: string): boolean {
   return NUMERIC_STRING_PATTERN.test(value.trim());
-}
-
-export function tryParseJson(value: string): unknown | undefined {
-  try {
-    const fixed = value.replace(
-      /([{,]\s*)([a-z_$][\w$]*)(\s*:)/gi,
-      '$1"$2"$3',
-    );
-    const unwrapped = unwrapString(fixed);
-    const removedTrailingCommas = removeTrailingCommas(unwrapped);
-
-    return JSON.parse(removedTrailingCommas);
-  } catch {
-    return undefined;
-  }
 }
 
 export function getValueType(value: unknown): string {

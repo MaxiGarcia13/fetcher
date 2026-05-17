@@ -1,7 +1,6 @@
 import type { KeyValueEntry } from './types';
-import { cn, isRecord, toFlatObject } from '@maxigarcia/js-utils';
+import { cn, isRecord, toFlatObject, tryParseJson } from '@maxigarcia/js-utils';
 import { useMemo } from 'react';
-import { tryParseJson } from '@/utils/value';
 import { KeyValueTableRow } from './key-value-table-row';
 import { applySpreadsheetTrailingBlankRow } from './utils';
 

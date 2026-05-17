@@ -1,9 +1,9 @@
 import type { DocFieldRow } from './type';
-import { toFlatObject } from '@maxigarcia/js-utils';
+import { toFlatObject, tryParseJson } from '@maxigarcia/js-utils';
 import { METHODS_EXCLUDED_FROM_BODY } from '@/constants/methods';
 import { filterNotVisibleAndEmptyKey } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
-import { getExampleValue, getValueType, tryParseJson } from '@/utils/value';
+import { getExampleValue, getValueType } from '@/utils/value';
 import { RequestDocTable } from './request-doc-table';
 
 export function HttpRequestDocPanel() {

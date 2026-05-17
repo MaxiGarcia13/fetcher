@@ -1,5 +1,5 @@
 import type { HttpResponseError } from './type';
-import { tryParseJson } from '@/utils/value';
+import { tryParseJson } from '@maxigarcia/js-utils';
 import { $httpResponse, initialHttpResponseState } from './http-response.store';
 
 export async function saveHttpResponse(response: Response): Promise<void> {

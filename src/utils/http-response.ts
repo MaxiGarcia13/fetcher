@@ -1,5 +1,5 @@
 import type { HttpResponseError } from '@/store/http-response';
-import { tryParseJson } from '@/utils/value';
+import { tryParseJson } from '@maxigarcia/js-utils';
 
 function primaryMimeType(headers: Record<string, string>): string {
   return (headers['content-type'] ?? '').split(';')[0]?.trim().toLowerCase() ?? '';

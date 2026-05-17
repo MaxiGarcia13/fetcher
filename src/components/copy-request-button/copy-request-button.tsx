@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import { isValidHttpUrl } from '@maxigarcia/js-utils';
+import { isValidHttpUrl, tryParseJson } from '@maxigarcia/js-utils';
 import { DropdownButton } from '@/components/button';
 import { JsIcon } from '@/components/icons/js';
 import { Tooltip } from '@/components/tooltip';
@@ -7,7 +7,6 @@ import { METHODS_WITH_BODY } from '@/constants/methods';
 import { parseObjectFromKeyValueEntries } from '@/domain/http-request';
 import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
 import { useHttpRequestState } from '@/store/http-request';
-import { tryParseJson } from '@/utils/value';
 import { CopyToClipboardContent } from '../copy-to-clipboard-content';
 import { TerminalIcon } from '../icons/terminal';
 import { getCopyToCurlText, getCopyToFetchText } from './utils';
