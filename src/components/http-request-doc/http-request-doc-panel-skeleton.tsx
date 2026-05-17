@@ -40,10 +40,10 @@ function DocTableSectionSkeleton({ title }: { title: string }) {
 
 export function HttpRequestDocPanelSkeleton() {
   return (
-    <section className="flex flex-col gap-4">
+    <>
       <DocTableSectionSkeleton title="Headers" />
       <DocTableSectionSkeleton title="Params" />
       <DocTableSectionSkeleton title="Body" />
-    </section>
+    </>
   );
 }
