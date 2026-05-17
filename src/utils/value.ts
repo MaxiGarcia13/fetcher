@@ -60,3 +60,19 @@ export function getValueType(value: unknown): string {
 
   return typeof value;
 }
+
+export function getExampleValue(value: unknown): string {
+  if (value === null) {
+    return 'null';
+  }
+
+  if (value === undefined) {
+    return 'undefined';
+  }
+
+  if (Array.isArray(value)) {
+    return JSON.stringify(value);
+  }
+
+  return String(value);
+}
