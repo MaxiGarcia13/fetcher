@@ -40,6 +40,7 @@ export function Menu({
   ...props
 }: MenuProps) {
   const internalRef = useRef<HTMLDivElement | null>(null);
+  const resolvedRef = ref ?? menuRef ?? internalRef;
 
   const usesFloatingPosition = placement !== undefined;
 
@@ -47,16 +48,16 @@ export function Menu({
     isOpen: usesFloatingPosition,
     anchorElement: anchorRef,
     anchorCoords: placement === 'at-point' ? anchorCoords : undefined,
-    floatingElement: ref ?? internalRef,
+    floatingElement: resolvedRef,
     computePosition: placement ? placementComputePosition[placement] : computeAtPointPosition,
   });
 
-  useDismiss(onClose, menuRef ?? internalRef);
+  useDismiss(onClose, resolvedRef);
 
   return (
     <div
       id={id}
-      ref={ref ?? internalRef}
+      ref={resolvedRef}
       role="menu"
       className={cn(
         'z-50 min-w-[160px] rounded-md border border-app-border bg-app-bg-surface py-2 shadow-xl',
