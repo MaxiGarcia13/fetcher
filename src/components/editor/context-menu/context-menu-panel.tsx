@@ -4,6 +4,7 @@ import { Menu } from '@/components/menu';
 import { CopyActionMenuItem } from './copy-action-menu-item';
 import { CutActionMenuItem } from './cut-action-menu-item';
 import { PasteActionMenuItem } from './paste-action-menu-item';
+import { SelectAllActionMenuItem } from './select-all-action-menu-item';
 
 interface ContextMenuPanelProps {
   x: number;
@@ -24,6 +25,7 @@ export function ContextMenuPanel({ x, y, editor, onActionClick, menuRef }: Conte
       <PasteActionMenuItem editor={editor} onActionClick={onActionClick} />
       <CopyActionMenuItem editor={editor} onActionClick={onActionClick} />
       <CutActionMenuItem editor={editor} onActionClick={onActionClick} />
+      <SelectAllActionMenuItem editor={editor} onActionClick={onActionClick} />
     </Menu>
   );
 }
