@@ -19,7 +19,15 @@
     "http-client",
     "developer-tools",
     "api-testing",
-    "rest-client"
+    "rest-client",
+    "rest",
+    "test",
+    "testing",
+    "api-client",
+    "api-rest",
+    "testing-tools",
+    "api-testing-tools",
+    "test-client"
   ],
   "scripts": {
     "prepare": "simple-git-hooks",
@@ -35,6 +43,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^5.0.4",
+    "@astrojs/sitemap": "^3.7.2",
     "@astrojs/vercel": "^10.0.6",
     "@maxigarcia/js-utils": "^1.9.0",
     "@nanostores/react": "^1.1.0",
