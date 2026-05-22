@@ -1,7 +1,6 @@
 ---
 import { capitalize } from '@maxigarcia/js-utils';
 import pkg from '../../package.json';
-
 import '../styles/global.css';
 
 interface Props {
@@ -39,6 +38,7 @@ const image = `${url}/icons/android/mipmap-xxxhdpi/ic_launcher.png`;
     <meta name="theme-color" content="#1F2937" />
     <meta name="description" content={description} />
     <meta name="robots" content="index,follow" />
+    <meta name="author" content={pkg.author} />
 
     <meta
       name="viewport"
