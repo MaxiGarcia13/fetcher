@@ -1,4 +1,4 @@
-import { decodeText, getParamFromUrl } from '@maxigarcia/js-utils';
+import { decodeText, getParamFromUrl, isRecord, tryParseJson } from '@maxigarcia/js-utils';
 import {
   HTTP_REQUEST_BODY_PARAM,
   HTTP_REQUEST_HEADERS_PARAM,
@@ -17,7 +17,15 @@ export function readHttpRequestUrlParam<T>(key: string, defaultValue?: T): T | u
     const paramsToParse = [HTTP_REQUEST_HEADERS_PARAM, HTTP_REQUEST_PARAMS_PARAM];
 
     if (paramsToParse.includes(key)) {
-      return JSON.parse(decoded) as T;
+      const parsed = tryParseJson(decoded);
+
+      if (Array.isArray(parsed)
+        && parsed.length > 0
+        && parsed.every((item) => isRecord(item) && 'key' in item && 'value' in item)) {
+        return parsed as T;
+      }
+
+      return defaultValue;
     }
 
     return decoded as T;
