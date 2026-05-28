@@ -18,7 +18,7 @@ import AppLayout from '@/layouts/app-layout.astro';
     <!-- End mobile brand -->
 
     <div
-      class="flex min-h-0 flex-1 flex-col border border-t-0 border-app-border sm:border-t"
+      class="flex min-h-0 flex-1 flex-col overflow-hidden border border-t-0 border-app-border sm:border-t"
     >
       <LazyRequestEditor client:only="react" className="p-4" />
       <LazyRequestPanel client:only="react" className="flex-1" />
