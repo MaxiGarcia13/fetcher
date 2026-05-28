@@ -19,10 +19,12 @@ export function readHttpRequestUrlParam<T>(key: string, defaultValue?: T): T | u
     if (paramsToParse.includes(key)) {
       const parsed = tryParseJson(decoded);
 
-      if (Array.isArray(parsed)
-        && parsed.length > 0
-        && parsed.every((item) => isRecord(item) && 'key' in item && 'value' in item)) {
-        return parsed as T;
+      if (Array.isArray(parsed)) {
+        const filtered = parsed.filter((item) => isRecord(item) && 'key' in item && 'value' in item);
+
+        if (filtered.length > 0) {
+          return filtered as T;
+        }
       }
 
       return defaultValue;
