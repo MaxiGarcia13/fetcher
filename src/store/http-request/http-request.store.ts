@@ -6,15 +6,15 @@ import {
   HTTP_REQUEST_BODY_PARAM,
   HTTP_REQUEST_HEADERS_PARAM,
   HTTP_REQUEST_METHOD_PARAM,
-  HTTP_REQUEST_PARAMS_PARAM,
-  HTTP_REQUEST_URL_PARAM,
 } from '@/domain/http-request/url.consts';
-import { readHttpRequestUrlParam } from './http-request.url';
+import { readHttpRequestUrlParam, readInitialHttpRequestUrlAndParams } from './http-request.url';
+
+const { url, params } = readInitialHttpRequestUrlAndParams();
 
 export const $httpRequest = map<HttpRequestState>({
   method: getHttpMethod(readHttpRequestUrlParam(HTTP_REQUEST_METHOD_PARAM)),
-  url: readHttpRequestUrlParam(HTTP_REQUEST_URL_PARAM, ''),
+  url,
   headers: readHttpRequestUrlParam(HTTP_REQUEST_HEADERS_PARAM, [createKeyValueEmptyEntry()]),
-  params: readHttpRequestUrlParam(HTTP_REQUEST_PARAMS_PARAM, [createKeyValueEmptyEntry()]),
+  params,
   body: readHttpRequestUrlParam(HTTP_REQUEST_BODY_PARAM, '{}'),
 });

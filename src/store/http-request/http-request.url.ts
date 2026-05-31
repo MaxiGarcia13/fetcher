@@ -1,4 +1,6 @@
-import { decodeText, getParamFromUrl, isRecord, tryParseJson } from '@maxigarcia/js-utils';
+import type { KeyValueEntry } from '@/components/key-value-table/types';
+import { decodeText, getParamFromUrl, isRecord, isValidHttpUrl, tryParseJson } from '@maxigarcia/js-utils';
+import { createKeyValueEmptyEntry } from '@/components/key-value-table/utils';
 import {
   HTTP_REQUEST_BODY_PARAM,
   HTTP_REQUEST_HEADERS_PARAM,
@@ -7,6 +9,58 @@ import {
   HTTP_REQUEST_URL_PARAM,
 } from '@/domain/http-request';
 import { removeUrlParam } from '@/utils/url';
+
+export function parseParamsFromRequestUrl(url: string): { baseUrl: string; params: KeyValueEntry[] } {
+  const trimmed = url.trim();
+
+  if (!trimmed || !isValidHttpUrl(trimmed)) {
+    return { baseUrl: url, params: [] };
+  }
+
+  try {
+    const parsed = new URL(trimmed);
+
+    if (parsed.search === '') {
+      return { baseUrl: url, params: [] };
+    }
+
+    const params = Array.from(parsed.searchParams.entries()).map(([key, value]) =>
+      createKeyValueEmptyEntry(key, value),
+    );
+
+    parsed.search = '';
+
+    return {
+      baseUrl: parsed.toString(),
+      params,
+    };
+  } catch {
+    return { baseUrl: url, params: [] };
+  }
+}
+
+function mergeParamsWithUrlQueryParams(
+  loadedParams: KeyValueEntry[],
+  paramsFromUrl: KeyValueEntry[],
+): KeyValueEntry[] {
+  const existingParams = loadedParams.filter((entry) => entry.key !== '' || entry.value !== '');
+  const merged = [...existingParams, ...paramsFromUrl];
+
+  return merged.length > 0 ? merged : [createKeyValueEmptyEntry()];
+}
+
+export function readInitialHttpRequestUrlAndParams(): { url: string; params: KeyValueEntry[] } {
+  const urlRaw = readHttpRequestUrlParam(HTTP_REQUEST_URL_PARAM, '') ?? '';
+  const loadedParams = readHttpRequestUrlParam(HTTP_REQUEST_PARAMS_PARAM, [createKeyValueEmptyEntry()]) ?? [
+    createKeyValueEmptyEntry(),
+  ];
+  const { baseUrl, params: paramsFromUrl } = parseParamsFromRequestUrl(urlRaw);
+
+  return {
+    url: baseUrl,
+    params: mergeParamsWithUrlQueryParams(loadedParams, paramsFromUrl),
+  };
+}
 
 export function readHttpRequestUrlParam<T>(key: string, defaultValue?: T): T | undefined {
   const param = getParamFromUrl(key);

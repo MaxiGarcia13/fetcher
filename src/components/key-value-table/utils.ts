@@ -1,10 +1,10 @@
 import type { KeyValueEntry } from './types';
 
-export function createKeyValueEmptyEntry(): KeyValueEntry {
+export function createKeyValueEmptyEntry(key = '', value = ''): KeyValueEntry {
   return {
     id: crypto.randomUUID(),
-    key: '',
-    value: '',
+    key,
+    value,
     hidden: false,
     masked: false,
   };

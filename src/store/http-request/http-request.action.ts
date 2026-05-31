@@ -15,6 +15,7 @@ import { updateSavedSessionFromSearch } from '../saved-sessions';
 import { $httpRequest } from './http-request.store';
 import {
   readHttpRequestUrlParam,
+  readInitialHttpRequestUrlAndParams,
   resetHttpRequestUrlParams,
 } from './http-request.url';
 
@@ -94,15 +95,15 @@ export function applyHttpRequestFromSearch(search: string): void {
     window.history.replaceState({}, '', next.toString());
 
     const methodRaw = readHttpRequestUrlParam(HTTP_REQUEST_METHOD_PARAM, 'GET');
+    const { url, params } = readInitialHttpRequestUrlAndParams();
+
     $httpRequest.set({
       method: getHttpMethod(methodRaw),
-      url: readHttpRequestUrlParam(HTTP_REQUEST_URL_PARAM, '') ?? '',
+      url,
       headers: readHttpRequestUrlParam(HTTP_REQUEST_HEADERS_PARAM, [createKeyValueEmptyEntry()]) ?? [
         createKeyValueEmptyEntry(),
       ],
-      params: readHttpRequestUrlParam(HTTP_REQUEST_PARAMS_PARAM, [createKeyValueEmptyEntry()]) ?? [
-        createKeyValueEmptyEntry(),
-      ],
+      params,
       body: readHttpRequestUrlParam(HTTP_REQUEST_BODY_PARAM, '{}') ?? '{}',
     });
   } catch {
