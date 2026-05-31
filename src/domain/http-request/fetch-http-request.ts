@@ -9,8 +9,12 @@ export interface HttpRequestOptions {
 }
 
 export function fetchHttpRequest(url: string, { method, params, headers, body }: HttpRequestOptions) {
-  const urlParams = new URLSearchParams(params);
   const urlWithParams = new URL(url);
+  const urlParams = new URLSearchParams(urlWithParams.search);
+
+  for (const [key, value] of Object.entries(params)) {
+    urlParams.set(key, value);
+  }
 
   urlWithParams.search = urlParams.toString();
 
