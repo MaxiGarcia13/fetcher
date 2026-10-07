@@ -3,7 +3,7 @@ import { addParamsToUrl, pushParamsToUrl, removeParamFromUrl } from '@maxigarcia
 export function setUrlParam(key: string, value: string) {
   let url = window.location.href;
 
-  url = addParamsToUrl({ [key]: value });
+  url = addParamsToUrl(url, { [key]: value });
 
   pushParamsToUrl(url);
 }
