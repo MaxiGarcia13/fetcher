@@ -61,10 +61,11 @@ export function Tooltip({
         createPortal(
           <TooltipContent
             ref={tooltipElementRef}
-            children={content}
             coords={coords}
             className={cn(contentClassName)}
-          />,
+          >
+            {content}
+          </TooltipContent>,
           document.body,
         )
       )}

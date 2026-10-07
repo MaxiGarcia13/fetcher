@@ -5,8 +5,6 @@ import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
-const srcDir = fileURLToPath(new URL('./src', import.meta.url));
-
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
@@ -14,7 +12,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
     resolve: {
       alias: {
-        '@': srcDir,
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
   },

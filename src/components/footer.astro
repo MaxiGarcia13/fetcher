@@ -9,17 +9,10 @@ interface Props {
 
 const { class: className } = Astro.props;
 
-const repositoryUrl = pkg.repository.url
-  .replace(/^git\+/, '')
-  .replace(/\.git$/, '');
+const repositoryUrl = pkg.repository.url.replace(/^git\+/, '').replace(/\.git$/, '');
 ---
 
-<footer
-  class={cn(
-    'mt-auto flex items-center justify-center gap-2 text-xs text-app-text-muted',
-    className,
-  )}
->
+<footer class={cn('mt-auto flex items-center justify-center gap-2 text-xs text-app-text-muted', className)}>
   <a
     href={repositoryUrl}
     target="_blank"

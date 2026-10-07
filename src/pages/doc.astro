@@ -8,29 +8,20 @@ import { ChevronLeftIcon } from '@/components/icons/chevron-left';
 import { RequestMethodBadge } from '@/components/request-method-badge';
 import { ShareButton } from '@/components/share-button';
 import { getHttpMethod } from '@/domain/http-request/request.utils';
-import {
-  HTTP_REQUEST_METHOD_PARAM,
-  HTTP_REQUEST_URL_PARAM,
-} from '@/domain/http-request/url.consts';
+import { HTTP_REQUEST_METHOD_PARAM, HTTP_REQUEST_URL_PARAM } from '@/domain/http-request/url.consts';
 import AppLayout from '@/layouts/app-layout.astro';
 
 const params = Astro.url.search;
 const url = new URLSearchParams(params);
 
-const decodedUrl = decodeText(
-  decodeURIComponent(url.get(HTTP_REQUEST_URL_PARAM) ?? ''),
-);
-const method = getHttpMethod(
-  decodeText(decodeURIComponent(url.get(HTTP_REQUEST_METHOD_PARAM))),
-);
+const decodedUrl = decodeText(decodeURIComponent(url.get(HTTP_REQUEST_URL_PARAM) ?? ''));
+const method = getHttpMethod(decodeText(decodeURIComponent(url.get(HTTP_REQUEST_METHOD_PARAM))));
 
 const title = `${method.toUpperCase()} - Request documentation for ${getUrlDomain(decodedUrl)}`;
 ---
 
 <AppLayout title={title}>
-  <main
-    class="mx-auto flex h-full w-full max-w-4xl flex-col gap-8 overflow-y-auto p-6"
-  >
+  <main class="mx-auto flex h-full w-full max-w-4xl flex-col gap-8 overflow-y-auto p-6">
     <Brand />
 
     <div class="flex items-center gap-2">
@@ -49,32 +40,18 @@ const title = `${method.toUpperCase()} - Request documentation for ${getUrlDomai
     </div>
 
     <div class="space-y-2">
-      <h2
-        class="text-sm font-semibold tracking-wide text-app-text-muted uppercase"
-      >
-        Method
-      </h2>
+      <h2 class="text-sm font-semibold tracking-wide text-app-text-muted uppercase">Method</h2>
 
-      <RequestMethodBadge
-        method={method}
-        className="text-lg!"
-        client:only="react"
-      />
+      <RequestMethodBadge method={method} className="text-lg!" client:only="react" />
     </div>
     <div class="space-y-2">
-      <h2
-        class="text-sm font-semibold tracking-wide text-app-text-muted uppercase"
-      >
-        URL
-      </h2>
+      <h2 class="text-sm font-semibold tracking-wide text-app-text-muted uppercase">URL</h2>
       {
-        decodedUrl
-? (
+        decodedUrl ? (
           <p class="rounded border border-app-border bg-app-bg-surface px-3 py-2 text-sm break-all text-app-text-primary">
             {decodedUrl}
           </p>
-        )
-: (
+        ) : (
           <EmptyRequestOption />
         )
       }

@@ -20,30 +20,15 @@ const image = `${url}/icons/android/mipmap-xxxhdpi/ic_launcher.png`;
   <head>
     <title>{title}</title>
     <link rel="icon" href={image} />
-    <link
-      rel="preload"
-      href="/assets/fonts/FiraCode-Regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/assets/fonts/FiraCode-Bold.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <link rel="preload" href="/assets/fonts/FiraCode-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/assets/fonts/FiraCode-Bold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#1F2937" />
     <meta name="description" content={description} />
     <meta name="robots" content="index,follow" />
     <meta name="author" content={pkg.author} />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, interactive-widget=overlays-content"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=overlays-content" />
     <meta name="keywords" content={keywords} />
 
     <meta property="og:title" content={title} />

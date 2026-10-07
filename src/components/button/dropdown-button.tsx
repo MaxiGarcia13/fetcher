@@ -126,21 +126,24 @@ export function DropdownButton({
           onClose={closeMenu}
           aria-labelledby={triggerId}
         >
-          {menuItems.map((item, index) => (
-            <MenuItem
-              key={item.id ?? index}
-              disabled={item.disabled}
-              selected={index === selectedIndex}
-              onClick={() => {
-                item.onClick?.();
-                closeMenu();
-                setSelectedIndex(index);
-                storage.write(STORAGE_KEY, index.toString());
-              }}
-            >
-              {item.label}
-            </MenuItem>
-          ))}
+          {menuItems.map((item, index) => {
+            const key = item.id ?? index;
+            return (
+              <MenuItem
+                key={key}
+                disabled={item.disabled}
+                selected={index === selectedIndex}
+                onClick={() => {
+                  item.onClick?.();
+                  closeMenu();
+                  setSelectedIndex(index);
+                  storage.write(STORAGE_KEY, index.toString());
+                }}
+              >
+                {item.label}
+              </MenuItem>
+            );
+          })}
         </Menu>
       )}
     </div>
