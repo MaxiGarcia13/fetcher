@@ -1,4 +1,4 @@
-import type { HttpResponseError } from './type';
+import type { HttpResponseCallResult, HttpResponseError } from './type';
 import { tryParseJson } from '@maxigarcia/js-utils';
 import { $httpResponse, initialHttpResponseState } from './http-response.store';
 
@@ -16,6 +16,7 @@ export async function saveHttpResponse(response: Response): Promise<void> {
     headers: Object.fromEntries(response.headers.entries()),
     body,
     error: null,
+    callResults: [],
   });
 }
 
@@ -27,7 +28,40 @@ export function saveHttpResponseError(error: unknown): void {
     headers: {},
     body: '',
     error: serializeHttpResponseError(error),
+    callResults: [],
   });
+}
+
+export async function saveHttpResponseBatch(
+  results: PromiseSettledResult<Response>[],
+): Promise<void> {
+  const callResults: HttpResponseCallResult[] = results.map((result, index) => {
+    if (result.status === 'fulfilled') {
+      return {
+        index,
+        status: result.value.status,
+        statusText: result.value.statusText,
+        error: null,
+      };
+    }
+
+    return {
+      index,
+      status: null,
+      statusText: '',
+      error: serializeHttpResponseError(result.reason),
+    };
+  });
+
+  const last = results.at(-1);
+
+  if (last?.status === 'fulfilled') {
+    await saveHttpResponse(last.value);
+  } else if (last) {
+    saveHttpResponseError(last.reason);
+  }
+
+  $httpResponse.setKey('callResults', callResults);
 }
 
 export function setHttpResponseLoading(isLoading: boolean): void {

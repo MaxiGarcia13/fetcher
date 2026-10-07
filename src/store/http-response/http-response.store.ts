@@ -8,6 +8,7 @@ export const initialHttpResponseState: HttpResponseState = {
   headers: {},
   body: '',
   error: null,
+  callResults: [],
 };
 
 export const $httpResponse = map<HttpResponseState>(initialHttpResponseState);
