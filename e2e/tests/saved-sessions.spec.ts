@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { fillRequest } from 'e2e/utils/request';
 import { SAVED_SESSIONS_TEST_ID } from '@/constants/test-ids';
+import { fillRequest } from '../utils/request';
 
 test('should save and load a session', async ({ page }) => {
   await page.goto('/');

@@ -1,6 +1,6 @@
 import type { Page } from '@playwright/test';
-import { waitForMockHttpRequest } from 'e2e/mocks/mock-routes';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
+import { waitForMockHttpRequest } from '../mocks/mock-routes';
 import { fillKeyValueTable } from './fill-key-value-table';
 
 interface SendRequestOptions {
