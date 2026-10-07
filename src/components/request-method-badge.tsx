@@ -31,7 +31,7 @@ export function RequestMethodBadge({ method, className }: RequestMethodBadgeProp
     <span
       className={cn(
         'shrink-0 font-mono text-xs font-semibold',
-        methodTextClass(method),
+        methodTextClass(method ?? 'GET'),
         className,
       )}
     >
