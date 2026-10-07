@@ -1,12 +1,11 @@
 import type { TabItem } from '@/components/tabs/types';
-import { cn } from '@maxigarcia/js-utils';
+import { cn, createStorage } from '@maxigarcia/js-utils';
 import { useState } from 'react';
 import { TabsContent } from '@/components/tabs/tabs-content';
 import { TabsHeader } from '@/components/tabs/tabs-header';
 import { TabsRoot } from '@/components/tabs/tabs-root';
 import { METHODS_WITH_BODY } from '@/constants/methods';
 import { useHttpRequestState } from '@/store/http-request';
-import { storage } from '@/utils/storage';
 import { ActionsSession } from '../actions-session';
 import { RequestBody } from './request-body';
 import { RequestHeaders } from './request-headers';
@@ -17,12 +16,12 @@ interface RequestOptionsPanelProps {
   className?: string;
 }
 
-const REQUEST_OPTIONS_TAB_STORAGE_SUFFIX = 'request-options-active-tab';
-
 type RequestOptionsTab = 'params' | 'headers' | 'body';
 
+const requestOptionsTabStorage = createStorage<RequestOptionsTab>('request-options-active-tab');
+
 function readStoredRequestOptionsTab(defaultTab: RequestOptionsTab): RequestOptionsTab {
-  const stored = storage.read(REQUEST_OPTIONS_TAB_STORAGE_SUFFIX);
+  const stored = requestOptionsTabStorage.getItem();
   if (stored === 'params' || stored === 'headers' || stored === 'body') {
     return stored;
   }
@@ -55,12 +54,12 @@ export function RequestOptionsPanel({ defaultTab = 'headers', className }: Reque
 
   if (!bodyEnabled && activeTab === 'body') {
     setActiveTab(defaultTab);
-    storage.write(REQUEST_OPTIONS_TAB_STORAGE_SUFFIX, defaultTab);
+    requestOptionsTabStorage.setItem(defaultTab);
   }
 
   const handleValueChange = (value: RequestOptionsTab) => {
     setActiveTab(value);
-    storage.write(REQUEST_OPTIONS_TAB_STORAGE_SUFFIX, value);
+    requestOptionsTabStorage.setItem(value);
   };
 
   return (

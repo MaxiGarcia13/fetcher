@@ -1,17 +1,16 @@
+import type { SubmitType } from './submit-type';
 import { isValidHttpUrl } from '@maxigarcia/js-utils';
 import { useState } from 'react';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids';
 import { submitHttpRequest } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
 import { saveHttpResponse, saveHttpResponseError, setHttpResponseLoading, useHttpResponseState } from '@/store/http-response';
-import { storage } from '@/utils/storage';
 import { DropdownButton } from '../button';
 import { BrowserIcon } from '../icons/browser';
 import { SendIcon } from '../icons/send';
 import { ServerIcon } from '../icons/server';
 import { Tooltip } from '../tooltip';
-
-const STORAGE_KEY = `fetcher.submit-button-selected-submit-type`;
+import { getStoredSubmitType, setStoredSubmitType } from './submit-type';
 
 const SUBMIT_OPTIONS = {
   server: {
@@ -28,15 +27,12 @@ export function SubmitButton() {
   const { url } = useHttpRequestState();
   const { isLoading } = useHttpResponseState();
 
-  const [selectedSubmitType, setSelectedSubmitType] = useState<'server' | 'client'>(() => {
-    const storedSubmitType = storage.read(STORAGE_KEY);
-    return (storedSubmitType as 'server' | 'client') ?? 'server';
-  });
+  const [selectedSubmitType, setSelectedSubmitType] = useState<SubmitType>(getStoredSubmitType);
 
-  const handleSend = (submitType: 'server' | 'client') => {
+  const handleSend = (submitType: SubmitType) => {
     setHttpResponseLoading(true);
     setSelectedSubmitType(submitType);
-    storage.write(STORAGE_KEY, submitType);
+    setStoredSubmitType(submitType);
 
     submitHttpRequest(submitType)
       .then((response) => saveHttpResponse(response))

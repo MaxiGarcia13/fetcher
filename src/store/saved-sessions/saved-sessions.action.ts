@@ -1,8 +1,7 @@
 import type { SavedSessionSnapshot } from '@/domain/saved-sessions';
 import { applyHttpRequestFromSearch } from '@/store/http-request';
-import { storage } from '@/utils/storage';
 import { clearHttpResponse } from '../http-response';
-import { SAVED_SESSIONS_STORAGE_KEY } from './consts';
+import { savedSessionsStorage } from './consts';
 import { $savedSessions, readSessionsFromStorage } from './saved-sessions.store';
 
 function pruneInvalidActive(sessions: SavedSessionSnapshot[]): void {
@@ -13,7 +12,7 @@ function pruneInvalidActive(sessions: SavedSessionSnapshot[]): void {
 }
 
 function persistSessions(sessions: SavedSessionSnapshot[]): void {
-  storage.writeJson(SAVED_SESSIONS_STORAGE_KEY, sessions);
+  savedSessionsStorage.setJson(sessions);
   $savedSessions.setKey('sessions', sessions);
   pruneInvalidActive(sessions);
 }

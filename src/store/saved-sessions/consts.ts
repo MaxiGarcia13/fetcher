@@ -1,1 +1,4 @@
-export const SAVED_SESSIONS_STORAGE_KEY = 'saved-sessions';
+import type { SavedSessionSnapshot } from '@/domain/saved-sessions';
+import { createStorage } from '@maxigarcia/js-utils';
+
+export const savedSessionsStorage = createStorage<SavedSessionSnapshot[]>('saved-sessions');

@@ -1,10 +1,9 @@
 import type { ComponentProps, ReactNode } from 'react';
 import type { ButtonVariant } from './button-styles';
-import { cn } from '@maxigarcia/js-utils';
+import { cn, createStorage } from '@maxigarcia/js-utils';
 import { useId, useRef, useState } from 'react';
 import { Menu, MenuItem } from '@/components/menu';
 import { handleKeyPressEvent } from '@/utils/key-press-event';
-import { storage } from '@/utils/storage';
 import { ChevronDownIcon } from '../icons/chevron-down';
 import { Button } from './button';
 import { buttonBaseClassName, disabledButtonClassName, splitButtonOuterHeightClassName, variantClassName } from './button-styles';
@@ -48,10 +47,10 @@ export function DropdownButton({
   const triggerId = useId();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const STORAGE_KEY = `fetcher.dropdown-button-selected-index-${menuId}`;
+  const selectedIndexStorage = createStorage(`dropdown-button-selected-index-${menuId}`);
 
   const [selectedIndex, setSelectedIndex] = useState(() => {
-    const storedIndex = storage.read(STORAGE_KEY);
+    const storedIndex = selectedIndexStorage.getItem();
 
     return storedIndex ? Number.parseInt(storedIndex) : defaultSelectedItemIndex;
   });
@@ -137,7 +136,7 @@ export function DropdownButton({
                   item.onClick?.();
                   closeMenu();
                   setSelectedIndex(index);
-                  storage.write(STORAGE_KEY, index.toString());
+                  selectedIndexStorage.setItem(index.toString());
                 }}
               >
                 {item.label}
