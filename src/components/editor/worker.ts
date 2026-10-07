@@ -1,6 +1,6 @@
-import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
-import JsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
+import EditorWorker from 'monaco-editor/editor/editor.worker?worker';
+import HtmlWorker from 'monaco-editor/language/html/html.worker?worker';
+import JsonWorker from 'monaco-editor/language/json/json.worker?worker';
 
 type MonacoWorkerFactory = (workerId: string, label: string) => Worker;
 
