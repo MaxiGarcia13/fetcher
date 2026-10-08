@@ -72,7 +72,7 @@ export function RequestOptionsPanel({ defaultTab = 'headers', className }: Reque
     >
       <div className="flex flex-col-reverse justify-between border-b border-app-border px-4 sm:flex-row sm:items-center sm:gap-4">
         <TabsHeader className="h-full flex-1 border-b-0" />
-        <ActionsSession className="w-full pb-4 sm:max-w-[380px]" />
+        <ActionsSession className="w-full pb-4 sm:max-w-95" />
       </div>
       <TabsContent />
     </TabsRoot>
