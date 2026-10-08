@@ -4,6 +4,7 @@ import { CopyRequestButton } from './copy-request-button/copy-request-button';
 import { DocButton } from './doc-button';
 import { HistoryButton } from './history-button';
 import { NewSessionButton } from './new-session-button';
+import { RepeatSubmitControl } from './repeat-submit-control';
 import { ShareButton } from './share-button';
 
 export interface ActionsSessionProps {
@@ -15,6 +16,7 @@ export function ActionsSession({ className }: ActionsSessionProps) {
 
   return (
     <div className={cn('flex gap-2 w-full', className)}>
+      <RepeatSubmitControl size="sm" />
       <CopyRequestButton className="flex-1" size="sm" />
       <ShareButton className="flex-1" size="sm" />
       <DocButton className="flex-1" size="sm" />
