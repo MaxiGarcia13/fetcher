@@ -46,13 +46,16 @@ export function StreamChatView({
       data-testid={HTTP_REQUEST_TEST_ID.STREAM_CHAT}
     >
       {history
-        ? history.map((message, index) => (
-            <ChatBubble
-              key={`${message.role}-${index}`}
-              role={message.role}
-              text={message.content}
-            />
-          ))
+        ? history.map((message, index) => {
+            const key = `${message.role}-${index}`;
+            return (
+              <ChatBubble
+                key={key}
+                role={message.role}
+                text={message.content}
+              />
+            );
+          })
         : (
             <ChatBubble
               role="user"
