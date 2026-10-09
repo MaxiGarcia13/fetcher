@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { waitForMockHttpRequest } from '../mocks/mock-routes';
@@ -10,6 +10,25 @@ interface SendRequestOptions {
   params?: Record<string, string>;
   headers?: Record<string, string>;
   body?: string;
+}
+
+/** Paste into Monaco as one edit — keyboard typing hits auto-close and corrupts JSON. */
+async function pasteIntoMonaco(editor: Locator, value: string) {
+  await editor.locator('.view-line').first().click({ clickCount: 3 });
+  await editor.evaluate((root, text) => {
+    const textarea = root.querySelector('textarea');
+    if (!textarea) {
+      throw new Error('Monaco textarea not found');
+    }
+
+    const data = new DataTransfer();
+    data.setData('text/plain', text);
+    textarea.dispatchEvent(new ClipboardEvent('paste', {
+      clipboardData: data,
+      bubbles: true,
+      cancelable: true,
+    }));
+  }, value);
 }
 
 export async function fillRequest(page: Page, {
@@ -41,14 +60,8 @@ export async function fillRequest(page: Page, {
     await expect(bodyEditor).toBeVisible();
 
     const urlBeforeBodyEdit = page.url();
-    const textarea = bodyEditor.locator('textarea');
-    await textarea.focus();
-    await page.keyboard.press('ControlOrMeta+A');
-    await page.keyboard.press('Backspace');
-    await page.keyboard.insertText(body);
-
-    await expect(bodyEditor).toHaveText(body);
-    // Editor onChange is debounced (100ms) before the request store/URL update.
+    await pasteIntoMonaco(bodyEditor, body);
+    // onChange is debounced; URL updates once the store receives the new body.
     await expect.poll(() => page.url()).not.toEqual(urlBeforeBodyEdit);
   }
 }

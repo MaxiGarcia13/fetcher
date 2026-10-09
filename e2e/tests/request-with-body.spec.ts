@@ -37,12 +37,14 @@ METHODS_WITH_BODY.forEach((method) => {
     await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.RESPONSE_EDITOR)).toBeVisible();
     await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.RESPONSE_EDITOR)).toContainText('Mocked OK');
 
-    expect(response?.request().postDataJSON()).toEqual({
+    const payload = response?.request().postDataJSON();
+    expect(payload).toMatchObject({
       url: requestUrl,
       method,
       params: expectedRequestParameters,
       headers: expectedRequestHeaders,
-      body: expectedRequestBody,
     });
+    // Monaco formatOnPaste may pretty-print the body; compare parsed JSON.
+    expect(JSON.parse(payload.body)).toEqual({ greeting: 'hello' });
   });
 });
