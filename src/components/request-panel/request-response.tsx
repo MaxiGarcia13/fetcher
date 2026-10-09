@@ -5,13 +5,18 @@ import { LazyEditor } from '@/components/editor/lazy-editor';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { useHttpResponseState } from '@/store/http-response';
 import { errorEditorValueAndLanguage, isImageResponseBody, responseEditorLanguage } from '@/utils/http-response';
+import { RequestStreamResponse } from './request-stream-response';
 
 interface Props {
   className?: string;
 }
 
 export function RequestResponse({ className }: Props) {
-  const { body, error, headers, isLoading, status } = useHttpResponseState();
+  const { body, error, headers, isLoading, mode, status } = useHttpResponseState();
+
+  if (mode === 'stream') {
+    return <RequestStreamResponse className={cn('min-h-0 flex-1', className)} />;
+  }
 
   if (isLoading) {
     return <EditorSkeleton className={cn('min-h-0 flex-1', className)} />;

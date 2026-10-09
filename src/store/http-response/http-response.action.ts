@@ -24,6 +24,7 @@ export async function saveHttpResponse(response: Response): Promise<void> {
     callResults: [],
     mode: 'buffered',
     isStreaming: false,
+    streamStatus: 'idle',
     streamFormat: null,
     events: [],
   });
@@ -40,6 +41,7 @@ export function saveHttpResponseError(error: unknown): void {
     callResults: [],
     mode: 'buffered',
     isStreaming: false,
+    streamStatus: 'idle',
     streamFormat: null,
     events: [],
   });
@@ -50,6 +52,7 @@ export function beginHttpStream(format: StreamFormat): void {
     ...initialHttpResponseState,
     mode: 'stream',
     isStreaming: true,
+    streamStatus: 'streaming',
     isLoading: false,
     streamFormat: format,
     status: 200,
@@ -73,6 +76,7 @@ export function endHttpStream(): void {
     ...$httpResponse.get(),
     isStreaming: false,
     isLoading: false,
+    streamStatus: 'completed',
   });
 }
 
@@ -82,6 +86,7 @@ export function saveHttpStreamError(error: unknown): void {
       ...$httpResponse.get(),
       isStreaming: false,
       isLoading: false,
+      streamStatus: 'aborted',
       error: null,
     });
     return;
@@ -91,6 +96,7 @@ export function saveHttpStreamError(error: unknown): void {
     ...$httpResponse.get(),
     isStreaming: false,
     isLoading: false,
+    streamStatus: 'error',
     error: serializeHttpResponseError(error),
   });
 }

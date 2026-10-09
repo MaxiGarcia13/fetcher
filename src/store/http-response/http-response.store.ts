@@ -11,6 +11,7 @@ export const initialHttpResponseState: HttpResponseState = {
   callResults: [],
   mode: 'buffered',
   isStreaming: false,
+  streamStatus: 'idle',
   streamFormat: null,
   events: [],
 };

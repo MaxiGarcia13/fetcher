@@ -7,6 +7,8 @@ export interface HttpResponseCallResult {
   error: HttpResponseError | null;
 }
 
+export type StreamStatus = 'idle' | 'streaming' | 'completed' | 'aborted' | 'error';
+
 export interface HttpResponseState {
   isLoading: boolean;
   status: number | null;
@@ -17,6 +19,7 @@ export interface HttpResponseState {
   callResults: HttpResponseCallResult[];
   mode: 'buffered' | 'stream';
   isStreaming: boolean;
+  streamStatus: StreamStatus;
   streamFormat: StreamFormat | null;
   events: StreamEvent[];
 }
