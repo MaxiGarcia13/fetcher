@@ -1,4 +1,5 @@
 import type { Page } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { waitForMockHttpRequest } from '../mocks/mock-routes';
 import { fillKeyValueTable } from './fill-key-value-table';
@@ -36,14 +37,19 @@ export async function fillRequest(page: Page, {
   if (body !== undefined) {
     await page.getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TAB}-body`).click();
 
-    await page.waitForTimeout(1000);
+    const bodyEditor = page.getByTestId(HTTP_REQUEST_TEST_ID.REQUEST_BODY_EDITOR);
+    await expect(bodyEditor).toBeVisible();
 
-    await page.keyboard.press('Control+A');
-    await page.keyboard.press('Delete');
+    const urlBeforeBodyEdit = page.url();
+    const textarea = bodyEditor.locator('textarea');
+    await textarea.focus();
+    await page.keyboard.press('ControlOrMeta+A');
+    await page.keyboard.press('Backspace');
+    await page.keyboard.insertText(body);
 
-    await page.keyboard.type(body);
-
-    await page.waitForTimeout(1000);
+    await expect(bodyEditor).toHaveText(body);
+    // Editor onChange is debounced (100ms) before the request store/URL update.
+    await expect.poll(() => page.url()).not.toEqual(urlBeforeBodyEdit);
   }
 }
 

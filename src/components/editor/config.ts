@@ -32,6 +32,7 @@ export const EDITOR_CONSTRUCTION_OPTIONS: editor.IStandaloneEditorConstructionOp
   cursorBlinking: 'expand',
 
   formatOnPaste: true,
+  editContext: false,
 
   automaticLayout: true,
   fixedOverflowWidgets: true,

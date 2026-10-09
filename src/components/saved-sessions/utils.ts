@@ -9,19 +9,26 @@ export interface SnapshotRequestMeta {
 }
 
 export function getSnapshotRequestMeta(search: string): SnapshotRequestMeta {
-  const qs = search.startsWith('?') ? search.slice(1) : search;
-  const params = new URLSearchParams(qs);
+  try {
+    const qs = search.startsWith('?') ? search.slice(1) : search;
+    const params = new URLSearchParams(qs);
 
-  const urlEncoded = params.get(HTTP_REQUEST_URL_PARAM);
-  const methodEncoded = params.get(HTTP_REQUEST_METHOD_PARAM);
+    const urlEncoded = params.get(HTTP_REQUEST_URL_PARAM);
+    const methodEncoded = params.get(HTTP_REQUEST_METHOD_PARAM);
 
-  const rawUrl = urlEncoded ? decodeText(decodeURIComponent(urlEncoded)).trim() : '';
-  const method = methodEncoded ? decodeText(decodeURIComponent(methodEncoded)).trim() : '';
+    const rawUrl = urlEncoded ? decodeText(decodeURIComponent(urlEncoded)).trim() : '';
+    const method = methodEncoded ? decodeText(decodeURIComponent(methodEncoded)).trim() : '';
 
-  const domain = rawUrl !== '' ? getUrlDomain(rawUrl) : null;
+    const domain = rawUrl !== '' ? getUrlDomain(rawUrl) : null;
 
-  return {
-    method: getHttpMethod(method),
-    domain,
-  };
+    return {
+      method: getHttpMethod(method),
+      domain,
+    };
+  } catch {
+    return {
+      method: null,
+      domain: null,
+    };
+  }
 }
