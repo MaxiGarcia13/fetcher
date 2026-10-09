@@ -9,6 +9,10 @@ export const initialHttpResponseState: HttpResponseState = {
   body: '',
   error: null,
   callResults: [],
+  mode: 'buffered',
+  isStreaming: false,
+  streamFormat: null,
+  events: [],
 };
 
 export const $httpResponse = map<HttpResponseState>(initialHttpResponseState);

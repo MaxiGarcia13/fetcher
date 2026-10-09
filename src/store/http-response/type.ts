@@ -1,3 +1,5 @@
+import type { StreamEvent, StreamFormat } from '@/domain/http-request';
+
 export interface HttpResponseCallResult {
   index: number;
   status: number | null;
@@ -13,6 +15,10 @@ export interface HttpResponseState {
   body: string;
   error: HttpResponseError | null;
   callResults: HttpResponseCallResult[];
+  mode: 'buffered' | 'stream';
+  isStreaming: boolean;
+  streamFormat: StreamFormat | null;
+  events: StreamEvent[];
 }
 
 export type HttpResponseError = Record<string, unknown>;

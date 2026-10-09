@@ -1,5 +1,10 @@
 import type { HttpResponseCallResult, HttpResponseError } from './type';
-import { tryParseJson } from '@maxigarcia/js-utils';
+import type { StreamEvent, StreamFormat } from '@/domain/http-request';
+import { isAbortRequestError, tryParseJson } from '@maxigarcia/js-utils';
+import {
+  abortHttpStream as abortActiveHttpStream,
+  streamEventToAssembledText,
+} from '@/domain/http-request';
 import { $httpResponse, initialHttpResponseState } from './http-response.store';
 
 export async function saveHttpResponse(response: Response): Promise<void> {
@@ -17,6 +22,10 @@ export async function saveHttpResponse(response: Response): Promise<void> {
     body,
     error: null,
     callResults: [],
+    mode: 'buffered',
+    isStreaming: false,
+    streamFormat: null,
+    events: [],
   });
 }
 
@@ -29,7 +38,65 @@ export function saveHttpResponseError(error: unknown): void {
     body: '',
     error: serializeHttpResponseError(error),
     callResults: [],
+    mode: 'buffered',
+    isStreaming: false,
+    streamFormat: null,
+    events: [],
   });
+}
+
+export function beginHttpStream(format: StreamFormat): void {
+  $httpResponse.set({
+    ...initialHttpResponseState,
+    mode: 'stream',
+    isStreaming: true,
+    isLoading: false,
+    streamFormat: format,
+    status: 200,
+    statusText: 'OK',
+  });
+}
+
+export function appendHttpStreamEvent(event: StreamEvent): void {
+  const current = $httpResponse.get();
+
+  $httpResponse.set({
+    ...current,
+    events: [...current.events, event],
+    body: `${current.body}${streamEventToAssembledText(event)}`,
+    error: null,
+  });
+}
+
+export function endHttpStream(): void {
+  $httpResponse.set({
+    ...$httpResponse.get(),
+    isStreaming: false,
+    isLoading: false,
+  });
+}
+
+export function saveHttpStreamError(error: unknown): void {
+  if (isAbortRequestError(error)) {
+    $httpResponse.set({
+      ...$httpResponse.get(),
+      isStreaming: false,
+      isLoading: false,
+      error: null,
+    });
+    return;
+  }
+
+  $httpResponse.set({
+    ...$httpResponse.get(),
+    isStreaming: false,
+    isLoading: false,
+    error: serializeHttpResponseError(error),
+  });
+}
+
+export function abortHttpStreamResponse(): void {
+  abortActiveHttpStream();
 }
 
 export async function saveHttpResponseBatch(
