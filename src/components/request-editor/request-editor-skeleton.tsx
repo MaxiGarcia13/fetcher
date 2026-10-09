@@ -3,13 +3,16 @@ import { Skeleton } from '../skeleton';
 
 export function RequestEditorSkeleton({ className }: { className?: string }) {
   return (
-    <div className={cn('flex max-h-[72px] min-h-0 flex-1 gap-2', className)}>
-      <div className="flex flex-1">
-        <Skeleton className="h-[38px] max-w-[80px] flex-1 rounded-r-none sm:max-w-[110px]" />
-        <Skeleton className="h-[38px] flex-1 rounded-l-none border-l border-app-border" />
+    <div className={cn('flex flex-col gap-2 sm:flex-row sm:items-start', className)}>
+      <div className="flex w-full min-w-0 flex-1">
+        <Skeleton className="h-10 max-w-20 flex-1 rounded-r-none sm:max-w-[110px]" />
+        <Skeleton className="h-10 flex-1 rounded-l-none border-l border-app-border" />
       </div>
 
-      <Skeleton className="h-[38px] max-w-[100px] flex-1 sm:max-w-[140px]" />
+      <div className="flex shrink-0 items-center justify-end gap-1">
+        <Skeleton className="h-10 w-20 sm:w-28" />
+        <Skeleton className="h-10 w-10 sm:w-32" />
+      </div>
     </div>
   );
 }

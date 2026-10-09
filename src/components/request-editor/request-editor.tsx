@@ -14,8 +14,8 @@ export function RequestEditor({ className }: Props) {
   const { method, url, urlError, setMethod, setUrl } = useHttpRequestState();
 
   return (
-    <header className={cn('flex flex-wrap gap-2', className)}>
-      <div className="flex min-w-0 flex-1">
+    <header className={cn('flex flex-col gap-2 sm:flex-row sm:items-start', className)}>
+      <div className="flex w-full min-w-0 flex-1">
         <RequestMethodSelect
           value={method}
           onChange={setMethod}
@@ -36,8 +36,10 @@ export function RequestEditor({ className }: Props) {
         />
       </div>
 
-      <ResponseModeControls />
-      <SubmitButton />
+      <div className="flex shrink-0 items-center justify-end gap-1">
+        <ResponseModeControls />
+        <SubmitButton />
+      </div>
     </header>
   );
 }

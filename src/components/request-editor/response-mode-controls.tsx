@@ -38,7 +38,7 @@ export function ResponseModeControls({ className }: Props) {
             setMode(value);
           }
         }}
-        className="min-w-24 sm:min-w-28"
+        className="w-auto max-w-30 pr-7 pl-2 text-xs sm:max-w-none sm:min-w-28 sm:pr-9 sm:pl-3 sm:text-sm"
         data-testid={HTTP_REQUEST_TEST_ID.RESPONSE_MODE_SELECT}
       />
       {mode === 'stream' && (
@@ -52,7 +52,7 @@ export function ResponseModeControls({ className }: Props) {
               setStreamFormat(value);
             }
           }}
-          className="min-w-20 sm:min-w-24"
+          className="w-auto max-w-22 pr-7 pl-2 text-xs sm:max-w-none sm:min-w-24 sm:pr-9 sm:pl-3 sm:text-sm"
           data-testid={HTTP_REQUEST_TEST_ID.STREAM_FORMAT_SELECT}
         />
       )}
