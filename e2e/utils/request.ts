@@ -31,6 +31,14 @@ async function pasteIntoMonaco(editor: Locator, value: string) {
   }, value);
 }
 
+/** Wait for React islands (request editor + panel) after `client:only` hydration. */
+export async function waitForAppReady(page: Page) {
+  await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.METHOD_SELECT)).toBeVisible();
+  await expect(
+    page.getByTestId(`${HTTP_REQUEST_TEST_ID.REQUEST_OPTIONS_TAB}-headers`),
+  ).toBeVisible({ timeout: 15_000 });
+}
+
 export async function fillRequest(page: Page, {
   method = 'GET',
   url = 'https://example.test/api',
@@ -38,6 +46,7 @@ export async function fillRequest(page: Page, {
   headers,
   body,
 }: SendRequestOptions = {}) {
+  await waitForAppReady(page);
   await page.getByTestId(HTTP_REQUEST_TEST_ID.METHOD_SELECT).selectOption(method);
   await page.getByTestId(HTTP_REQUEST_TEST_ID.URL_INPUT).fill(url);
 
@@ -77,6 +86,8 @@ export async function sendRequest(
   }: SendRequestOptions = {},
 ) {
   await fillRequest(page, { method, url, params, headers, body });
+  // Ensure buffered mode — localStorage may still say "stream" from a prior session.
+  await selectResponseMode(page, 'buffered');
 
   return sendButtonClick(page);
 }

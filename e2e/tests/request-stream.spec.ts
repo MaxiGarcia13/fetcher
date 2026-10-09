@@ -16,9 +16,11 @@ test('streams SSE events into the stream response viewer', async ({ page }) => {
   });
 
   const streamResponse = page.getByTestId(HTTP_REQUEST_TEST_ID.STREAM_RESPONSE);
-  await expect(streamResponse).toBeVisible();
+  await expect(streamResponse).toBeVisible({ timeout: 15_000 });
 
-  await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.STREAM_STATUS)).toHaveText('Done');
+  await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.STREAM_STATUS)).toHaveText('Done', {
+    timeout: 15_000,
+  });
   await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.STREAM_EVENT_COUNT)).toContainText('3');
 
   const events = page.getByTestId(HTTP_REQUEST_TEST_ID.STREAM_EVENTS);
