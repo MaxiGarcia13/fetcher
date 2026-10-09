@@ -14,6 +14,7 @@ export const HTTP_REQUEST_TEST_ID = {
   STREAM_RAW: 'stream-raw',
   STREAM_CHAT: 'stream-chat',
   STREAM_TOOLBAR_STOP: 'stream-toolbar-stop',
+  STREAM_APPEND_BODY_BUTTON: 'stream-append-body-button',
   REQUEST_OPTIONS_TAB: 'request-options-tab',
   REQUEST_OPTIONS_INPUT_KEY: 'request-options-input-key',
   REQUEST_OPTIONS_INPUT_VALUE: 'request-options-input-value',

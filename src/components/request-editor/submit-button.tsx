@@ -2,16 +2,12 @@ import type { SubmitType } from './submit-type';
 import { isValidHttpUrl } from '@maxigarcia/js-utils';
 import { useState } from 'react';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids';
-import { submitHttpRequest, submitHttpStream } from '@/domain/http-request';
+import { submitHttpRequest } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
 import {
   abortHttpStreamResponse,
-  appendHttpStreamEvent,
-  beginHttpStream,
-  endHttpStream,
   saveHttpResponse,
   saveHttpResponseError,
-  saveHttpStreamError,
   setHttpResponseLoading,
   useHttpResponseState,
 } from '@/store/http-response';
@@ -21,7 +17,8 @@ import { SendIcon } from '../icons/send';
 import { ServerIcon } from '../icons/server';
 import { StopIcon } from '../icons/stop';
 import { Tooltip } from '../tooltip';
-import { $responseSendMode, $streamFormat } from './response-mode';
+import { $responseSendMode } from './response-mode';
+import { runHttpStream } from './run-http-stream';
 import { getStoredSubmitType, setStoredSubmitType } from './submit-type';
 
 const SUBMIT_OPTIONS = {
@@ -45,21 +42,8 @@ export function SubmitButton() {
     setSelectedSubmitType(submitType);
     setStoredSubmitType(submitType);
 
-    const mode = $responseSendMode.get();
-    const streamFormat = $streamFormat.get();
-
-    if (mode === 'stream') {
-      beginHttpStream(streamFormat);
-
-      try {
-        for await (const event of submitHttpStream(submitType, streamFormat)) {
-          appendHttpStreamEvent(event);
-        }
-        endHttpStream();
-      } catch (error) {
-        saveHttpStreamError(error);
-      }
-
+    if ($responseSendMode.get() === 'stream') {
+      await runHttpStream(submitType);
       return;
     }
 

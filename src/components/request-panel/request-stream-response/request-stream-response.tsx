@@ -89,6 +89,8 @@ export function RequestStreamResponse({ className }: Props) {
         eventCount={events.length}
         elapsedMs={elapsedMs}
         isStreaming={isStreaming}
+        requestBody={requestBody}
+        assistantText={chatText}
       />
 
       {error && (
