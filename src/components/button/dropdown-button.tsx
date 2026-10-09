@@ -100,7 +100,7 @@ export function DropdownButton({
         size={size}
         disabled={disabled}
         className={cn(
-          'box-border flex h-full w-11 shrink-0 items-center justify-center rounded rounded-l-none border-0 px-0!',
+          'box-border h-full w-11 shrink-0 rounded rounded-l-none border-0 p-0!',
           disabled ? 'border-transparent' : borderSeparatorClassNames[variant],
         )}
         aria-expanded={open}
@@ -114,7 +114,7 @@ export function DropdownButton({
         onClick={handleToggleMenu}
       >
         <ChevronDownIcon
-          className={cn('size-5 shrink-0 text-current transition-transform', open && 'rotate-180')}
+          className={cn('size-4 shrink-0 text-current transition-transform', open && 'rotate-180')}
         />
       </Button>
 
