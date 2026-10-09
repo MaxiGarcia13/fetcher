@@ -21,8 +21,8 @@ import { SendIcon } from '../icons/send';
 import { ServerIcon } from '../icons/server';
 import { StopIcon } from '../icons/stop';
 import { Tooltip } from '../tooltip';
+import { $responseSendMode, $streamFormat } from './response-mode';
 import { getStoredSubmitType, setStoredSubmitType } from './submit-type';
-import { useResponseSendMode } from './use-response-mode';
 
 const SUBMIT_OPTIONS = {
   server: {
@@ -38,13 +38,15 @@ const SUBMIT_OPTIONS = {
 export function SubmitButton() {
   const { url } = useHttpRequestState();
   const { isLoading, isStreaming } = useHttpResponseState();
-  const { mode, streamFormat } = useResponseSendMode();
 
   const [selectedSubmitType, setSelectedSubmitType] = useState<SubmitType>(getStoredSubmitType);
 
   const handleSend = async (submitType: SubmitType) => {
     setSelectedSubmitType(submitType);
     setStoredSubmitType(submitType);
+
+    const mode = $responseSendMode.get();
+    const streamFormat = $streamFormat.get();
 
     if (mode === 'stream') {
       beginHttpStream(streamFormat);

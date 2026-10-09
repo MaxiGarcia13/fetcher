@@ -86,3 +86,27 @@ export async function sendButtonClick(page: Page) {
   await page.getByTestId(HTTP_REQUEST_TEST_ID.SEND_BUTTON).click();
   return requestFinished;
 }
+
+export async function selectResponseMode(page: Page, mode: 'buffered' | 'stream') {
+  await page.getByTestId(HTTP_REQUEST_TEST_ID.RESPONSE_MODE_SELECT).selectOption(mode);
+  await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.RESPONSE_MODE_SELECT)).toHaveValue(mode);
+}
+
+export async function selectStreamFormat(page: Page, format: 'sse' | 'ndjson' | 'bytes') {
+  await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.STREAM_FORMAT_SELECT)).toBeVisible();
+  await page.getByTestId(HTTP_REQUEST_TEST_ID.STREAM_FORMAT_SELECT).selectOption(format);
+  await expect(page.getByTestId(HTTP_REQUEST_TEST_ID.STREAM_FORMAT_SELECT)).toHaveValue(format);
+}
+
+export async function sendStreamRequest(
+  page: Page,
+  options: SendRequestOptions & { format?: 'sse' | 'ndjson' | 'bytes' } = {},
+) {
+  const { format = 'sse', ...requestOptions } = options;
+
+  await fillRequest(page, requestOptions);
+  await selectResponseMode(page, 'stream');
+  await selectStreamFormat(page, format);
+
+  return sendButtonClick(page);
+}
