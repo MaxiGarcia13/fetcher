@@ -25,9 +25,10 @@ export function ResponseModeControls({ className }: Props) {
   const { mode, streamFormat, setMode, setStreamFormat } = useResponseSendMode();
   const { isLoading, isStreaming } = useHttpResponseState();
   const disabled = isLoading || isStreaming;
+  const showFormat = mode === 'stream';
 
   return (
-    <div className={cn('flex shrink-0 items-center gap-1', className)}>
+    <div className={cn('flex shrink-0 items-center', className)}>
       <Select
         aria-label="Response mode"
         value={mode}
@@ -38,10 +39,13 @@ export function ResponseModeControls({ className }: Props) {
             setMode(value);
           }
         }}
-        className="w-auto max-w-30 pr-7 pl-2 text-xs sm:max-w-none sm:min-w-28 sm:pr-9 sm:pl-3 sm:text-sm"
+        className={cn(
+          'w-auto max-w-30 rounded-l-none border-l-0 pr-7 pl-2 text-xs sm:max-w-none sm:min-w-28 sm:pr-9 sm:pl-3 sm:text-sm',
+          showFormat && 'rounded-r-none',
+        )}
         data-testid={HTTP_REQUEST_TEST_ID.RESPONSE_MODE_SELECT}
       />
-      {mode === 'stream' && (
+      {showFormat && (
         <Select
           aria-label="Stream format"
           value={streamFormat}
@@ -52,7 +56,7 @@ export function ResponseModeControls({ className }: Props) {
               setStreamFormat(value);
             }
           }}
-          className="w-auto max-w-22 pr-7 pl-2 text-xs sm:max-w-none sm:min-w-24 sm:pr-9 sm:pl-3 sm:text-sm"
+          className="w-auto max-w-22 rounded-l-none border-l-0 pr-7 pl-2 text-xs sm:max-w-none sm:min-w-24 sm:pr-9 sm:pl-3 sm:text-sm"
           data-testid={HTTP_REQUEST_TEST_ID.STREAM_FORMAT_SELECT}
         />
       )}

@@ -83,7 +83,7 @@ export function DropdownButton({
         variant="transparent"
         size={size}
         disabled={disabled}
-        className="h-full shrink-0 rounded rounded-r-none"
+        className="h-full min-w-0 flex-1 rounded rounded-r-none"
         tabIndex={disabled ? -1 : 0}
         onKeyDown={handleKeyPressEvent(() => selectedItem.onClick?.())}
         onClick={() => {
@@ -100,7 +100,7 @@ export function DropdownButton({
         size={size}
         disabled={disabled}
         className={cn(
-          'h-full rounded rounded-l-none border-l',
+          'box-border flex h-full w-11 shrink-0 items-center justify-center rounded rounded-l-none border-0 px-0!',
           disabled ? 'border-transparent' : borderSeparatorClassNames[variant],
         )}
         aria-expanded={open}
@@ -114,7 +114,7 @@ export function DropdownButton({
         onClick={handleToggleMenu}
       >
         <ChevronDownIcon
-          className={cn('size-4 text-current transition-transform', open && 'rotate-180')}
+          className={cn('size-5 shrink-0 text-current transition-transform', open && 'rotate-180')}
         />
       </Button>
 

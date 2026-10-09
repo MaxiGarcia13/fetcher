@@ -19,7 +19,7 @@ export function RequestEditor({ className }: Props) {
         <RequestMethodSelect
           value={method}
           onChange={setMethod}
-          className="max-w-[80px] rounded-r-none sm:max-w-none"
+          className="max-w-20 rounded-r-none sm:max-w-none"
           data-testid={HTTP_REQUEST_TEST_ID.METHOD_SELECT}
         />
         <Input
@@ -30,16 +30,14 @@ export function RequestEditor({ className }: Props) {
           }}
           placeholder="Enter url"
           aria-label="Request URL"
-          className="flex-1 rounded-l-none border-l-0"
+          className="min-w-0 flex-1 rounded-none border-l-0"
           error={urlError}
           data-testid={HTTP_REQUEST_TEST_ID.URL_INPUT}
         />
+        <ResponseModeControls />
       </div>
 
-      <div className="flex shrink-0 items-center justify-end gap-1">
-        <ResponseModeControls />
-        <SubmitButton />
-      </div>
+      <SubmitButton />
     </header>
   );
 }

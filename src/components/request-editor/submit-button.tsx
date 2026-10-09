@@ -64,14 +64,14 @@ export function SubmitButton() {
       <Button
         type="button"
         variant="default"
-        className="min-w-0 shrink-0 sm:min-w-32"
+        className="w-full shrink-0 sm:w-auto sm:min-w-32"
         aria-label="Stop streaming request"
         data-testid={HTTP_REQUEST_TEST_ID.STOP_STREAM_BUTTON}
         onClick={() => {
           abortHttpStreamResponse();
         }}
       >
-        <span className="mt-0.5 hidden sm:block">Stop</span>
+        <span className="mt-0.5">Stop</span>
         <StopIcon className="size-4" />
       </Button>
     );
@@ -85,7 +85,7 @@ export function SubmitButton() {
   return (
     <DropdownButton
       variant={selectedSubmitType === 'server' ? 'primary' : 'secondary'}
-      className="min-w-0 shrink-0 sm:min-w-32"
+      className="w-full shrink-0 sm:w-auto sm:min-w-32"
       disabled={!isValidHttpUrl(url) || isLoading}
       aria-label={sendAriaLabel}
       toggleMenuAriaLabel="Choose how to send the request"
@@ -104,7 +104,7 @@ export function SubmitButton() {
             },
             children: (
               <Tooltip content={SUBMIT_OPTIONS.server.tooltip} placement="bottom" className="flex items-center gap-2">
-                <span className="mt-0.5 hidden sm:block">Send</span>
+                <span className="mt-0.5">Send</span>
                 <SendIcon className="size-4" />
               </Tooltip>
             ),
@@ -121,7 +121,7 @@ export function SubmitButton() {
             },
             children: (
               <Tooltip content={SUBMIT_OPTIONS.client.tooltip} placement="bottom" className="flex items-center gap-2">
-                <span className="mt-0.5 hidden sm:block">Send</span>
+                <span className="mt-0.5">Send</span>
                 <SendIcon className="size-4" />
               </Tooltip>
             ),
