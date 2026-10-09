@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^7.0.1",
-    "@maxigarcia/js-utils": "^1.21.1",
+    "@maxigarcia/js-utils": "^1.22.1",
     "@nanostores/react": "^2.0.1",
     "astro": "^7.3.6",
     "monaco-editor": "^0.57.0",
