@@ -3,6 +3,7 @@ import { Input } from '@/components/input';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids/http-request';
 import { useHttpRequestState } from '@/store/http-request';
 import { RequestMethodSelect } from './request-method-select';
+import { ResponseModeControls } from './response-mode-controls';
 import { SubmitButton } from './submit-button';
 
 interface Props {
@@ -13,8 +14,8 @@ export function RequestEditor({ className }: Props) {
   const { method, url, urlError, setMethod, setUrl } = useHttpRequestState();
 
   return (
-    <header className={cn('flex gap-2', className)}>
-      <div className="flex flex-1">
+    <header className={cn('flex flex-wrap gap-2', className)}>
+      <div className="flex min-w-0 flex-1">
         <RequestMethodSelect
           value={method}
           onChange={setMethod}
@@ -35,6 +36,7 @@ export function RequestEditor({ className }: Props) {
         />
       </div>
 
+      <ResponseModeControls />
       <SubmitButton />
     </header>
   );

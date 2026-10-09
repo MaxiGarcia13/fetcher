@@ -2,15 +2,27 @@ import type { SubmitType } from './submit-type';
 import { isValidHttpUrl } from '@maxigarcia/js-utils';
 import { useState } from 'react';
 import { HTTP_REQUEST_TEST_ID } from '@/constants/test-ids';
-import { submitHttpRequest } from '@/domain/http-request';
+import { submitHttpRequest, submitHttpStream } from '@/domain/http-request';
 import { useHttpRequestState } from '@/store/http-request';
-import { saveHttpResponse, saveHttpResponseError, setHttpResponseLoading, useHttpResponseState } from '@/store/http-response';
-import { DropdownButton } from '../button';
+import {
+  abortHttpStreamResponse,
+  appendHttpStreamEvent,
+  beginHttpStream,
+  endHttpStream,
+  saveHttpResponse,
+  saveHttpResponseError,
+  saveHttpStreamError,
+  setHttpResponseLoading,
+  useHttpResponseState,
+} from '@/store/http-response';
+import { Button, DropdownButton } from '../button';
 import { BrowserIcon } from '../icons/browser';
 import { SendIcon } from '../icons/send';
 import { ServerIcon } from '../icons/server';
+import { StopIcon } from '../icons/stop';
 import { Tooltip } from '../tooltip';
 import { getStoredSubmitType, setStoredSubmitType } from './submit-type';
+import { useResponseSendMode } from './use-response-mode';
 
 const SUBMIT_OPTIONS = {
   server: {
@@ -25,20 +37,59 @@ const SUBMIT_OPTIONS = {
 
 export function SubmitButton() {
   const { url } = useHttpRequestState();
-  const { isLoading } = useHttpResponseState();
+  const { isLoading, isStreaming } = useHttpResponseState();
+  const { mode, streamFormat } = useResponseSendMode();
 
   const [selectedSubmitType, setSelectedSubmitType] = useState<SubmitType>(getStoredSubmitType);
 
-  const handleSend = (submitType: SubmitType) => {
-    setHttpResponseLoading(true);
+  const handleSend = async (submitType: SubmitType) => {
     setSelectedSubmitType(submitType);
     setStoredSubmitType(submitType);
 
-    submitHttpRequest(submitType)
-      .then((response) => saveHttpResponse(response))
-      .catch((error) => saveHttpResponseError(error))
-      .finally(() => setHttpResponseLoading(false));
+    if (mode === 'stream') {
+      beginHttpStream(streamFormat);
+
+      try {
+        for await (const event of submitHttpStream(submitType, streamFormat)) {
+          appendHttpStreamEvent(event);
+        }
+        endHttpStream();
+      } catch (error) {
+        saveHttpStreamError(error);
+      }
+
+      return;
+    }
+
+    setHttpResponseLoading(true);
+
+    try {
+      const response = await submitHttpRequest(submitType);
+      await saveHttpResponse(response);
+    } catch (error) {
+      saveHttpResponseError(error);
+    } finally {
+      setHttpResponseLoading(false);
+    }
   };
+
+  if (isStreaming) {
+    return (
+      <Button
+        type="button"
+        variant="default"
+        className="min-w-0 shrink-0 sm:min-w-32"
+        aria-label="Stop streaming request"
+        data-testid={HTTP_REQUEST_TEST_ID.STOP_STREAM_BUTTON}
+        onClick={() => {
+          abortHttpStreamResponse();
+        }}
+      >
+        <span className="mt-0.5 hidden sm:block">Stop</span>
+        <StopIcon className="size-4" />
+      </Button>
+    );
+  }
 
   const sendAriaLabel
     = selectedSubmitType === 'server'
@@ -63,7 +114,7 @@ export function SubmitButton() {
               </>
             ),
             onClick: () => {
-              handleSend('server');
+              void handleSend('server');
             },
             children: (
               <Tooltip content={SUBMIT_OPTIONS.server.tooltip} placement="bottom" className="flex items-center gap-2">
@@ -80,7 +131,7 @@ export function SubmitButton() {
               </>
             ),
             onClick: () => {
-              handleSend('client');
+              void handleSend('client');
             },
             children: (
               <Tooltip content={SUBMIT_OPTIONS.client.tooltip} placement="bottom" className="flex items-center gap-2">
