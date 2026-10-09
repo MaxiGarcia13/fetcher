@@ -1,6 +1,6 @@
 import type { TabItem } from '@/components/tabs/types';
 import { cn } from '@maxigarcia/js-utils';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { LazyEditor } from '@/components/editor/lazy-editor';
 import { TabsContent } from '@/components/tabs/tabs-content';
 import { TabsHeader } from '@/components/tabs/tabs-header';
@@ -23,16 +23,23 @@ interface Props {
 }
 
 export function RequestStreamResponse({ className }: Props) {
-  const { body, error, events, isStreaming, streamStatus } = useHttpResponseState();
+  const { body, error, events, isStreaming, streamFormat, streamStatus } = useHttpResponseState();
   const { body: requestBody } = useHttpRequestState();
   const [activeTab, setActiveTab] = useState<StreamTab>('events');
+  const showRawTab = streamFormat === 'sse';
 
   const rawText = useMemo(
-    () => events.map((event) => streamEventToRawText(event)).join(''),
-    [events],
+    () => (showRawTab ? events.map((event) => streamEventToRawText(event)).join('') : ''),
+    [events, showRawTab],
   );
   const chatText = useMemo(() => assembleChatFromEvents(events), [events]);
   const elapsedMs = events.at(-1)?.at ?? 0;
+
+  useEffect(() => {
+    if (!showRawTab && activeTab === 'raw') {
+      setActiveTab('events');
+    }
+  }, [activeTab, showRawTab]);
 
   const items: TabItem<StreamTab>[] = [
     {
@@ -53,19 +60,21 @@ export function RequestStreamResponse({ className }: Props) {
         />
       ),
     },
-    {
-      value: 'raw',
-      label: 'Raw',
-      content: (
-        <LazyEditor
-          className="min-h-0 flex-1"
-          value={rawText}
-          language="markdown"
-          data-testid={HTTP_REQUEST_TEST_ID.STREAM_RAW}
-          readOnly
-        />
-      ),
-    },
+    ...(showRawTab
+      ? [{
+          value: 'raw' as const,
+          label: 'Raw',
+          content: (
+            <LazyEditor
+              className="min-h-0 flex-1"
+              value={rawText}
+              language="markdown"
+              data-testid={HTTP_REQUEST_TEST_ID.STREAM_RAW}
+              readOnly
+            />
+          ),
+        }]
+      : []),
     {
       value: 'chat',
       label: 'Chat',
